@@ -139,7 +139,7 @@ class Trade(commands.Cog):
 
             mob_rarity = mob["rarity"]
             token_rarity = CLERIC_RARITY_TO_TOKEN[mob_rarity]
-            token_id = f"token_{token_rarity}_roll"
+            token_id = token_rarity
             token_count = mob_amount // 2
             token = self.bot.items[token_id]
 

@@ -89,7 +89,7 @@ class Rolls(commands.Cog):
                 await ctx.send(f"❌ Invalid token rarity. Valid options: {', '.join(VALID_TOKEN_RARITIES)}")
                 return
             roll_type = mode
-            token_id = f"token_{value}_roll"
+            token_id = value
         else:
             await ctx.send(
                 f"❌ Invalid roll type. Try `{self.bot.command_prefix}roll`, `{self.bot.command_prefix}roll focus`, or `{self.bot.command_prefix}roll token <rarity>`."
@@ -124,7 +124,7 @@ class Rolls(commands.Cog):
             User.record_focus_roll(self.bot.db, guild_id, user_id, now)
         elif roll_type == "token":
             inventory = Inventory.get_item(self.bot.db, guild_id, user_id, token_id)
-            token_count = inventory["amount"] if inventory else 0
+            token_count = inventory.amount if inventory else 0
             if token_count <= 0:
                 await ctx.send("❌ You do not have enough of that token type.")
                 return
