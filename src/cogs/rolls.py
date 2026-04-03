@@ -45,12 +45,14 @@ class Rolls(commands.Cog):
         mob_id, mob = self.roll_random_mob()
         User.record_reroll(self.bot.db, guild_id, user_id, now)
 
-        embed = discord.Embed(
-            title=mob["name"],
-            color=RARITY_COLORS.get(mob["rarity"], 0x2F3136),
+        embed = self.build_mob_embed(
+            guild_id=guild_id,
+            user_id=user_id,
+            mob_id=mob_id,
+            mob=mob,
+            display_name=ctx.author.display_name,
+            rerolled=True,
         )
-        embed.set_image(url=mob["image"])
-        embed.set_footer(text=f"Rerolled by: {ctx.author.display_name}")
 
         await ctx.send(
             embed=embed,
@@ -131,30 +133,9 @@ class Rolls(commands.Cog):
             mob_id, mob = self.roll_random_mob(allowed={value.capitalize()} if value else None)
             User.record_roll(self.bot.db, guild_id, user_id, now)
 
-        owned_amount = Collection.get_mob_count(self.bot.db, guild_id, user_id, mob_id) or 0
-
-        emoji = RARITY_EMOJIS.get(mob["rarity"], "❔")
-        color = RARITY_COLORS.get(mob["rarity"], 0x2F3136)
-
-        if owned_amount > 0:
-            embed = discord.Embed(
-                title=f"{emoji} {mob['name']} - Duplicate!",
-                description=(
-                    f"**Rarity:** {mob['rarity']}\n"
-                    f"**You already own:** {owned_amount}\n"
-                    "*💡 Duplicates can still be claimed.*"
-                ),
-                color=color,
-            )
-        else:
-            embed = discord.Embed(
-                title=f"{emoji} {mob['name']}",
-                description=f"**Rarity:** {mob['rarity']}",
-                color=color,
-            )
-
-        embed.set_image(url=mob["image"])
-        embed.set_footer(text=f"Rolled by: {ctx.author.display_name}")
+        embed = self.build_mob_embed(
+            guild_id=guild_id, user_id=user_id, mob_id=mob_id, mob=mob, display_name=ctx.author.display_name
+        )
 
         await ctx.send(
             embed=embed,
@@ -176,6 +157,35 @@ class Rolls(commands.Cog):
         weights = [RARITY_WEIGHTS[r] for r in rarities]
 
         return random.choices(rarities, weights=weights, k=1)[0]
+
+    def build_mob_embed(
+        self, guild_id: int, user_id: int, mob_id: str, mob: dict, display_name: str, rerolled: bool = False
+    ) -> discord.Embed:
+        owned_amount = Collection.get_mob_count(self.bot.db, guild_id, user_id, mob_id) or 0
+        emoji = RARITY_EMOJIS.get(mob["rarity"], "❔")
+        color = RARITY_COLORS.get(mob["rarity"], 0x2F3136)
+
+        if owned_amount > 0:
+            embed = discord.Embed(
+                title=f"{emoji} {mob['name']} - Duplicate!",
+                description=(
+                    f"**Rarity:** {mob['rarity']}\n"
+                    f"**You already own:** {owned_amount}\n"
+                    "*💡 Duplicates can still be claimed.*"
+                ),
+                color=color,
+            )
+        else:
+            embed = discord.Embed(
+                title=f"{emoji} {mob['name']}",
+                description=f"**Rarity:** {mob['rarity']}",
+                color=color,
+            )
+
+        embed.set_image(url=mob["image"])
+        action = "Rerolled" if rerolled else "Rolled"
+        embed.set_footer(text=f"{action} by: {display_name}")
+        return embed
 
 
 async def setup(bot):
