@@ -171,11 +171,14 @@ class Help(commands.Cog):
         if section.lower() == "tokens":
             embed = discord.Embed(title="🎟️ Roll Tokens", color=0xE67E22)
 
-            embed.add_field(name="Token Types", value=("• Uncommon Token\n• Rare Token\n• Epic Token"), inline=False)
+            embed.add_field(
+                name="Token Types", value=("• Uncommon Roll Token\n• Rare Roll Token\n• Epic Roll Token"), inline=False
+            )
             embed.add_field(
                 name="Using Tokens",
                 value=(
-                    f"`{self.bot.command_prefix}roll <token>`\n"
+                    f"`{self.bot.command_prefix}roll token <rarity>`\n"
+                    "• Valid rarities: uncommon, rare, epic\n"
                     "• Consumes the token\n"
                     "• Rolls only within that rarity band"
                 ),
