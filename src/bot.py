@@ -8,6 +8,11 @@ import discord
 from discord.ext import commands
 
 from database.db import SessionLocal, init_db
+from services.collection_service import CollectionService
+from services.economy_service import EconomyService
+from services.roll_service import RollService
+from services.shop_service import ShopService
+from services.trade_service import TradeService
 from utils import item_loader, mob_loader, villager_loader
 
 
@@ -20,6 +25,14 @@ class MyBot(commands.Bot):
         self.villagers = villagers
         self.items = items
         self.db = db
+
+        # Initialize services
+        self.collection_service = CollectionService(mobs, mobs_by_rarity)
+        self.economy_service = EconomyService(mobs, mobs_by_rarity, items)
+        self.roll_service = RollService(mobs, mobs_by_rarity, villagers)
+        self.shop_service = ShopService(villagers)
+        self.trade_service = TradeService(mobs, villagers, items)
+        self.trade_service = TradeService(mobs, villagers, items)
 
     async def setup_hook(self) -> None:
         for extention in self.extentions:

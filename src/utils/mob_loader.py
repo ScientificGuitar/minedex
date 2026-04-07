@@ -1,6 +1,6 @@
 import json
-from pathlib import Path
 from collections import defaultdict
+from pathlib import Path
 
 RARITIES = {"Common", "Uncommon", "Rare", "Epic", "Legendary"}
 REQUIRED_FIELDS = {"name", "rarity", "image", "lore"}
