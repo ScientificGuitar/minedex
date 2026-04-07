@@ -10,3 +10,9 @@ dependencies = [
     "psycopg[binary]>=3.3.3",
     "sqlalchemy>=2.0.48",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "pytest-cov>=7.1.0",
+]

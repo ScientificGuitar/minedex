@@ -1,13 +1,10 @@
-import random
 import time
 from datetime import datetime, timezone
 
 import discord
 from discord.ext import commands
 
-from constants import RARITY_COLORS, RARITY_EMOJIS, RARITY_WEIGHTS
-from database.collection import Collection
-from database.inventory import Inventory
+from constants import RARITY_COLORS, RARITY_EMOJIS
 from database.user import User
 
 
@@ -20,7 +17,7 @@ class Economy(commands.Cog):
         guild_id = ctx.guild.id
         user_id = ctx.author.id
         User.ensure_user(self.bot.db, guild_id, user_id)
-        emeralds = User.get_emeralds(self.bot.db, guild_id, user_id)
+        emeralds = self.bot.economy_service.get_user_balance(self.bot.db, guild_id, user_id)
 
         embed = discord.Embed(title=f"{ctx.author.display_name}'s Balance", colour=discord.Colour.green())
 
@@ -34,31 +31,15 @@ class Economy(commands.Cog):
         guild_id = ctx.guild.id
         user_id = ctx.author.id
         User.ensure_user(self.bot.db, guild_id, user_id)
-        inventory = Inventory.get_items(self.bot.db, guild_id, user_id)
+        grouped_inventory = self.bot.economy_service.get_user_inventory(self.bot.db, guild_id, user_id)
 
-        grouped = {}
-
-        for item in inventory or []:
-            item_id = item.item_id
-            amount = item.amount
-
-            if amount <= 0:
-                continue
-
-            item = self.bot.items.get(item_id)
-            if not item:
-                continue
-
-            item_type = item.get("type", "misc")
-            grouped.setdefault(item_type, []).append((item, amount))
-
-        if not grouped:
+        if not grouped_inventory:
             await ctx.send("🎒 Your inventory is empty.")
             return
 
         embed = discord.Embed(title=f"🎒 {ctx.author.display_name}'s Inventory", colour=discord.Colour.dark_gold())
 
-        for item_type, items in grouped.items():
+        for item_type, items in grouped_inventory.items():
             lines = []
 
             for item, amount in items:
@@ -78,7 +59,7 @@ class Economy(commands.Cog):
 
     @commands.command()
     async def item(self, ctx, item_id: str):
-        item = self.bot.items.get(item_id)
+        item = self.bot.economy_service.get_item_info(item_id)
         if not item:
             await ctx.send("❌ Unknown item.")
             return
@@ -99,18 +80,11 @@ class Economy(commands.Cog):
         now = int(time.time())
         User.ensure_user(self.bot.db, guild_id, user_id)
 
-        user = User.get_user(self.bot.db, guild_id, user_id)
-        last_daily_claim_at = user.last_daily_at if user else None
-        if same_utc_day(last_daily_claim_at, now):
-            await ctx.send("❌ You've already claimed today.")
+        result = self.bot.economy_service.claim_daily_reward(self.bot.db, guild_id, user_id, now)
+
+        if "error" in result:
+            await ctx.send(f"❌ {result['error']}")
             return
-
-        emeralds = random.randint(2, 5)
-        mob_id, mob = self.roll_random_mob(allowed={"Common"})
-
-        User.update_last_daily_at(self.bot.db, guild_id, user_id, now)
-        User.add_emeralds(self.bot.db, guild_id, user_id, emeralds)
-        Collection.add_to_collection(self.bot.db, guild_id, user_id, mob_id)
 
         embed = discord.Embed(
             title="🎁 Daily Reward",
@@ -120,33 +94,17 @@ class Economy(commands.Cog):
 
         embed.add_field(
             name="💎 Emeralds",
-            value=f"+{emeralds}",
+            value=f"+{result['emeralds']}",
             inline=False,
         )
 
         embed.add_field(
             name="🪨 Common Mob",
-            value=f"**{mob['name']}**",
+            value=f"**{result['mob']['name']}**",
             inline=False,
         )
 
         await ctx.send(embed=embed)
-
-    def roll_random_mob(self, exclude=None, allowed=None):
-        rarity = Economy.roll_rarity(exclude, allowed)
-        mob = random.choice(self.bot.mobs_by_rarity[rarity])
-        return mob, self.bot.mobs[mob]
-
-    @staticmethod
-    def roll_rarity(exclude=None, allowed=None):
-        exclude = exclude or set()
-        if allowed:
-            rarities = [r for r in allowed if r in RARITY_WEIGHTS]
-        else:
-            rarities = [r for r in RARITY_WEIGHTS if r not in exclude]
-        weights = [RARITY_WEIGHTS[r] for r in rarities]
-
-        return random.choices(rarities, weights=weights, k=1)[0]
 
 
 async def setup(bot):

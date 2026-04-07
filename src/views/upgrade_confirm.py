@@ -1,7 +1,5 @@
 import discord
 
-from database.user import User
-
 
 class UpgradeTradingView(discord.ui.View):
     def __init__(self, bot, guild_id: int, user_id: int, villager: dict):
@@ -21,17 +19,12 @@ class UpgradeTradingView(discord.ui.View):
 
     @discord.ui.button(label="Confirm Upgrade", style=discord.ButtonStyle.success)
     async def confirm(self, interaction: discord.Interaction, button: discord.ui.Button):
-        price = self.villager["price"]
+        result = self.bot.shop_service.perform_trading_hall_upgrade(self.bot.db, self.guild_id, self.user_id)
 
-        emeralds = User.get_emeralds(self.bot.db, self.guild_id, self.user_id) or 0
-
-        if emeralds < price:
-            await interaction.response.send_message("❌ You no longer have enough emeralds.", ephemeral=True)
+        if not result["success"]:
+            await interaction.response.send_message(f"❌ {result['error']}", ephemeral=True)
             self.stop()
             return
-
-        User.add_emeralds(self.bot.db, self.guild_id, self.user_id, -price)
-        User.upgrade_trading_hall(self.bot.db, self.guild_id, self.user_id)
 
         message = interaction.message
         if message is None or not message.embeds:
@@ -39,11 +32,11 @@ class UpgradeTradingView(discord.ui.View):
         embed = message.embeds[0]
         embed.title = "✅ Trading Hall Upgraded!"
         embed.color = discord.Color.green()
-        embed.add_field(name="Unlocked", value=f"{self.villager['name']}", inline=False)
+        embed.add_field(name="Unlocked", value=f"{result['upgraded_to']['name']}", inline=False)
 
         button.disabled = True
 
         await interaction.response.edit_message(embed=embed, view=self)
-        await interaction.followup.send(f"🏛️ Your Trading Hall is now **Tier {self.villager['level']}**!")
+        await interaction.followup.send(f"🏛️ Your Trading Hall is now **Tier {result['upgraded_to']['level']}**!")
 
         self.stop()

@@ -2,10 +2,6 @@ import time
 
 import discord
 
-from constants import RARITY_EMERALD_REWARDS
-from database.collection import Collection
-from database.user import User
-
 
 class Claim(discord.ui.View):
     def __init__(self, bot, guild_id: int, user_id: int, mob_id: str, mob: dict):
@@ -28,18 +24,7 @@ class Claim(discord.ui.View):
     async def button_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         now = int(time.time())
 
-        user = User.get_user(self.bot.db, self.guild_id, self.user_id)
-        last_claim_at = user.last_claim_at if user else 0
-        user_tz = user.timezone if user else None
-        # if same_utc_day(last_claim_at, now, user_tz):
-        #     await interaction.response.send_message("❌ You've already claimed today.", ephemeral=True)
-        #     return
-
-        reward = RARITY_EMERALD_REWARDS[self.mob["rarity"]]
-
-        Collection.add_to_collection(self.bot.db, self.guild_id, self.user_id, self.mob_id)
-        User.update_last_claim_at(self.bot.db, self.guild_id, self.user_id, now)
-        User.add_emeralds(self.bot.db, self.guild_id, self.user_id, reward)
+        reward = self.bot.roll_service.claim_mob(self.bot.db, self.guild_id, self.user_id, self.mob_id, self.mob, now)
 
         button.disabled = True
         message = interaction.message
