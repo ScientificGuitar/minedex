@@ -1,8 +1,5 @@
 import discord
 
-from database.collection import Collection
-from database.user import User
-
 
 class FarmerTradeConfirm(discord.ui.View):
     def __init__(self, bot, guild_id, user_id, mob_id, amount, emeralds, timeout=60):
@@ -22,8 +19,9 @@ class FarmerTradeConfirm(discord.ui.View):
 
     @discord.ui.button(label="Confirm", style=discord.ButtonStyle.success, emoji="✅")
     async def button_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
-        Collection.remove_mob(self.bot.db, self.guild_id, self.user_id, self.mob_id, self.amount)
-        User.add_emeralds(self.bot.db, self.guild_id, self.user_id, self.emeralds)
+        self.bot.trade_service.perform_farmer_trade(
+            self.bot.db, self.guild_id, self.user_id, self.mob_id, self.amount, self.emeralds
+        )
 
         button.disabled = True
 

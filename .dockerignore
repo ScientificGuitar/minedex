@@ -1,7 +1,42 @@
+# Development and testing files
+tests/
+.pytest_cache/
+pytest.ini
+
+# Development environment
 .venv/
 __pycache__/
 *.pyc
-.git
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+
+# Documentation (development focused)
+README.md
+
+# Local development files
 .env
-data/
-minedex.db
+.env.local
+.env.*.local
+logs/
+
+# CI/CD and deployment
+.github/
+.gitlab-ci.yml
+Dockerfile
+docker-compose.yml
+docker-compose.*.yml
