@@ -7,7 +7,7 @@ from typing import List
 import discord
 from discord.ext import commands
 
-from database.db import SessionLocal, init_db
+from database.db import get_session, init_db
 from services.collection_service import CollectionService
 from services.economy_service import EconomyService
 from services.roll_service import RollService
@@ -82,7 +82,7 @@ async def main():
         mobs_by_rarity=mobs_by_rarity,
         villagers=villagers,
         items=items,
-        db=SessionLocal,
+        db=get_session,
     ) as bot:
         await bot.start(os.getenv("DISCORD_TOKEN", ""))
 

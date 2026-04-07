@@ -8,7 +8,7 @@ Changes:
 
 from sqlalchemy import text
 
-from src.database.db import SessionLocal
+from src.database.db import get_session
 
 
 def migrate_token_ids():
@@ -18,7 +18,7 @@ def migrate_token_ids():
         ("token_epic_roll", "epic"),
     ]
 
-    with SessionLocal() as session:
+    with get_session() as session:
         try:
             for old_id, new_id in updates:
                 session.execute(

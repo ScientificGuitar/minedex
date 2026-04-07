@@ -6,13 +6,37 @@ from sqlalchemy import BigInteger, ForeignKeyConstraint, Integer, String, create
 from sqlalchemy.orm import Mapped, Session, declarative_base, mapped_column, sessionmaker
 from sqlalchemy.pool import NullPool
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL environment variable is not set")
-
-engine = create_engine(DATABASE_URL, poolclass=NullPool, echo=False)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
+
+def get_database_url() -> str:
+    database_url = os.getenv("DATABASE_URL")
+    if not database_url:
+        raise ValueError("DATABASE_URL environment variable is not set")
+    return database_url
+
+
+def get_engine():
+    return create_engine(get_database_url(), poolclass=NullPool, echo=False)
+
+
+def get_session_local():
+    return sessionmaker(autocommit=False, autoflush=False, bind=get_engine())
+
+
+@contextmanager
+def get_session() -> Generator[Session, None, None]:
+    """Context manager for database sessions."""
+    session = get_session_local()()
+    try:
+        yield session
+    finally:
+        session.close()
+
+
+def init_db() -> None:
+    """Initialize the database by creating all tables."""
+    Base.metadata.create_all(bind=get_engine())
 
 
 class User(Base):
@@ -66,18 +90,3 @@ class Inventory(Base):
             ondelete="CASCADE",
         ),
     )
-
-
-@contextmanager
-def get_session() -> Generator[Session, None, None]:
-    """Context manager for database sessions."""
-    session = SessionLocal()
-    try:
-        yield session
-    finally:
-        session.close()
-
-
-def init_db() -> None:
-    """Initialize the database by creating all tables."""
-    Base.metadata.create_all(bind=engine)
