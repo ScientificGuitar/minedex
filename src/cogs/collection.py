@@ -70,6 +70,102 @@ class CollectionCog(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command()
+    async def leaderboard(self, ctx, category: str | None = None):
+        if ctx.guild is None:
+            await ctx.send("❌ Leaderboards can only be viewed in a server.")
+            return
+        normalized = category.lower() if category else None
+        if normalized in {"collection", "completion"}:
+            category_key = "completion"
+        elif normalized in {"value", "collection_value", "score"}:
+            category_key = "value"
+        elif normalized in {"emeralds", "emerald"}:
+            category_key = "emeralds"
+        elif normalized is None:
+            category_key = None
+        else:
+            await ctx.send("❌ Invalid leaderboard category. Available categories: emeralds, completion, value.")
+            return
+
+        guild_id = ctx.guild.id
+        user_id = ctx.author.id
+        User.ensure_user(self.bot.db, guild_id, user_id)
+
+        leaderboard_data = self.bot.collection_service.get_leaderboards(self.bot.db, guild_id, limit=5)
+        if not any(leaderboard_data.values()):
+            await ctx.send("📭 No leaderboard data is available yet.")
+            return
+
+        embed = discord.Embed(title="🏆 Leaderboards", colour=discord.Colour.gold())
+
+        if category_key is None or category_key == "emeralds":
+            embed.add_field(
+                name="💎 Emeralds",
+                value=self._format_emerald_leaderboard(ctx.guild, leaderboard_data["emeralds"]),
+                inline=False,
+            )
+
+        if category_key is None or category_key == "completion":
+            embed.add_field(
+                name="📚 Collection Completion",
+                value=self._format_completion_leaderboard(ctx.guild, leaderboard_data["completion"]),
+                inline=False,
+            )
+
+        if category_key is None or category_key == "value":
+            embed.add_field(
+                name="🏅 Collection Value",
+                value=self._format_value_leaderboard(ctx.guild, leaderboard_data["value"]),
+                inline=False,
+            )
+
+        embed.set_footer(text=f"Use {self.bot.command_prefix}collection to view your collection.")
+        await ctx.send(embed=embed)
+
+    def _format_emerald_leaderboard(self, guild, rows):
+        if not rows:
+            return "No emerald leaderboard entries yet."
+
+        lines = []
+        for idx, row in enumerate(rows, start=1):
+            display_name = self._get_member_display_name(row["user_id"], guild)
+            lines.append(f"{idx}. {display_name} — {row['emeralds']} 💎")
+
+        return "\n".join(lines)
+
+    def _format_completion_leaderboard(self, guild, rows):
+        if not rows:
+            return "No completion leaderboard entries yet."
+
+        lines = []
+        total_unique = len(self.bot.mobs)
+        for idx, row in enumerate(rows, start=1):
+            display_name = self._get_member_display_name(row["user_id"], guild)
+            lines.append(
+                f"{idx}. {display_name} — {row['unique_count']}/{total_unique} unique, {row['total_count']} total"
+            )
+
+        return "\n".join(lines)
+
+    def _format_value_leaderboard(self, guild, rows):
+        if not rows:
+            return "No value leaderboard entries yet."
+
+        lines = []
+        for idx, row in enumerate(rows, start=1):
+            display_name = self._get_member_display_name(row["user_id"], guild)
+            lines.append(f"{idx}. {display_name} — {row['collection_value']}")
+
+        return "\n".join(lines)
+
+    def _get_member_display_name(self, user_id: int, guild):
+        if guild is None:
+            return f"<@{user_id}>"
+
+        member = guild.get_member(user_id)
+        return member.display_name if member else f"<@{user_id}>"
+
+    @commands.command()
     async def mobs(self, ctx, mob_filter: int | str = 1):
         if isinstance(mob_filter, int):
             await self._all_mobs(ctx, mob_filter)
