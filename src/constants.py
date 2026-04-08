@@ -23,6 +23,24 @@ RARITY_COLORS = {
     "Legendary": Colour.orange(),
 }
 
+RARITY_BUCKET_TOTALS = {
+    "Common": 100,
+    "Uncommon": 175,
+    "Rare": 300,
+    "Epic": 500,
+    "Legendary": 800,
+}
+
+RARITY_COMPLETION_BONUS = {
+    "Common": 25,
+    "Uncommon": 50,
+    "Rare": 100,
+    "Epic": 175,
+    "Legendary": 300,
+}
+
+FULL_COLLECTION_BONUS = 500
+
 TRADING_HALL_ORDER = ["farmer", "cleric", "toolsmith", "librarian"]
 
 VALID_TOKEN_RARITIES = ["uncommon", "rare", "epic"]
