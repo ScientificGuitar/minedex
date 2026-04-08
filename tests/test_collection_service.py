@@ -2,13 +2,14 @@
 
 import sys
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import pytest
 
 # Add src directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
+from constants import FULL_COLLECTION_BONUS, RARITY_BUCKET_TOTALS, RARITY_COMPLETION_BONUS
 from services.collection_service import CollectionService
 
 
@@ -126,3 +127,100 @@ class TestCollectionService:
 
         assert "error" in result
         assert "No mobs found for rarity" in result["error"]
+
+    def test_calculate_collection_value_score(self):
+        """Test calculating weighted collection value from a unique mob set."""
+        common_mob_id = self.service.mobs_by_rarity["Common"][0]
+        result = self.service.calculate_collection_value_score([{"mob_id": common_mob_id, "amount": 1}])
+        expected = int(round(RARITY_BUCKET_TOTALS["Common"] / len(self.service.mobs_by_rarity["Common"])))
+
+        assert result == expected
+
+    def test_get_leaderboards(self, mock_session_factory):
+        """Test leaderboard generation from user and collection data."""
+        mock_session = MagicMock()
+        mock_session_factory.return_value.__enter__.return_value = mock_session
+
+        mock_user_query = MagicMock()
+        mock_collection_query = MagicMock()
+        mock_session.query.side_effect = [mock_user_query, mock_collection_query]
+
+        mock_user_query.filter_by.return_value.all.return_value = [(111, 420), (222, 280)]
+        mock_collection_query.filter_by.return_value.all.return_value = [
+            (111, self.service.mobs_by_rarity["Common"][0], 1),
+            (111, self.service.mobs_by_rarity["Common"][1], 2),
+            (222, self.service.mobs_by_rarity["Common"][2], 1),
+        ]
+
+        result = self.service.get_leaderboards(mock_session_factory, guild_id=123, limit=2)
+
+        assert result["emeralds"][0]["user_id"] == 111
+        assert result["completion"][0]["user_id"] == 111
+        assert result["value"][0]["user_id"] == 111
+
+    def test_calculate_collection_value_score_applies_rarity_completion_bonus(self):
+        """Rarity completion awards the configured bonus when all rarity mobs are owned."""
+        common_ids = self.service.mobs_by_rarity["Common"]
+        rows = [{"mob_id": mob_id, "amount": 1} for mob_id in common_ids]
+
+        expected_score = sum(RARITY_BUCKET_TOTALS["Common"] / len(common_ids) for _ in common_ids)
+        expected_score += RARITY_COMPLETION_BONUS["Common"]
+
+        assert self.service.calculate_collection_value_score(rows) == int(round(expected_score))
+
+    def test_calculate_collection_value_score_applies_full_collection_bonus(self):
+        """Owning every unique mob grants the full collection bonus."""
+        rows = [{"mob_id": mob_id, "amount": 1} for mob_id in self.service.mobs]
+
+        expected_score = 0.0
+        for rarity, mob_ids in self.service.mobs_by_rarity.items():
+            expected_score += len(mob_ids) * (RARITY_BUCKET_TOTALS[rarity] / len(mob_ids))
+            expected_score += RARITY_COMPLETION_BONUS[rarity]
+        expected_score += FULL_COLLECTION_BONUS
+
+        assert self.service.calculate_collection_value_score(rows) == int(round(expected_score))
+
+    def test_get_leaderboards_includes_empty_collection_users(self, mock_session_factory):
+        """Users with emeralds but no collection should still appear in leaderboards."""
+        mock_session = MagicMock()
+        mock_session_factory.return_value.__enter__.return_value = mock_session
+
+        mock_user_query = MagicMock()
+        mock_collection_query = MagicMock()
+        mock_session.query.side_effect = [mock_user_query, mock_collection_query]
+
+        mock_user_query.filter_by.return_value.all.return_value = [(111, 150)]
+        mock_collection_query.filter_by.return_value.all.return_value = []
+
+        result = self.service.get_leaderboards(mock_session_factory, guild_id=123, limit=5)
+
+        assert result["emeralds"][0]["user_id"] == 111
+        assert result["emeralds"][0]["emeralds"] == 150
+        assert result["completion"][0]["unique_count"] == 0
+        assert result["completion"][0]["total_count"] == 0
+        assert result["value"][0]["collection_value"] == 0
+
+    def test_get_leaderboards_completion_sort_by_total_count(self, mock_session_factory):
+        """Completion leaderboard should sort by unique count then total count."""
+        mock_session = MagicMock()
+        mock_session_factory.return_value.__enter__.return_value = mock_session
+
+        mock_user_query = MagicMock()
+        mock_collection_query = MagicMock()
+        mock_session.query.side_effect = [mock_user_query, mock_collection_query]
+
+        mock_user_query.filter_by.return_value.all.return_value = [(111, 100), (222, 50)]
+        mock_collection_query.filter_by.return_value.all.return_value = [
+            (111, self.service.mobs_by_rarity["Common"][0], 1),
+            (111, self.service.mobs_by_rarity["Common"][1], 1),
+            (111, self.service.mobs_by_rarity["Rare"][0], 1),
+            (222, self.service.mobs_by_rarity["Common"][2], 1),
+            (222, self.service.mobs_by_rarity["Common"][3], 2),
+            (222, self.service.mobs_by_rarity["Common"][4], 1),
+        ]
+
+        result = self.service.get_leaderboards(mock_session_factory, guild_id=123, limit=2)
+
+        assert result["completion"][0]["user_id"] == 222
+        assert result["completion"][0]["unique_count"] == 3
+        assert result["completion"][0]["total_count"] == 4

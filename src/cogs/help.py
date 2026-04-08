@@ -59,6 +59,7 @@ class Help(commands.Cog):
                     f"`{self.bot.command_prefix}daily` - Free emeralds + a common mob\n"
                     f"`{self.bot.command_prefix}collection` - View your mobs\n"
                     f"`{self.bot.command_prefix}missing` - See what mobs you haven't collected\n"
+                    f"`{self.bot.command_prefix}leaderboard` - Show emerald, completion, and value leaderboards\n"
                     f"`{self.bot.command_prefix}balance` - Check your emeralds\n"
                     f"`{self.bot.command_prefix}timezone` - Set your timezone for daily resets"
                 ),
