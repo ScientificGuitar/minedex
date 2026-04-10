@@ -2,37 +2,37 @@
   "zombie": {
     "name": "Zombie",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/87/Zombie_JE3_BE2.png/revision/latest?cb=20191227070025",
+    "image": "https://minecraft.wiki/images/Zombie_JE3_BE2.png?228b5",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "skeleton": {
     "name": "Skeleton",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/47/Skeleton_JE6_BE4.png/revision/latest?cb=20210227130136",
+    "image": "https://minecraft.wiki/images/Skeleton_JE6_BE4.png?85786",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "creeper": {
     "name": "Creeper",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5b/Creeper_JE2_BE1.png/revision/latest?cb=20191229172043",
+    "image": "https://minecraft.wiki/images/Creeper_JE3_BE1.png?dc7b2",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "spider": {
     "name": "Spider",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/1f/Spider_JE4_BE3.png/revision/latest?cb=20240729213340",
+    "image": "https://minecraft.wiki/images/thumb/Spider_JE5_BE4.png/1024px-Spider_JE5_BE4.png?b090e",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "slime": {
     "name": "Slime",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/dd/Slime_JE3_BE2.png/revision/latest?cb=20191230025505",
+    "image": "https://minecraft.wiki/images/Slime_JE3_BE2.png?5b6a7",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "bat": {
     "name": "Bat",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c6/Bat_JE2_BE2.png/revision/latest/scale-to-width-down/1000?cb=20190814232656",
+    "image": "https://minecraft.wiki/images/thumb/Bat_JE1_BE1.png/800px-Bat_JE1_BE1.png?55f87",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "silverfish": {
@@ -44,43 +44,43 @@
   "chicken": {
     "name": "Chicken",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/2c/Chicken_JE2_BE2.png/revision/latest?cb=20240729214013",
+    "image": "https://minecraft.wiki/images/MCD_Silverfish.png?83812",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "cow": {
     "name": "Cow",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/20/Temperate_Cow.png/revision/latest?cb=20250222051825",
+    "image": "https://minecraft.wiki/images/thumb/Cow_JE7_BE4.png/800px-Cow_JE7_BE4.png?3de94",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "pig": {
     "name": "Pig",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/1a/Pig_JE3_BE2.png/revision/latest?cb=20251004183015",
+    "image": "https://minecraft.wiki/images/Temperate_Pig_JE4_BE2.png?c550c",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "sheep": {
     "name": "Sheep",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e2/White_Sheep_JE3_BE6.png/revision/latest?cb=20190809163123",
+    "image": "https://minecraft.wiki/images/White_Sheep_JE4_BE7.png?5062a",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "cod": {
     "name": "Cod",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/6/66/Cod.gif/revision/latest?cb=20240729214018",
+    "image": "https://minecraft.wiki/images/Cod.gif?fe8d7",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "salmon": {
     "name": "Salmon",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d8/Salmon.gif/revision/latest?cb=20190923182046",
+    "image": "https://minecraft.wiki/images/Salmon.gif?cb24f",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "rabbit": {
     "name": "Rabbit",
     "rarity": "Common",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/8d/Brown_Rabbit_JE2_BE2.png/revision/latest?cb=20240729213325",
+    "image": "https://minecraft.wiki/images/Brown_Rabbit_BE4.png?235b9",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "nitwit": {
@@ -89,248 +89,478 @@
     "image": "https://minecraft.wiki/images/Plains_Nitwit.png?01c04",
     "lore": "Lorem ipsum dolor sit amet."
   },
-
+  "cat": {
+    "name": "Cat",
+    "rarity": "Common",
+    "image": "https://minecraft.wiki/images/Tabby_Cat.png?ea9ab",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "horse": {
+    "name": "Horse",
+    "rarity": "Common",
+    "image": "https://minecraft.wiki/images/thumb/White_Horse.png/800px-White_Horse.png?f3f6e",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "squid": {
+    "name": "Squid",
+    "rarity": "Common",
+    "image": "https://minecraft.wiki/images/Squid_JE1_BE1.png?d0fd1",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "tadpole": {
+    "name": "Tadpole",
+    "rarity": "Common",
+    "image": "https://minecraft.wiki/images/Tadpole_JE1.png?94313",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "tropical_fish": {
+    "name": "Tropical Fish",
+    "rarity": "Common",
+    "image": "https://minecraft.wiki/images/Clownfish.png?1b6b5",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
   "witch": {
     "name": "Witch",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e6/Witch.png/revision/latest?cb=20220611062944",
+    "image": "https://minecraft.wiki/images/Witch_JE3.png?aeb30",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "stray": {
     "name": "Stray",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/38/Stray_JE2_BE4.png/revision/latest?cb=20191001180649",
+    "image": "https://minecraft.wiki/images/Stray_JE2_BE4.png?ef82d",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "husk": {
     "name": "Husk",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/e4/Husk_JE2_BE2.png/revision/latest?cb=20190510101810",
+    "image": "https://minecraft.wiki/images/Husk_JE2_BE2.png?a6767",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "drowned": {
     "name": "Drowned",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/57/Drowned.png/revision/latest?cb=20180626144030",
+    "image": "https://minecraft.wiki/images/Drowned_JE1.png?2454e",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "pillager": {
     "name": "Pillager",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/55/Pillager_JE3.png/revision/latest/scale-to-width-down/1000?cb=20220714205247",
+    "image": "https://minecraft.wiki/images/thumb/Pillager_JE3.png/800px-Pillager_JE3.png?22662",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "vindicator": {
     "name": "Vindicator",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b7/Vindicator_JE3.png/revision/latest?cb=20220611074851",
+    "image": "https://minecraft.wiki/images/Vindicator_JE4.png?48924",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "zombie_villager": {
     "name": "Zombie Villager",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/fd/Plains_Zombie_Villager_Base.png/revision/latest?cb=20211013222051",
+    "image": "https://minecraft.wiki/images/Plains_Zombie_Villager_Base_JE1_BE1.png?7882a",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "endermite": {
     "name": "Endermite",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/89/Endermite_Revision_2.png/revision/latest?cb=20240729214337",
+    "image": "https://minecraft.wiki/images/Endermite_JE1.png?dc5e8",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "magma_cube": {
     "name": "Magma Cube",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ed/Magma_Cube.png/revision/latest?cb=20190805151823",
+    "image": "https://minecraft.wiki/images/Magma_Cube_JE2_BE2.png?b4389",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "llama": {
     "name": "Llama",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4a/Creamy_Llama.png/revision/latest?cb=20240729214726",
+    "image": "https://minecraft.wiki/images/Brown_Llama_JE2_BE2.png?3b960",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "goat": {
     "name": "Goat",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/f8/Goat_JE1_BE1.png/revision/latest?cb=20240729214711",
+    "image": "https://minecraft.wiki/images/Goat_%28two_horns%29_JE1_BE1.png?a5c0c",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "axolotl": {
     "name": "Axolotl",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/99/Lucy_Axolotl_JE2.png/revision/latest/scale-to-width-down/1000?cb=20240729213943",
+    "image": "https://minecraft.wiki/images/Lucy_Axolotl_JE2.png?90400",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "bee": {
     "name": "Bee",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/56/Bee.png/revision/latest?cb=20200317180506",
+    "image": "https://minecraft.wiki/images/Bee.png?3dd28",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "fox": {
     "name": "Fox",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/73/Fox.png/revision/latest?cb=20240729214702",
+    "image": "https://minecraft.wiki/images/Fox_JE1_BE1.png?ebd36",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "frog": {
     "name": "Frog",
     "rarity": "Uncommon",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/ce/Temperate_Frog_JE1_BE1.gif/revision/latest?cb=20240729215004",
+    "image": "https://minecraft.wiki/images/Temperate_Frog_JE1_BE1.gif?5a0ff",
     "lore": "Lorem ipsum dolor sit amet."
   },
-
+  "allay": {
+    "name": "Allay",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Allay_JE1_BE1.png?643d1",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "armadillo": {
+    "name": "Armadillo",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Armadillo_JE2_BE2.png?9cdf1",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "bogged": {
+    "name": "Bogged",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Bogged_JE2_BE2.png?55cb9",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "camel": {
+    "name": "Camel",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Camel_Idle.gif?72667",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "cave_spider": {
+    "name": "Cave Spider",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Cave_Spider_JE3_BE3.png?86c1d",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "dolphin": {
+    "name": "Dolphin",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Dolphin_pJE20171118_2.png?e9ccc",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "donkey": {
+    "name": "Donkey",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/thumb/Donkey_JE5.png/800px-Donkey_JE5.png?9e2a1",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "glow_squid": {
+    "name": "Glow Squid",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Glow_Squid_JE1.gif?dcad8",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "mooshroom": {
+    "name": "Mooshroom",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Red_Mooshroom_JE5_BE3.png?de6c9",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "mule": {
+    "name": "Mule",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/thumb/Mule_JE5.png/800px-Mule_JE5.png?3c1f0",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "ocelot": {
+    "name": "Ocelot",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Ocelot_JE2_BE2.png?7d798",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "piglin": {
+    "name": "Piglin",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Piglin_JE1.png?a498e",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "pufferfish": {
+    "name": "Pufferfish",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Pufferfish_large.png?f2115",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "trader_llama": {
+    "name": "Trader Llama",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Brown_Trader_Llama.png?b7db4",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "turtle": {
+    "name": "Turtle",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Turtle_JE3_BE1.png?373f9",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "wolf": {
+    "name": "Wolf",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Wolf_JE2_BE2.png?ee46e",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "zombified_piglin": {
+    "name": "Zombified Piglin",
+    "rarity": "Uncommon",
+    "image": "https://minecraft.wiki/images/Zombified_Piglin_JE9.png?b91da",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
   "enderman": {
     "name": "Enderman",
     "rarity": "Rare",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/39/Enderman_Screaming.gif/revision/latest?cb=20200413141725",
+    "image": "https://minecraft.wiki/images/thumb/Enderman_JE3_BE1.png/800px-Enderman_JE3_BE1.png?c6308",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "ghast": {
     "name": "Ghast",
     "rarity": "Rare",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/34/Ghast_New.gif/revision/latest?cb=20250625155222",
+    "image": "https://minecraft.wiki/images/Ghast_JE3_BE3.gif?ae9fb",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "guardian": {
     "name": "Guardian",
     "rarity": "Rare",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/94/Guardian.gif/revision/latest?cb=20190925152101",
+    "image": "https://minecraft.wiki/images/thumb/Guardian_JE1_BE1.png/1024px-Guardian_JE1_BE1.png?57ead",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "elder_guardian": {
     "name": "Elder Guardian",
     "rarity": "Rare",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/7/75/Elder_Guardian.gif/revision/latest?cb=20190925152022",
+    "image": "https://minecraft.wiki/images/Elder_Guardian_JE2_BE2.gif?99f67",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "ravager": {
     "name": "Ravager",
     "rarity": "Rare",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/a3/Ravager_JE1.png/revision/latest?cb=20210120025723",
+    "image": "https://minecraft.wiki/images/thumb/Ravager_JE1.png/1024px-Ravager_JE1.png?55aae",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "hoglin": {
     "name": "Hoglin",
     "rarity": "Rare",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/41/Hoglin_JE3.png/revision/latest/scale-to-width-down/1000?cb=20240729214720",
+    "image": "https://minecraft.wiki/images/thumb/Hoglin_JE3.png/1024px-Hoglin_JE3.png?65eaa",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "piglin_brute": {
     "name": "Piglin Brute",
     "rarity": "Rare",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5b/Piglin_Brute.png/revision/latest?cb=20230723003220",
+    "image": "https://minecraft.wiki/images/thumb/Piglin_Brute_JE1_BE1.png/300px-Piglin_Brute_JE1_BE1.png?5d4a0",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "phantom": {
     "name": "Phantom",
     "rarity": "Rare",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/39/Phantom_JE2.gif/revision/latest?cb=20180706142237",
+    "image": "https://minecraft.wiki/images/Phantom_JE2_BE1.png?94468",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "shulker": {
     "name": "Shulker",
     "rarity": "Rare",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/06/Shulker.png/revision/latest?cb=20200107095352",
+    "image": "https://minecraft.wiki/images/Shulker_JE1_BE1.png?02a87",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "strider": {
     "name": "Strider",
     "rarity": "Rare",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/a6/Strider_JE2_BE2.gif/revision/latest?cb=20240729214354",
+    "image": "https://minecraft.wiki/images/Strider_JE2_BE2.gif?f8244",
     "lore": "Lorem ipsum dolor sit amet."
   },
-
+  "breeze": {
+    "name": "Breeze",
+    "rarity": "Rare",
+    "image": "https://minecraft.wiki/images/Breeze_JE1.webp?181ec",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "copper_golem": {
+    "name": "Copper Golem",
+    "rarity": "Rare",
+    "image": "https://minecraft.wiki/images/Copper_Golem_JE1_BE1.png?3c87d&20250716011045",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "nautilus": {
+    "name": "Nautilus",
+    "rarity": "Rare",
+    "image": "https://minecraft.wiki/images/Nautilus_Breathe_JE1_BE2.gif?af9c0",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "panda": {
+    "name": "Panda",
+    "rarity": "Rare",
+    "image": "https://minecraft.wiki/images/Panda_JE1_BE1.png?31d00",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "parrot": {
+    "name": "Parrot",
+    "rarity": "Rare",
+    "image": "https://minecraft.wiki/images/Red_Parrot_JE1_BE1.png?90904",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "polar_bear": {
+    "name": "Polar Bear",
+    "rarity": "Rare",
+    "image": "https://minecraft.wiki/images/Polar_Bear_JE2_BE2.png?29c45",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "skeleton_horse": {
+    "name": "Skeleton Horse",
+    "rarity": "Rare",
+    "image": "https://minecraft.wiki/images/thumb/Skeleton_Horse.png/800px-Skeleton_Horse.png?5e42a",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "wandering_trader": {
+    "name": "Wandering Trader",
+    "rarity": "Rare",
+    "image": "https://minecraft.wiki/images/Wandering_Trader_JE1_BE1.png?309b9",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "zoglin": {
+    "name": "Zoglin",
+    "rarity": "Rare",
+    "image": "https://minecraft.wiki/images/thumb/Zoglin_JE1.png/1024px-Zoglin_JE1.png?6fd4b",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "zombie_horse": {
+    "name": "Zombie Horse",
+    "rarity": "Rare",
+    "image": "https://minecraft.wiki/images/thumb/Zombie_Horse_JE6.png/800px-Zombie_Horse_JE6.png?b6882",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "zombie_nautilus": {
+    "name": "Zombie Nautilus",
+    "rarity": "Rare",
+    "image": "https://minecraft.wiki/images/Zombie_Nautilus_Breathe_JE1_BE2.gif?1d78e",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
   "blaze": {
     "name": "Blaze",
     "rarity": "Epic",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/5a/Blaze.gif/revision/latest?cb=20230214143150",
+    "image": "https://minecraft.wiki/images/Blaze_JE2.gif?29f6f",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "wither_skeleton": {
     "name": "Wither Skeleton",
     "rarity": "Epic",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/cd/Wither_Skeleton.png/revision/latest?cb=20191229162539",
+    "image": "https://minecraft.wiki/images/thumb/Wither_Skeleton_JE4_BE3.png/300px-Wither_Skeleton_JE4_BE3.png?9c107",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "iron_golem": {
     "name": "Iron Golem",
     "rarity": "Epic",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/02/Iron_Golem_JE2_BE2.png/revision/latest?cb=20190605101959",
+    "image": "https://minecraft.wiki/images/Iron_Golem_JE2_BE2.png?2cd73",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "evoker": {
     "name": "Evoker",
     "rarity": "Epic",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c1/Evoker_JE2.png/revision/latest?cb=20220613062102",
+    "image": "https://minecraft.wiki/images/Evoker_JE3.png?54321",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "vex": {
     "name": "Vex",
     "rarity": "Epic",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/84/Vex_JE4.gif/revision/latest?cb=20221123024346",
+    "image": "https://minecraft.wiki/images/Vex_JE4.gif?da166",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "warden": {
     "name": "Warden",
     "rarity": "Epic",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/1a/Warden.gif/revision/latest?cb=20220218034755",
+    "image": "https://minecraft.wiki/images/Warden.gif?d0f99",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "illusioner": {
     "name": "Illusioner",
     "rarity": "Epic",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/a/a7/Illusioner.png/revision/latest?cb=20220613073947",
+    "image": "https://minecraft.wiki/images/Illusioner_JE3.png?4414c",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "pink_sheep": {
     "name": "Pink Sheep",
     "rarity": "Epic",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/f2/Pink_Sheep_JE4.png/revision/latest?cb=20190809163538",
+    "image": "https://minecraft.wiki/images/thumb/Pink_Sheep_JE2.png/800px-Pink_Sheep_JE2.png?d27c5",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "jeb_": {
     "name": "jeb_",
     "rarity": "Epic",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/1/1b/Jeb_Sheep_JE2.gif/revision/latest?cb=20201221182841",
+    "image": "https://minecraft.wiki/images/Jeb_Sheep_JE4_BE3.webp?ac096",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "charged_creeper": {
     "name": "Charged Creeper",
     "rarity": "Epic",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/eb/Charged_Creeper_Animated.gif/revision/latest?cb=20210604085020",
+    "image": "https://minecraft.wiki/images/Charged_Creeper.webp?e75f2",
     "lore": "Lorem ipsum dolor sit amet."
   },
-
+  "camel_husk": {
+    "name": "Camel Husk",
+    "rarity": "Epic",
+    "image": "https://minecraft.wiki/images/Camel_Husk_Idle_JE1.gif?4ee1a",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "creaking": {
+    "name": "Creaking",
+    "rarity": "Epic",
+    "image": "https://minecraft.wiki/images/Creaking_JE1_BE1.png?1a8ab",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "happy_ghast": {
+    "name": "Happy Ghast",
+    "rarity": "Epic",
+    "image": "https://minecraft.wiki/images/Happy_Ghast_JE1_BE1.gif?7e801",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "parched": {
+    "name": "Parched",
+    "rarity": "Epic",
+    "image": "https://minecraft.wiki/images/Parched_JE2.png?70598",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "sniffer": {
+    "name": "Sniffer",
+    "rarity": "Epic",
+    "image": "https://minecraft.wiki/images/Sniffer_sniffsniff.gif?36ccd",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
+  "snow_golem": {
+    "name": "Snow Golem",
+    "rarity": "Epic",
+    "image": "https://minecraft.wiki/images/Snow_Golem_JE2_BE2.png?23125",
+    "lore": "Lorem ipsum dolor sit amet."
+  },
   "ender_dragon": {
     "name": "Ender Dragon",
     "rarity": "Legendary",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/0a/Ender_Dragon.gif/revision/latest?cb=20210107043116",
+    "image": "https://minecraft.wiki/images/Ender_Dragon.gif?fb9ba",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "wither": {
     "name": "Wither",
     "rarity": "Legendary",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3b/Wither_JE2_BE2.png/revision/latest/scale-to-width-down/1000?cb=20240729214341",
+    "image": "https://minecraft.wiki/images/thumb/Wither_JE2_BE2.png/800px-Wither_JE2_BE2.png?60b11",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "herobrine": {
     "name": "Herobrine",
     "rarity": "Legendary",
-    "image": "https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b4/Herobrine.png/revision/latest?cb=20201018002728",
+    "image": "https://minecraft.wiki/images/thumb/Herobrine_1.19.3%2B.png/226px-Herobrine_1.19.3%2B.png?3c5da",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "moobloom": {
     "name": "Moobloom",
     "rarity": "Legendary",
-    "image": "https://static.wikia.nocookie.net/minecraft/images/f/f9/Moobloom.png/revision/latest?cb=20191027190120",
+    "image": "https://minecraft.wiki/images/thumb/MoobloomPixel.png/231px-MoobloomPixel.png?de56f",
     "lore": "Lorem ipsum dolor sit amet."
   },
   "kevin": {
     "name": "Kevin",
     "rarity": "Legendary",
-    "image": "https://static.wikia.nocookie.net/minecraft-mob/images/7/71/Emperor_Penguin.webp/revision/latest?cb=20230313163217",
+    "image": "https://minecraft.wiki/images/thumb/PenguinPixel.png/300px-PenguinPixel.png?93e4b",
     "lore": "Lorem ipsum dolor sit amet."
   }
 }
