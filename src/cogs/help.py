@@ -60,6 +60,8 @@ class Help(commands.Cog):
                     f"`{self.bot.command_prefix}collection` - View your mobs\n"
                     f"`{self.bot.command_prefix}missing` - See what mobs you haven't collected\n"
                     f"`{self.bot.command_prefix}leaderboard` - Show emerald, completion, and value leaderboards\n"
+                    f"`{self.bot.command_prefix}achievements` - View achievements you've unlocked"
+                    f"`{self.bot.command_prefix}stats` - View your lifetime statistics"
                     f"`{self.bot.command_prefix}balance` - Check your emeralds\n"
                     f"`{self.bot.command_prefix}timezone` - Set your timezone for daily resets"
                 ),
