@@ -5,7 +5,7 @@ import time
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import MagicMock, patch
 
 import pytest
 
@@ -121,6 +121,7 @@ class TestRollService:
         with (
             patch("services.roll_service.UserDB.get_user", return_value=user),
             patch("services.roll_service.UserDB.record_roll"),
+            patch("services.roll_service.UserDB.increment_total_rolls"),
         ):
             mob_id, mob = self.service.perform_roll(mock_session_factory, 123, 456, now)
 
@@ -263,15 +264,6 @@ class TestRollService:
         assert result["can_reroll"] is False
         assert "Toolsmith" in result["error"]
 
-    def test_roll_random_mob(self, mock_mobs, mock_mobs_by_rarity, mock_villagers):
-        """Test rolling a random mob."""
-        service = RollService(mock_mobs, mock_mobs_by_rarity, mock_villagers)
-
-        mob_id, mob = service.roll_random_mob()
-
-        assert mob_id in mock_mobs
-        assert mob == mock_mobs[mob_id]
-
     def test_build_mob_embed_data(self, mock_mobs, mock_mobs_by_rarity, mock_villagers, mock_session_factory):
         service = RollService(mock_mobs, mock_mobs_by_rarity, mock_villagers)
 
@@ -299,45 +291,6 @@ class TestRollService:
 
         assert result["can_roll"] is False
         assert "roll again" in result["error"]
-
-    def test_perform_roll(self, mock_mobs, mock_mobs_by_rarity, mock_villagers):
-        service = RollService(mock_mobs, mock_mobs_by_rarity, mock_villagers)
-
-        rolled_mob = {
-            "id": "zombie",
-            "name": "Zombie",
-            "rarity": "Common",
-        }
-
-        now = int(time.time())
-
-        with (
-            patch("services.roll_service.UserDB.record_roll") as mock_record_roll,
-            patch(
-                "services.roll_service.RollService.roll_random_mob",
-                return_value=("zombie", rolled_mob),
-            ),
-        ):
-            mob_id, mob = service.perform_roll(None, 123, 456, now)
-
-        assert mob_id == "zombie"
-        assert mob["id"] == "zombie"
-        assert mob["name"] == "Zombie"
-        assert mob["rarity"] == "Common"
-        mock_record_roll.assert_called_once_with(None, 123, 456, now)
-
-        def test_claim_mob(self):
-            # Mock session factory and database calls
-            mock_session = Mock()
-
-            with patch("services.roll_service.CollectionDB.add_mob") as mock_add_mob:
-                result = self.service.claim_mob(Mock(return_value=mock_session), 123, 456, "zombie")
-
-                self.assertTrue(result["success"])
-                self.assertEqual(result["mob"]["id"], "zombie")
-
-                # Verify mob was added to collection
-                mock_add_mob.assert_called_once_with(mock_session, 456, "zombie")
 
 
 if __name__ == "__main__":

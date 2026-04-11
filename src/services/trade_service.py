@@ -58,6 +58,9 @@ class TradeService:
         CollectionDB.remove_mob(session_factory, guild_id, user_id, mob_id, mob_amount)
         # Add emeralds
         UserDB.add_emeralds(session_factory, guild_id, user_id, emeralds)
+        # Track stats
+        UserDB.increment_total_farmer_trades(session_factory, guild_id, user_id)
+        UserDB.add_emeralds_gained(session_factory, guild_id, user_id, emeralds)
 
         return {"success": True}
 
@@ -122,5 +125,7 @@ class TradeService:
         CollectionDB.remove_mob(session_factory, guild_id, user_id, mob_id, mob_amount)
         # Add tokens to inventory
         InventoryDB.add_to_inventory(session_factory, guild_id, user_id, token_id, token_count)
+        # Track stats
+        UserDB.increment_total_cleric_trades(session_factory, guild_id, user_id)
 
         return {"success": True}
