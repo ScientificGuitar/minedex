@@ -125,6 +125,60 @@ class User:
                 user.timezone = timezone
                 session.commit()
 
+    @staticmethod
+    def increment_total_rolls(session_factory, guild_id: int, user_id: int) -> None:
+        """Increment the total rolls counter."""
+        with session_factory() as session:
+            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if user:
+                user.total_rolls += 1
+                session.commit()
+
+    @staticmethod
+    def increment_total_claims(session_factory, guild_id: int, user_id: int) -> None:
+        """Increment the total claims counter."""
+        with session_factory() as session:
+            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if user:
+                user.total_claims += 1
+                session.commit()
+
+    @staticmethod
+    def increment_total_farmer_trades(session_factory, guild_id: int, user_id: int) -> None:
+        """Increment the total farmer trades counter."""
+        with session_factory() as session:
+            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if user:
+                user.total_farmer_trades += 1
+                session.commit()
+
+    @staticmethod
+    def increment_total_cleric_trades(session_factory, guild_id: int, user_id: int) -> None:
+        """Increment the total cleric trades counter."""
+        with session_factory() as session:
+            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if user:
+                user.total_cleric_trades += 1
+                session.commit()
+
+    @staticmethod
+    def add_emeralds_gained(session_factory, guild_id: int, user_id: int, amount: int) -> None:
+        """Add to the total emeralds gained (for stats tracking)."""
+        with session_factory() as session:
+            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if user:
+                user.total_emeralds_gained += amount
+                session.commit()
+
+    @staticmethod
+    def add_mobs_traded(session_factory, guild_id: int, user_id: int, amount: int) -> None:
+        """Add to the total mobs traded counter."""
+        with session_factory() as session:
+            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if user:
+                user.total_mobs_traded += amount
+                session.commit()
+
 
 def same_utc_day(ts1: int | None, ts2: int | None, tz_str: str | None = None) -> bool:
     """Check if two timestamps are on the same day in the given timezone (or UTC if None)."""

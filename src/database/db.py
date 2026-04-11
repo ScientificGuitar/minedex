@@ -55,6 +55,13 @@ class User(Base):
     last_daily_at: Mapped[int | None] = mapped_column(Integer, nullable=True)
     timezone: Mapped[str | None] = mapped_column(String, nullable=True)
 
+    # Lifetime statistics
+    total_rolls: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    total_claims: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    total_farmer_trades: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    total_cleric_trades: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    total_emeralds_gained: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+
 
 class Collection(Base):
     __tablename__ = "collections"
@@ -82,6 +89,24 @@ class Inventory(Base):
     item_id: Mapped[str] = mapped_column(String, primary_key=True, nullable=False)
 
     amount: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["guild_id", "user_id"],
+            ["users.guild_id", "users.user_id"],
+            ondelete="CASCADE",
+        ),
+    )
+
+
+class AchievementUnlock(Base):
+    __tablename__ = "achievement_unlocks"
+
+    guild_id: Mapped[int] = mapped_column(BigInteger, primary_key=True, nullable=False)
+    user_id: Mapped[int] = mapped_column(BigInteger, primary_key=True, nullable=False)
+    achievement_id: Mapped[str] = mapped_column(String, primary_key=True, nullable=False)
+
+    unlocked_at: Mapped[int] = mapped_column(Integer, nullable=False)
 
     __table_args__ = (
         ForeignKeyConstraint(
