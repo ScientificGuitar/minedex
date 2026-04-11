@@ -124,8 +124,10 @@ class RollService:
             InventoryDB.add_to_inventory(session_factory, guild_id, user_id, value, -1)
             roll_allowed = {value.capitalize()}
             UserDB.record_roll(session_factory, guild_id, user_id, now)
+            UserDB.increment_total_rolls(session_factory, guild_id, user_id)
         else:
             UserDB.record_roll(session_factory, guild_id, user_id, now)
+            UserDB.increment_total_rolls(session_factory, guild_id, user_id)
 
         mob_id, mob = self.roll_random_mob(exclude=roll_exclude, allowed=roll_allowed)
         return mob_id, mob
@@ -137,6 +139,8 @@ class RollService:
         CollectionDB.add_to_collection(session_factory, guild_id, user_id, mob_id)
         UserDB.update_last_claim_at(session_factory, guild_id, user_id, now)
         UserDB.add_emeralds(session_factory, guild_id, user_id, reward)
+        UserDB.increment_total_claims(session_factory, guild_id, user_id)
+        UserDB.add_emeralds_gained(session_factory, guild_id, user_id, reward)
 
         return reward
 

@@ -26,6 +26,11 @@ class Claim(discord.ui.View):
 
         reward = self.bot.roll_service.claim_mob(self.bot.db, self.guild_id, self.user_id, self.mob_id, self.mob, now)
 
+        # Evaluate achievements
+        newly_unlocked = self.bot.achievement_service.evaluate_unlocked(
+            self.bot.db, self.guild_id, self.user_id, "claim", now
+        )
+
         button.disabled = True
         message = interaction.message
         if message is None or not message.embeds:
@@ -33,7 +38,18 @@ class Claim(discord.ui.View):
         embed = message.embeds[0]
         embed.set_footer(text=f"🗸 Claimed by: {interaction.user.display_name}")
         await interaction.response.edit_message(embed=embed, view=self)
-        await interaction.followup.send(
+
+        # Send claim message
+        claim_msg = (
             f"✅ {self.mob['rarity']} {self.mob['name']} claimed!\n💎 +{reward} emerald{'s' if reward != 1 else ''}!"
         )
+
+        # Add achievement notifications
+        if newly_unlocked:
+            achievement_msgs = []
+            for ach in newly_unlocked:
+                achievement_msgs.append(f"🏆 **{ach['name']}** - {ach['description']}")
+            claim_msg += "\n\n" + "\n".join(achievement_msgs)
+
+        await interaction.followup.send(claim_msg)
         self.stop()

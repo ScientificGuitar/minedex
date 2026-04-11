@@ -8,6 +8,7 @@ import discord
 from discord.ext import commands
 
 from database.db import get_session, init_db
+from services.achievement_service import AchievementService
 from services.collection_service import CollectionService
 from services.economy_service import EconomyService
 from services.roll_service import RollService
@@ -32,7 +33,7 @@ class MyBot(commands.Bot):
         self.roll_service = RollService(mobs, mobs_by_rarity, villagers)
         self.shop_service = ShopService(villagers)
         self.trade_service = TradeService(mobs, villagers, items)
-        self.trade_service = TradeService(mobs, villagers, items)
+        self.achievement_service = AchievementService(mobs, mobs_by_rarity)
 
     async def setup_hook(self) -> None:
         for extention in self.extentions:
@@ -72,6 +73,7 @@ async def main():
         "cogs.villagers",
         "cogs.trade",
         "cogs.help",
+        "cogs.achievements",
     ]
     intents = discord.Intents.default()
     intents.message_content = True

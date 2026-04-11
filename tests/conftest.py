@@ -2,6 +2,7 @@
 
 import json
 import sys
+from collections import defaultdict
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import MagicMock
@@ -89,7 +90,51 @@ def create_mock_user(
     )
 
 
+def create_mock_user_snapshot(
+    emeralds=0,
+    trading_hall_level=0,
+    total_rolls=0,
+    total_claims=0,
+    total_farmer_trades=0,
+    total_cleric_trades=0,
+    total_emeralds_gained=0,
+    total_unique=0,
+    mobs_by_rarity=None,
+    mobs_by_tag=None,
+    unique_mobs=None,
+):
+    if mobs_by_rarity is None:
+        mobs_by_rarity = defaultdict(set)
+
+    if mobs_by_tag is None:
+        mobs_by_tag = defaultdict(set)
+
+    if unique_mobs is None:
+        unique_mobs = set()
+
+    return SimpleNamespace(
+        emeralds=emeralds,
+        trading_hall_level=trading_hall_level,
+        total_rolls=total_rolls,
+        total_claims=total_claims,
+        total_farmer_trades=total_farmer_trades,
+        total_cleric_trades=total_cleric_trades,
+        total_trades=total_farmer_trades + total_cleric_trades,
+        total_emeralds_gained=total_emeralds_gained,
+        total_unique=total_unique,
+        mobs_by_rarity=mobs_by_rarity,
+        mobs_by_tag=mobs_by_tag,
+        unique_mobs=unique_mobs,
+    )
+
+
 @pytest.fixture
 def mock_user_factory():
     """Fixture providing a factory for mock users."""
     return create_mock_user
+
+
+@pytest.fixture
+def mock_user_snapshot_factory():
+    """Fixture providing a factory for mock users."""
+    return create_mock_user_snapshot
