@@ -77,14 +77,12 @@ class CollectionCog(commands.Cog):
         normalized = category.lower() if category else None
         if normalized in {"collection", "completion"}:
             category_key = "completion"
-        elif normalized in {"value", "collection_value", "score"}:
-            category_key = "value"
         elif normalized in {"emeralds", "emerald"}:
             category_key = "emeralds"
         elif normalized is None:
             category_key = None
         else:
-            await ctx.send("❌ Invalid leaderboard category. Available categories: emeralds, completion, value.")
+            await ctx.send("❌ Invalid leaderboard category. Available categories: emeralds, completion.")
             return
 
         guild_id = ctx.guild.id
@@ -112,13 +110,6 @@ class CollectionCog(commands.Cog):
                 inline=False,
             )
 
-        if category_key is None or category_key == "value":
-            embed.add_field(
-                name="🏅 Collection Value",
-                value=self._format_value_leaderboard(ctx.guild, leaderboard_data["value"]),
-                inline=False,
-            )
-
         embed.set_footer(text=f"Use {self.bot.command_prefix}collection to view your collection.")
         await ctx.send(embed=embed)
 
@@ -142,19 +133,8 @@ class CollectionCog(commands.Cog):
         for idx, row in enumerate(rows, start=1):
             display_name = self._get_member_display_name(row["user_id"], guild)
             lines.append(
-                f"{idx}. {display_name} — {row['unique_count']}/{total_unique} unique, {row['total_count']} total"
+                f"{idx}. {display_name} — {row['unique_count']}/{total_unique} ({row['completion_pct']:.1f}%)"
             )
-
-        return "\n".join(lines)
-
-    def _format_value_leaderboard(self, guild, rows):
-        if not rows:
-            return "No value leaderboard entries yet."
-
-        lines = []
-        for idx, row in enumerate(rows, start=1):
-            display_name = self._get_member_display_name(row["user_id"], guild)
-            lines.append(f"{idx}. {display_name} — {row['collection_value']}")
 
         return "\n".join(lines)
 
@@ -193,7 +173,7 @@ class CollectionCog(commands.Cog):
         embed = discord.Embed(
             title=f"{display_name}'s Collection",
             colour=discord.Colour.green(),
-            description=f"Page {data['current_page']}/{data['total_pages']} ({data['total_entries']} mobs total)",
+            description=f"Page {data['current_page']}/{data['total_pages']} ({data['total_entries']} mobs total) — {data['completion_pct']:.1f}% Complete",
         )
 
         for rarity_name, entries in data["entries"].items():

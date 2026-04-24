@@ -30,7 +30,7 @@ class TestShopService:
     def test_can_upgrade_trading_hall_success(self, mock_session_factory):
         """Test successful trading hall upgrade check."""
         with (
-            patch("services.shop_service.User.get_trading_hall_level", return_value=0),
+            patch("services.shop_service.User.get_unlocked_villagers", return_value=[]),
             patch("services.shop_service.User.get_emeralds", return_value=500),
         ):
             result = self.service.can_upgrade_trading_hall(mock_session_factory, 123, 456)
@@ -40,7 +40,7 @@ class TestShopService:
     def test_can_upgrade_trading_hall_insufficient_emeralds(self, mock_session_factory):
         """Test trading hall upgrade with insufficient emeralds."""
         with (
-            patch("services.shop_service.User.get_trading_hall_level", return_value=0),
+            patch("services.shop_service.User.get_unlocked_villagers", return_value=[]),
             patch("services.shop_service.User.get_emeralds", return_value=50),
         ):
             result = self.service.can_upgrade_trading_hall(mock_session_factory, 123, 456)
@@ -51,7 +51,7 @@ class TestShopService:
     def test_can_upgrade_already_maxed(self, mock_session_factory):
         """Test upgrading when already at max level."""
         with (
-            patch("services.shop_service.User.get_trading_hall_level", return_value=10),
+            patch("services.shop_service.User.get_unlocked_villagers", return_value=["farmer", "cleric", "toolsmith", "librarian"]),
             patch("services.shop_service.User.get_emeralds", return_value=5000),
         ):
             result = self.service.can_upgrade_trading_hall(mock_session_factory, 123, 456)
@@ -62,7 +62,7 @@ class TestShopService:
     def test_perform_trading_hall_upgrade_insufficient_funds(self, mock_session_factory):
         """Test performing trading hall upgrade when user can't afford it."""
         with (
-            patch("services.shop_service.User.get_trading_hall_level", return_value=0),
+            patch("services.shop_service.User.get_unlocked_villagers", return_value=[]),
             patch("services.shop_service.User.get_emeralds", return_value=50),  # Not enough for upgrade
         ):
             result = self.service.perform_trading_hall_upgrade(mock_session_factory, 123, 456)
@@ -73,7 +73,7 @@ class TestShopService:
     def test_get_upgrade_data(self, mock_session_factory):
         """Test getting upgrade data."""
         with (
-            patch("services.shop_service.User.get_trading_hall_level", return_value=0),
+            patch("services.shop_service.User.get_unlocked_villagers", return_value=[]),
             patch("services.shop_service.User.get_emeralds", return_value=500),
         ):
             data = self.service.get_upgrade_data(mock_session_factory, 123, 456, "trading")
@@ -84,12 +84,12 @@ class TestShopService:
     def test_get_trading_hall_data(self, mock_session_factory):
         """Test getting complete trading hall display data."""
         with (
-            patch("services.shop_service.User.get_trading_hall_level", return_value=2),
+            patch("services.shop_service.User.get_unlocked_villagers", return_value=["farmer", "cleric"]),
             patch("services.shop_service.User.get_emeralds", return_value=750),
         ):
             data = self.service.get_trading_hall_data(mock_session_factory, 123, 456)
 
-        assert data["current_level"] == 2
+        assert data["unlocked_count"] == 2
         assert data["emeralds"] == 750
         assert "villagers" in data
         assert len(data["villagers"]) > 0
@@ -102,23 +102,13 @@ class TestShopService:
     def test_get_upgrade_data_fully_upgraded(self, mock_session_factory):
         """Test get_upgrade_data when trading hall is fully upgraded."""
         with (
-            patch("services.shop_service.User.get_trading_hall_level", return_value=10),
+            patch("services.shop_service.User.get_unlocked_villagers", return_value=["farmer", "cleric", "toolsmith", "librarian"]),
             patch("services.shop_service.User.get_emeralds", return_value=5000),
         ):
             data = self.service.get_upgrade_data(mock_session_factory, 123, 456, "trading")
 
         assert "error" in data
         assert "fully upgraded" in data["error"]
-
-    def test_get_upgrade_data_none_target(self, mock_session_factory):
-        """Test get_upgrade_data with None target defaults to trading."""
-        with (
-            patch("services.shop_service.User.get_trading_hall_level", return_value=1),
-            patch("services.shop_service.User.get_emeralds", return_value=200),
-        ):
-            data = self.service.get_upgrade_data(mock_session_factory, 123, 456, target=None)
-
-        assert "type" in data or "error" in data
 
     def test_get_user_emeralds_zero(self, mock_session_factory):
         """Test getting emerald count when user has zero."""

@@ -4,8 +4,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from constants import RARITY_WEIGHTS
 from database.collection import Collection as CollectionDB
 from database.inventory import Inventory as InventoryDB
-from database.user import User as UserDB
-from database.user import same_utc_day
+from database.user import User as UserDB, is_same_game_day
 
 
 class EconomyService:
@@ -48,7 +47,7 @@ class EconomyService:
         user = UserDB.get_user(session_factory, guild_id, user_id)
         last_daily_claim_at = user.last_daily_at if user else None
 
-        if same_utc_day(last_daily_claim_at, now):
+        if is_same_game_day(last_daily_claim_at, now):
             return {"error": "You've already claimed today."}
 
         emeralds = random.randint(2, 5)

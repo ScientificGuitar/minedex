@@ -20,8 +20,6 @@ class TestAchievementService:
         """Set up service once per class using request fixture."""
         request.cls.service = AchievementService(mock_mobs, mock_mobs_by_rarity)
 
-    from unittest.mock import patch
-
     def test_evaluate_unlocked_no_achievements(self, mock_session_factory, mock_user_snapshot_factory):
         snapshot = mock_user_snapshot_factory(
             emeralds=0,
@@ -41,6 +39,15 @@ class TestAchievementService:
         mock_user.emeralds = 100
         mock_user.trading_hall_level = 2
 
+        # Mock stats data
+        mock_stats = MagicMock()
+        mock_stats.total_rolls = 5
+        mock_stats.total_claims = 2
+        mock_stats.total_farmer_trades = 1
+        mock_stats.total_cleric_trades = 1
+        mock_stats.total_emeralds_gained = 50
+        mock_stats.total_mobs_traded = 2
+
         # Mock collection data
         mock_collection = [
             {"mob_id": "zombie", "amount": 1},
@@ -49,6 +56,7 @@ class TestAchievementService:
 
         with (
             patch("database.user.User.get_user", return_value=mock_user),
+            patch("database.user.User.get_stats", return_value=mock_stats),
             patch("database.collection.Collection.get_collection", return_value=mock_collection),
         ):
             snapshot = PlayerSnapshot(mock_session_factory, 123, 456, mock_mobs)
@@ -56,6 +64,7 @@ class TestAchievementService:
             assert snapshot.emeralds == 100
             assert snapshot.trading_hall_level == 2
             assert snapshot.total_unique == 2
+            assert snapshot.total_rolls == 5
             assert "zombie" in snapshot.unique_mobs
             assert "skeleton" in snapshot.unique_mobs
 
@@ -78,6 +87,15 @@ class TestAchievementService:
         mock_user.emeralds = 500
         mock_user.trading_hall_level = 3
 
+        # Mock stats data
+        mock_stats = MagicMock()
+        mock_stats.total_rolls = 10
+        mock_stats.total_claims = 5
+        mock_stats.total_farmer_trades = 2
+        mock_stats.total_cleric_trades = 1
+        mock_stats.total_emeralds_gained = 200
+        mock_stats.total_mobs_traded = 3
+
         # Mock collection data
         mock_collection = [
             {"mob_id": "zombie", "amount": 1},
@@ -85,6 +103,7 @@ class TestAchievementService:
 
         with (
             patch("database.user.User.get_user", return_value=mock_user),
+            patch("database.user.User.get_stats", return_value=mock_stats),
             patch("database.collection.Collection.get_collection", return_value=mock_collection),
         ):
             stats = self.service.get_user_stats(mock_session_factory, 123, 456)
@@ -94,3 +113,5 @@ class TestAchievementService:
             assert stats["unique_mobs"] == 1
             assert stats["total_mobs"] == len(mock_mobs)
             assert stats["collection_completion"] == 1 / len(mock_mobs) * 100
+            assert stats["total_rolls"] == 10
+            assert stats["total_mobs_traded"] == 3

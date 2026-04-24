@@ -71,22 +71,22 @@ def mock_session_factory():
 
 def create_mock_user(
     trading_hall_level=0,
+    unlocked_villagers="",
     last_claim_at=None,
     last_reroll_at=None,
     last_daily_at=None,
     last_roll_at=None,
-    timezone=None,
-    balance=1000,
+    emeralds=1000,
 ):
     """Factory for creating mock user objects with sensible defaults."""
     return SimpleNamespace(
         trading_hall_level=trading_hall_level,
+        unlocked_villagers=unlocked_villagers,
         last_claim_at=last_claim_at,
         last_reroll_at=last_reroll_at,
         last_daily_at=last_daily_at,
         last_roll_at=last_roll_at,
-        timezone=timezone,
-        balance=balance,
+        emeralds=emeralds,
     )
 
 

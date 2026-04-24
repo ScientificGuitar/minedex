@@ -47,20 +47,35 @@ class User(Base):
 
     emeralds: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     trading_hall_level: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    unlocked_villagers: Mapped[str] = mapped_column(String, nullable=False, default="")
 
     last_roll_at: Mapped[int | None] = mapped_column(Integer, nullable=True)
     last_claim_at: Mapped[int | None] = mapped_column(Integer, nullable=True)
     last_focus_roll_at: Mapped[int | None] = mapped_column(Integer, nullable=True)
     last_reroll_at: Mapped[int | None] = mapped_column(Integer, nullable=True)
     last_daily_at: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    timezone: Mapped[str | None] = mapped_column(String, nullable=True)
 
-    # Lifetime statistics
+
+class UserStatistics(Base):
+    __tablename__ = "user_statistics"
+
+    guild_id: Mapped[int] = mapped_column(BigInteger, primary_key=True, nullable=False)
+    user_id: Mapped[int] = mapped_column(BigInteger, primary_key=True, nullable=False)
+
     total_rolls: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     total_claims: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     total_farmer_trades: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     total_cleric_trades: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    total_mobs_traded: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     total_emeralds_gained: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["guild_id", "user_id"],
+            ["users.guild_id", "users.user_id"],
+            ondelete="CASCADE",
+        ),
+    )
 
 
 class Collection(Base):

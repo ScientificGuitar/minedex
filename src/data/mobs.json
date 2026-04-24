@@ -8,7 +8,12 @@
       "overworld",
       "hostile",
       "undead"
-    ]
+    ],
+    "base_power": 2,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "skeleton": {
     "name": "Skeleton",
@@ -19,7 +24,12 @@
       "overworld",
       "hostile",
       "undead"
-    ]
+    ],
+    "base_power": 1,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "creeper": {
     "name": "Creeper",
@@ -29,7 +39,12 @@
     "tags": [
       "overworld",
       "hostile"
-    ]
+    ],
+    "base_power": 2,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "spider": {
     "name": "Spider",
@@ -40,7 +55,12 @@
       "overworld",
       "neutral",
       "arthropod"
-    ]
+    ],
+    "base_power": 4,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "slime": {
     "name": "Slime",
@@ -50,7 +70,12 @@
     "tags": [
       "overworld",
       "hostile"
-    ]
+    ],
+    "base_power": 1,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "bat": {
     "name": "Bat",
@@ -62,7 +87,12 @@
       "passive",
       "animal",
       "flying"
-    ]
+    ],
+    "base_power": 5,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "silverfish": {
     "name": "Silverfish",
@@ -73,7 +103,12 @@
       "overworld",
       "hostile",
       "arthropod"
-    ]
+    ],
+    "base_power": 1,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "chicken": {
     "name": "Chicken",
@@ -84,7 +119,12 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 5,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "cow": {
     "name": "Cow",
@@ -95,7 +135,12 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 2,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "pig": {
     "name": "Pig",
@@ -106,7 +151,12 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 4,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "sheep": {
     "name": "Sheep",
@@ -117,7 +167,12 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 1,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "cod": {
     "name": "Cod",
@@ -129,7 +184,12 @@
       "passive",
       "aquatic",
       "animal"
-    ]
+    ],
+    "base_power": 2,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "salmon": {
     "name": "Salmon",
@@ -141,7 +201,12 @@
       "passive",
       "aquatic",
       "animal"
-    ]
+    ],
+    "base_power": 1,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "rabbit": {
     "name": "Rabbit",
@@ -152,7 +217,12 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 3,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "nitwit": {
     "name": "Nitwit",
@@ -163,7 +233,12 @@
       "overworld",
       "passive",
       "villager"
-    ]
+    ],
+    "base_power": 4,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "cat": {
     "name": "Cat",
@@ -174,7 +249,12 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 1,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "horse": {
     "name": "Horse",
@@ -185,7 +265,12 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 2,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "squid": {
     "name": "Squid",
@@ -197,7 +282,12 @@
       "passive",
       "aquatic",
       "animal"
-    ]
+    ],
+    "base_power": 3,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "tadpole": {
     "name": "Tadpole",
@@ -209,7 +299,12 @@
       "passive",
       "aquatic",
       "animal"
-    ]
+    ],
+    "base_power": 5,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "tropical_fish": {
     "name": "Tropical Fish",
@@ -221,7 +316,12 @@
       "passive",
       "aquatic",
       "animal"
-    ]
+    ],
+    "base_power": 4,
+    "traits": [],
+    "claim_reward": 2,
+    "farmer_value": 5,
+    "token_reward": "uncommon"
   },
   "witch": {
     "name": "Witch",
@@ -232,7 +332,14 @@
       "overworld",
       "hostile",
       "illager"
-    ]
+    ],
+    "base_power": 19,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "stray": {
     "name": "Stray",
@@ -243,7 +350,14 @@
       "overworld",
       "hostile",
       "undead"
-    ]
+    ],
+    "base_power": 11,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "husk": {
     "name": "Husk",
@@ -254,7 +368,14 @@
       "overworld",
       "hostile",
       "undead"
-    ]
+    ],
+    "base_power": 10,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "drowned": {
     "name": "Drowned",
@@ -266,7 +387,14 @@
       "hostile",
       "undead",
       "aquatic"
-    ]
+    ],
+    "base_power": 11,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "pillager": {
     "name": "Pillager",
@@ -277,7 +405,14 @@
       "overworld",
       "hostile",
       "illager"
-    ]
+    ],
+    "base_power": 11,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "vindicator": {
     "name": "Vindicator",
@@ -288,7 +423,14 @@
       "overworld",
       "hostile",
       "illager"
-    ]
+    ],
+    "base_power": 13,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "zombie_villager": {
     "name": "Zombie Villager",
@@ -299,7 +441,14 @@
       "overworld",
       "hostile",
       "undead"
-    ]
+    ],
+    "base_power": 14,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "endermite": {
     "name": "Endermite",
@@ -310,7 +459,14 @@
       "end",
       "hostile",
       "arthropod"
-    ]
+    ],
+    "base_power": 11,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "magma_cube": {
     "name": "Magma Cube",
@@ -320,7 +476,14 @@
     "tags": [
       "nether",
       "hostile"
-    ]
+    ],
+    "base_power": 14,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "llama": {
     "name": "Llama",
@@ -331,7 +494,14 @@
       "overworld",
       "neutral",
       "animal"
-    ]
+    ],
+    "base_power": 17,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "goat": {
     "name": "Goat",
@@ -342,7 +512,14 @@
       "overworld",
       "neutral",
       "animal"
-    ]
+    ],
+    "base_power": 12,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "axolotl": {
     "name": "Axolotl",
@@ -354,7 +531,14 @@
       "passive",
       "aquatic",
       "animal"
-    ]
+    ],
+    "base_power": 10,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "bee": {
     "name": "Bee",
@@ -366,7 +550,14 @@
       "neutral",
       "animal",
       "flying"
-    ]
+    ],
+    "base_power": 19,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "fox": {
     "name": "Fox",
@@ -377,7 +568,14 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 11,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "frog": {
     "name": "Frog",
@@ -388,7 +586,14 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 13,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "allay": {
     "name": "Allay",
@@ -399,7 +604,14 @@
       "overworld",
       "passive",
       "flying"
-    ]
+    ],
+    "base_power": 19,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "armadillo": {
     "name": "Armadillo",
@@ -410,7 +622,14 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 15,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "bogged": {
     "name": "Bogged",
@@ -421,7 +640,14 @@
       "overworld",
       "hostile",
       "undead"
-    ]
+    ],
+    "base_power": 19,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "camel": {
     "name": "Camel",
@@ -432,7 +658,14 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 16,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "cave_spider": {
     "name": "Cave Spider",
@@ -443,7 +676,14 @@
       "overworld",
       "hostile",
       "arthropod"
-    ]
+    ],
+    "base_power": 16,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "dolphin": {
     "name": "Dolphin",
@@ -455,7 +695,14 @@
       "neutral",
       "aquatic",
       "animal"
-    ]
+    ],
+    "base_power": 20,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "donkey": {
     "name": "Donkey",
@@ -466,7 +713,14 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 15,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "glow_squid": {
     "name": "Glow Squid",
@@ -478,7 +732,14 @@
       "passive",
       "aquatic",
       "animal"
-    ]
+    ],
+    "base_power": 14,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "mooshroom": {
     "name": "Mooshroom",
@@ -489,7 +750,14 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 14,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "mule": {
     "name": "Mule",
@@ -500,7 +768,14 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 19,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "ocelot": {
     "name": "Ocelot",
@@ -511,7 +786,14 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 13,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "piglin": {
     "name": "Piglin",
@@ -521,7 +803,14 @@
     "tags": [
       "nether",
       "neutral"
-    ]
+    ],
+    "base_power": 11,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "pufferfish": {
     "name": "Pufferfish",
@@ -533,7 +822,14 @@
       "neutral",
       "aquatic",
       "animal"
-    ]
+    ],
+    "base_power": 11,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "trader_llama": {
     "name": "Trader Llama",
@@ -544,7 +840,14 @@
       "overworld",
       "neutral",
       "animal"
-    ]
+    ],
+    "base_power": 13,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "turtle": {
     "name": "Turtle",
@@ -556,7 +859,14 @@
       "passive",
       "aquatic",
       "animal"
-    ]
+    ],
+    "base_power": 12,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "wolf": {
     "name": "Wolf",
@@ -567,7 +877,14 @@
       "overworld",
       "neutral",
       "animal"
-    ]
+    ],
+    "base_power": 12,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "zombified_piglin": {
     "name": "Zombified Piglin",
@@ -578,7 +895,14 @@
       "nether",
       "neutral",
       "undead"
-    ]
+    ],
+    "base_power": 19,
+    "traits": [
+      "Hardy"
+    ],
+    "claim_reward": 5,
+    "farmer_value": 20,
+    "token_reward": "rare"
   },
   "enderman": {
     "name": "Enderman",
@@ -590,7 +914,14 @@
       "nether",
       "end",
       "neutral"
-    ]
+    ],
+    "base_power": 47,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "ghast": {
     "name": "Ghast",
@@ -601,7 +932,14 @@
       "nether",
       "hostile",
       "flying"
-    ]
+    ],
+    "base_power": 60,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "guardian": {
     "name": "Guardian",
@@ -612,7 +950,14 @@
       "overworld",
       "hostile",
       "aquatic"
-    ]
+    ],
+    "base_power": 54,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "elder_guardian": {
     "name": "Elder Guardian",
@@ -624,7 +969,14 @@
       "hostile",
       "boss",
       "aquatic"
-    ]
+    ],
+    "base_power": 56,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "ravager": {
     "name": "Ravager",
@@ -635,7 +987,14 @@
       "overworld",
       "hostile",
       "illager"
-    ]
+    ],
+    "base_power": 41,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "hoglin": {
     "name": "Hoglin",
@@ -646,7 +1005,14 @@
       "nether",
       "hostile",
       "animal"
-    ]
+    ],
+    "base_power": 41,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "piglin_brute": {
     "name": "Piglin Brute",
@@ -656,7 +1022,14 @@
     "tags": [
       "nether",
       "hostile"
-    ]
+    ],
+    "base_power": 42,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "phantom": {
     "name": "Phantom",
@@ -668,7 +1041,14 @@
       "hostile",
       "flying",
       "undead"
-    ]
+    ],
+    "base_power": 52,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "shulker": {
     "name": "Shulker",
@@ -678,7 +1058,14 @@
     "tags": [
       "end",
       "hostile"
-    ]
+    ],
+    "base_power": 44,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "strider": {
     "name": "Strider",
@@ -689,7 +1076,14 @@
       "nether",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 52,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "breeze": {
     "name": "Breeze",
@@ -699,7 +1093,14 @@
     "tags": [
       "overworld",
       "hostile"
-    ]
+    ],
+    "base_power": 57,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "copper_golem": {
     "name": "Copper Golem",
@@ -709,7 +1110,14 @@
     "tags": [
       "overworld",
       "passive"
-    ]
+    ],
+    "base_power": 56,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "nautilus": {
     "name": "Nautilus",
@@ -721,7 +1129,14 @@
       "passive",
       "aquatic",
       "animal"
-    ]
+    ],
+    "base_power": 49,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "panda": {
     "name": "Panda",
@@ -732,7 +1147,14 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 57,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "parrot": {
     "name": "Parrot",
@@ -744,7 +1166,14 @@
       "passive",
       "animal",
       "flying"
-    ]
+    ],
+    "base_power": 40,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "polar_bear": {
     "name": "Polar Bear",
@@ -755,7 +1184,14 @@
       "overworld",
       "neutral",
       "animal"
-    ]
+    ],
+    "base_power": 58,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "skeleton_horse": {
     "name": "Skeleton Horse",
@@ -767,7 +1203,14 @@
       "passive",
       "undead",
       "animal"
-    ]
+    ],
+    "base_power": 40,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "wandering_trader": {
     "name": "Wandering Trader",
@@ -777,7 +1220,14 @@
     "tags": [
       "overworld",
       "passive"
-    ]
+    ],
+    "base_power": 49,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "zoglin": {
     "name": "Zoglin",
@@ -789,7 +1239,14 @@
       "hostile",
       "undead",
       "animal"
-    ]
+    ],
+    "base_power": 48,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "zombie_horse": {
     "name": "Zombie Horse",
@@ -801,7 +1258,14 @@
       "passive",
       "undead",
       "animal"
-    ]
+    ],
+    "base_power": 41,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "zombie_nautilus": {
     "name": "Zombie Nautilus",
@@ -814,7 +1278,14 @@
       "undead",
       "aquatic",
       "animal"
-    ]
+    ],
+    "base_power": 44,
+    "traits": [
+      "Sharp"
+    ],
+    "claim_reward": 10,
+    "farmer_value": 50,
+    "token_reward": "epic"
   },
   "blaze": {
     "name": "Blaze",
@@ -825,7 +1296,14 @@
       "nether",
       "hostile",
       "flying"
-    ]
+    ],
+    "base_power": 103,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "wither_skeleton": {
     "name": "Wither Skeleton",
@@ -836,7 +1314,14 @@
       "nether",
       "hostile",
       "undead"
-    ]
+    ],
+    "base_power": 111,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "iron_golem": {
     "name": "Iron Golem",
@@ -846,7 +1331,14 @@
     "tags": [
       "overworld",
       "neutral"
-    ]
+    ],
+    "base_power": 150,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "evoker": {
     "name": "Evoker",
@@ -857,7 +1349,14 @@
       "overworld",
       "hostile",
       "illager"
-    ]
+    ],
+    "base_power": 104,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "vex": {
     "name": "Vex",
@@ -868,7 +1367,14 @@
       "overworld",
       "hostile",
       "flying"
-    ]
+    ],
+    "base_power": 132,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "warden": {
     "name": "Warden",
@@ -879,7 +1385,14 @@
       "overworld",
       "hostile",
       "boss"
-    ]
+    ],
+    "base_power": 110,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "illusioner": {
     "name": "Illusioner",
@@ -890,7 +1403,14 @@
       "overworld",
       "hostile",
       "illager"
-    ]
+    ],
+    "base_power": 131,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "pink_sheep": {
     "name": "Pink Sheep",
@@ -901,7 +1421,14 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 130,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "jeb_": {
     "name": "jeb_",
@@ -912,7 +1439,14 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 142,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "charged_creeper": {
     "name": "Charged Creeper",
@@ -922,7 +1456,14 @@
     "tags": [
       "overworld",
       "hostile"
-    ]
+    ],
+    "base_power": 134,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "camel_husk": {
     "name": "Camel Husk",
@@ -934,7 +1475,14 @@
       "passive",
       "undead",
       "animal"
-    ]
+    ],
+    "base_power": 130,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "creaking": {
     "name": "Creaking",
@@ -944,7 +1492,14 @@
     "tags": [
       "overworld",
       "hostile"
-    ]
+    ],
+    "base_power": 141,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "happy_ghast": {
     "name": "Happy Ghast",
@@ -955,7 +1510,14 @@
       "nether",
       "passive",
       "flying"
-    ]
+    ],
+    "base_power": 148,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "parched": {
     "name": "Parched",
@@ -966,7 +1528,14 @@
       "overworld",
       "hostile",
       "undead"
-    ]
+    ],
+    "base_power": 127,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "sniffer": {
     "name": "Sniffer",
@@ -977,7 +1546,14 @@
       "overworld",
       "passive",
       "animal"
-    ]
+    ],
+    "base_power": 105,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "snow_golem": {
     "name": "Snow Golem",
@@ -987,7 +1563,14 @@
     "tags": [
       "overworld",
       "passive"
-    ]
+    ],
+    "base_power": 127,
+    "traits": [
+      "Aura"
+    ],
+    "claim_reward": 20,
+    "farmer_value": 100,
+    "token_reward": null
   },
   "ender_dragon": {
     "name": "Ender Dragon",
@@ -999,7 +1582,14 @@
       "boss",
       "hostile",
       "flying"
-    ]
+    ],
+    "base_power": 314,
+    "traits": [
+      "Legendary"
+    ],
+    "claim_reward": 50,
+    "farmer_value": 200,
+    "token_reward": null
   },
   "wither": {
     "name": "Wither",
@@ -1012,7 +1602,14 @@
       "hostile",
       "undead",
       "flying"
-    ]
+    ],
+    "base_power": 310,
+    "traits": [
+      "Legendary"
+    ],
+    "claim_reward": 50,
+    "farmer_value": 200,
+    "token_reward": null
   },
   "herobrine": {
     "name": "Herobrine",
@@ -1021,7 +1618,14 @@
     "lore": "Lorem ipsum dolor sit amet.",
     "tags": [
       "myth"
-    ]
+    ],
+    "base_power": 323,
+    "traits": [
+      "Legendary"
+    ],
+    "claim_reward": 50,
+    "farmer_value": 200,
+    "token_reward": null
   },
   "moobloom": {
     "name": "Moobloom",
@@ -1030,7 +1634,14 @@
     "lore": "Lorem ipsum dolor sit amet.",
     "tags": [
       "myth"
-    ]
+    ],
+    "base_power": 498,
+    "traits": [
+      "Legendary"
+    ],
+    "claim_reward": 50,
+    "farmer_value": 200,
+    "token_reward": null
   },
   "kevin": {
     "name": "Kevin",
@@ -1039,6 +1650,13 @@
     "lore": "Lorem ipsum dolor sit amet.",
     "tags": [
       "myth"
-    ]
+    ],
+    "base_power": 451,
+    "traits": [
+      "Legendary"
+    ],
+    "claim_reward": 50,
+    "farmer_value": 200,
+    "token_reward": null
   }
 }

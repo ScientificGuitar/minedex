@@ -1,0 +1,10 @@
+{
+  "rarity_weights": {
+    "Common": 55,
+    "Uncommon": 25,
+    "Rare": 13,
+    "Epic": 6,
+    "Legendary": 1
+  },
+  "global_reset_hour": 0
+}

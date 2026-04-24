@@ -1,7 +1,6 @@
 from collections import defaultdict
 from typing import Any, Dict, List, Optional
 
-from constants import FULL_COLLECTION_BONUS, RARITY_BUCKET_TOTALS, RARITY_COMPLETION_BONUS
 from database.collection import Collection as CollectionDB
 from database.db import Collection as CollectionModel
 from database.db import User as UserModel
@@ -71,38 +70,15 @@ class CollectionService:
         mob_id = mob_id.lower()
         return self.mobs.get(mob_id)
 
-    def calculate_collection_value_score(self, rows: List[Dict[str, Any]]) -> int:
-        """Calculate a weighted collection value score for a user's unique mobs."""
-        if not rows:
-            return 0
-
-        score = 0.0
-        rarity_counts: Dict[str, int] = defaultdict(int)
-
-        for row in rows:
-            mob = self.mobs.get(row["mob_id"])
-            if not mob:
-                continue
-
-            rarity = mob["rarity"]
-            rarity_count = len(self.mobs_by_rarity.get(rarity, []))
-            if rarity_count == 0:
-                continue
-
-            score += RARITY_BUCKET_TOTALS.get(rarity, 0) / rarity_count
-            rarity_counts[rarity] += 1
-
-        for rarity, owned_count in rarity_counts.items():
-            if owned_count == len(self.mobs_by_rarity.get(rarity, [])):
-                score += RARITY_COMPLETION_BONUS.get(rarity, 0)
-
-        if len(rows) == len(self.mobs):
-            score += FULL_COLLECTION_BONUS
-
-        return int(round(score))
+    def calculate_completion_percentage(self, rows: List[Dict[str, Any]]) -> float:
+        """Calculate the percentage of total mobs collected."""
+        if not self.mobs:
+            return 0.0
+        unique_owned = len(rows)
+        return (unique_owned / len(self.mobs)) * 100
 
     def get_leaderboards(self, session_factory, guild_id: int, limit: int = 5) -> Dict[str, List[Dict[str, Any]]]:
-        """Return leaderboard data for emeralds, collection completion, and weighted collection value."""
+        """Return leaderboard data for emeralds and collection completion."""
         with session_factory() as session:
             user_results = session.query(UserModel.user_id, UserModel.emeralds).filter_by(guild_id=guild_id).all()
             collection_results = (
@@ -126,7 +102,7 @@ class CollectionService:
                     "emeralds": emerald_by_user.get(user_id, 0),
                     "unique_count": len(rows),
                     "total_count": sum(entry["amount"] for entry in rows),
-                    "collection_value": self.calculate_collection_value_score(rows),
+                    "completion_pct": self.calculate_completion_percentage(rows),
                 }
             )
 
@@ -136,12 +112,10 @@ class CollectionService:
             key=lambda u: (u["unique_count"], u["total_count"]),
             reverse=True,
         )[:limit]
-        value_ranking = sorted(users, key=lambda u: u["collection_value"], reverse=True)[:limit]
 
         return {
             "emeralds": emerald_ranking,
             "completion": completion_ranking,
-            "value": value_ranking,
         }
 
     def build_collection_embed_data(
@@ -189,4 +163,5 @@ class CollectionService:
             "current_page": page,
             "rarity_filter": rarity_filter,
             "entries": dict(grouped_entries),
+            "completion_pct": self.calculate_completion_percentage(rows),
         }

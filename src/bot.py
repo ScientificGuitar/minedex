@@ -30,7 +30,7 @@ class MyBot(commands.Bot):
         # Initialize services
         self.collection_service = CollectionService(mobs, mobs_by_rarity)
         self.economy_service = EconomyService(mobs, mobs_by_rarity, items)
-        self.roll_service = RollService(mobs, mobs_by_rarity, villagers)
+        self.roll_service = RollService(mobs, mobs_by_rarity, villagers, items)
         self.shop_service = ShopService(villagers)
         self.trade_service = TradeService(mobs, villagers, items)
         self.achievement_service = AchievementService(mobs, mobs_by_rarity)

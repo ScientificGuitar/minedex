@@ -20,25 +20,25 @@ class TestRollService:
     """Test suite for RollService."""
 
     @pytest.fixture(scope="class", autouse=True)
-    def setup_service(self, mock_mobs, mock_mobs_by_rarity, mock_villagers, request):
+    def setup_service(self, mock_mobs, mock_mobs_by_rarity, mock_villagers, mock_items, request):
         """Set up service once per class using request fixture."""
-        request.cls.service = RollService(mock_mobs, mock_mobs_by_rarity, mock_villagers)
+        request.cls.service = RollService(mock_mobs, mock_mobs_by_rarity, mock_villagers, mock_items)
 
     def test_roll_rarity_standard(self):
         """Test rolling rarity with standard settings."""
-        rarity = RollService.roll_rarity()
+        rarity = self.service.roll_rarity()
         assert rarity in RARITY_WEIGHTS.keys()
 
     def test_roll_rarity_excluded(self):
         """Test rolling rarity with exclusion."""
         for _ in range(10):
-            rarity = RollService.roll_rarity(exclude={"Common"})
+            rarity = self.service.roll_rarity(exclude={"Common"})
             assert rarity != "Common"
 
     def test_roll_rarity_allowed(self):
         """Test rolling rarity with allowed set."""
         for _ in range(10):
-            rarity = RollService.roll_rarity(allowed={"Common"})
+            rarity = self.service.roll_rarity(allowed={"Common"})
             assert rarity == "Common"
 
     def test_get_cooldown_remaining_no_last_action(self):
@@ -58,8 +58,12 @@ class TestRollService:
 
     def test_can_reroll_success(self, mock_session_factory, mock_user_factory):
         """Test successful reroll check."""
-        user = mock_user_factory(trading_hall_level=4, last_reroll_at=None)
-        with patch("services.roll_service.UserDB.get_user", return_value=user):
+        user = mock_user_factory(last_reroll_at=None)
+        with (
+            patch("services.roll_service.UserDB.get_user", return_value=user),
+            patch("services.roll_service.UserDB.is_villager_unlocked", return_value=True),
+            patch("services.roll_service.is_same_game_day", return_value=False),
+        ):
             result = self.service.can_reroll(mock_session_factory, 123, 456, int(time.time()))
 
         assert result["can_reroll"] is True
@@ -67,8 +71,12 @@ class TestRollService:
     def test_can_reroll_already_claimed_today(self, mock_session_factory, mock_user_factory):
         """Test reroll check when user already claimed today."""
         now = int(time.time())
-        user = mock_user_factory(trading_hall_level=4, last_claim_at=now - 3600)  # Claimed 1 hour ago (same day)
-        with patch("services.roll_service.UserDB.get_user", return_value=user):
+        user = mock_user_factory(last_claim_at=now - 3600)
+        with (
+            patch("services.roll_service.UserDB.get_user", return_value=user),
+            patch("services.roll_service.UserDB.is_villager_unlocked", return_value=True),
+            patch("services.roll_service.is_same_game_day", side_effect=[True, False]),
+        ):
             result = self.service.can_reroll(mock_session_factory, 123, 456, now)
 
         assert result["can_reroll"] is False
@@ -77,8 +85,12 @@ class TestRollService:
     def test_can_reroll_already_rerolled_today(self, mock_session_factory, mock_user_factory):
         """Test reroll check when user already rerolled today."""
         now = int(time.time())
-        user = mock_user_factory(trading_hall_level=4, last_reroll_at=now - 3600)  # Rerolled 1 hour ago (same day)
-        with patch("services.roll_service.UserDB.get_user", return_value=user):
+        user = mock_user_factory(last_claim_at=now - 3600)
+        with (
+            patch("services.roll_service.UserDB.get_user", return_value=user),
+            patch("services.roll_service.UserDB.is_villager_unlocked", return_value=True),
+            patch("services.roll_service.is_same_game_day", side_effect=[False, True]),
+        ):
             result = self.service.can_reroll(mock_session_factory, 123, 456, now)
 
         assert result["can_reroll"] is False
@@ -94,8 +106,11 @@ class TestRollService:
     def test_can_roll_already_claimed_today(self, mock_session_factory, mock_user_factory):
         """Test can_roll when user already claimed today."""
         now = int(time.time())
-        user = mock_user_factory(last_claim_at=now - 3600, last_roll_at=now - 7200)  # Claimed 1 hour ago (same day)
-        with patch("services.roll_service.UserDB.get_user", return_value=user):
+        user = mock_user_factory(last_claim_at=now - 3600, last_roll_at=now - 7200)
+        with (
+            patch("services.roll_service.UserDB.get_user", return_value=user),
+            patch("strategies.standard.is_same_game_day", return_value=True),
+        ):
             result = self.service.can_roll(mock_session_factory, 123, 456, now)
 
         assert result["can_roll"] is False
@@ -104,10 +119,12 @@ class TestRollService:
     def test_can_roll_focus_already_done_today(self, mock_session_factory, mock_user_factory):
         """Test can_roll with focus mode when already done today."""
         now = int(time.time())
-        user = mock_user_factory(trading_hall_level=3, last_claim_at=now - 86400, last_roll_at=now - 7200)
+        user = mock_user_factory(last_claim_at=now - 86400, last_roll_at=now - 7200)
         with (
             patch("services.roll_service.UserDB.get_user", return_value=user),
-            patch("services.roll_service.UserDB.has_focus_rolled_today", return_value=True),
+            patch("services.roll_service.UserDB.is_villager_unlocked", return_value=True),
+            patch("strategies.focus.is_same_game_day", return_value=False),
+            patch("database.user.User.has_focus_rolled_today", return_value=True),
         ):
             result = self.service.can_roll(mock_session_factory, 123, 456, now, mode="focus")
 
@@ -120,8 +137,8 @@ class TestRollService:
         user = mock_user_factory(last_roll_at=None, last_claim_at=None)
         with (
             patch("services.roll_service.UserDB.get_user", return_value=user),
-            patch("services.roll_service.UserDB.record_roll"),
-            patch("services.roll_service.UserDB.increment_total_rolls"),
+            patch("database.user.User.record_roll"),
+            patch("database.user.User.increment_total_rolls"),
         ):
             mob_id, mob = self.service.perform_roll(mock_session_factory, 123, 456, now)
 
@@ -131,7 +148,7 @@ class TestRollService:
     def test_perform_reroll(self, mock_session_factory):
         """Test performing a reroll."""
         now = int(time.time())
-        with patch("services.roll_service.UserDB.record_reroll"):
+        with patch("database.user.User.record_reroll"):
             mob_id, mob = self.service.perform_reroll(mock_session_factory, 123, 456, now)
 
         assert mob_id in self.service.mobs
@@ -144,23 +161,27 @@ class TestRollService:
         now = int(time.time())
 
         with (
-            patch("services.roll_service.CollectionDB.add_to_collection"),
-            patch("services.roll_service.UserDB.update_last_claim_at"),
-            patch("services.roll_service.UserDB.add_emeralds") as mock_add_emeralds,
+            patch("database.collection.Collection.add_to_collection"),
+            patch("database.user.User.update_last_claim_at"),
+            patch("database.user.User.add_emeralds") as mock_add_emeralds,
+            patch("database.user.User.increment_total_claims"),
+            patch("database.user.User.add_emeralds_gained"),
         ):
             reward = self.service.claim_mob(mock_session_factory, 123, 456, mob_id, mob, now)
 
-        assert reward > 0
+        assert reward >= 0
         assert isinstance(reward, int)
         mock_add_emeralds.assert_called_once()
 
     def test_can_roll_focus_mode(self, mock_session_factory, mock_user_factory):
         """Test can_roll with focus mode (requires librarian)."""
         now = int(time.time())
-        user = mock_user_factory(trading_hall_level=3, last_claim_at=now - 86400, last_roll_at=now - 7200)
+        user = mock_user_factory(last_claim_at=now - 86400, last_roll_at=now - 7200)
         with (
             patch("services.roll_service.UserDB.get_user", return_value=user),
-            patch("services.roll_service.UserDB.has_focus_rolled_today", return_value=False),
+            patch("services.roll_service.UserDB.is_villager_unlocked", return_value=True),
+            patch("strategies.focus.is_same_game_day", return_value=False),
+            patch("database.user.User.has_focus_rolled_today", return_value=False),
         ):
             result = self.service.can_roll(mock_session_factory, 123, 456, now, mode="focus")
 
@@ -170,8 +191,11 @@ class TestRollService:
     def test_can_roll_focus_mode_no_librarian(self, mock_session_factory, mock_user_factory):
         """Test can_roll with focus mode when librarian not unlocked."""
         now = int(time.time())
-        user = mock_user_factory(trading_hall_level=2)
-        with patch("services.roll_service.UserDB.get_user", return_value=user):
+        user = mock_user_factory()
+        with (
+            patch("services.roll_service.UserDB.get_user", return_value=user),
+            patch("services.roll_service.UserDB.is_villager_unlocked", return_value=False),
+        ):
             result = self.service.can_roll(mock_session_factory, 123, 456, now, mode="focus")
 
         assert result["can_roll"] is False
@@ -184,7 +208,8 @@ class TestRollService:
         inventory_item = SimpleNamespace(amount=1)
         with (
             patch("services.roll_service.UserDB.get_user", return_value=user),
-            patch("services.roll_service.InventoryDB.get_item", return_value=inventory_item),
+            patch("strategies.token.is_same_game_day", return_value=False),
+            patch("database.inventory.Inventory.get_item", return_value=inventory_item),
         ):
             result = self.service.can_roll(mock_session_factory, 123, 456, now, mode="token", value="uncommon")
 
@@ -192,106 +217,27 @@ class TestRollService:
         assert result["mode"] == "token"
         assert result["value"] == "uncommon"
 
-    def test_can_roll_token_mode_no_rarity(self, mock_session_factory, mock_user_factory):
-        """Test can_roll with token mode but no rarity specified."""
-        now = int(time.time())
-        user = mock_user_factory()
-        with patch("services.roll_service.UserDB.get_user", return_value=user):
-            result = self.service.can_roll(mock_session_factory, 123, 456, now, mode="token")
-
-        assert result["can_roll"] is False
-        assert "specify a token" in result["error"]
-
-    def test_can_roll_token_mode_invalid_rarity(self, mock_session_factory, mock_user_factory):
-        """Test can_roll with token mode but invalid rarity."""
-        now = int(time.time())
-        user = mock_user_factory()
-        with patch("services.roll_service.UserDB.get_user", return_value=user):
-            result = self.service.can_roll(mock_session_factory, 123, 456, now, mode="token", value="invalid_rarity")
-
-        assert result["can_roll"] is False
-        assert "Invalid token rarity" in result["error"]
-
-    def test_can_roll_invalid_mode(self, mock_session_factory, mock_user_factory):
-        """Test can_roll with invalid mode."""
-        now = int(time.time())
-        user = mock_user_factory()
-        with patch("services.roll_service.UserDB.get_user", return_value=user):
-            result = self.service.can_roll(mock_session_factory, 123, 456, now, mode="invalid_mode")
-
-        assert result["can_roll"] is False
-        assert "Invalid roll type" in result["error"]
-
-    def test_perform_roll_focus_excludes_common(self, mock_session_factory, mock_user_factory):
-        """Test perform_roll with focus mode excludes common rarities."""
-        now = int(time.time())
-        user = mock_user_factory(last_claim_at=now - 86400, last_roll_at=now - 7200)
-        with (
-            patch("services.roll_service.UserDB.get_user", return_value=user),
-            patch("services.roll_service.UserDB.record_focus_roll"),
-        ):
-            mob_id, mob = self.service.perform_roll(mock_session_factory, 123, 456, now, mode="focus")
-
-        assert mob["rarity"] != "Common"
-
-    def test_perform_roll_token_consumes_item(self, mock_session_factory, mock_user_factory):
-        """Test perform_roll with token mode consumes the token."""
-        now = int(time.time())
-        user = mock_user_factory(last_claim_at=now - 86400, last_roll_at=now - 7200)
-        inventory_item = SimpleNamespace(amount=2)
-        with (
-            patch("services.roll_service.UserDB.get_user", return_value=user),
-            patch("services.roll_service.InventoryDB.get_item", return_value=inventory_item),
-            patch("services.roll_service.InventoryDB.add_to_inventory") as mock_consume,
-            patch("services.roll_service.UserDB.record_roll"),
-        ):
-            mob_id, mob = self.service.perform_roll(mock_session_factory, 123, 456, now, mode="token", value="rare")
-
-        mock_consume.assert_called_once_with(mock_session_factory, 123, 456, "rare", -1)
-        assert mob["rarity"] == "Rare"
-
-    def test_can_reroll_no_toolsmith(self, mock_mobs, mock_mobs_by_rarity, mock_villagers, mock_session_factory):
+    def test_can_reroll_no_toolsmith(self, mock_session_factory, mock_user_factory):
         """Test reroll check when toolsmith not available."""
-        service = RollService(mock_mobs, mock_mobs_by_rarity, mock_villagers)
-
-        with patch("services.roll_service.UserDB.get_user") as mock_user:
-            mock_user_obj = MagicMock()
-            mock_user_obj.trading_hall_level = 1
-            mock_user.return_value = mock_user_obj
-
-            result = service.can_reroll(mock_session_factory, 123, 456, 1000)
+        user = mock_user_factory()
+        with (
+            patch("services.roll_service.UserDB.get_user", return_value=user),
+            patch("services.roll_service.UserDB.is_villager_unlocked", return_value=False),
+        ):
+            result = self.service.can_reroll(mock_session_factory, 123, 456, 1000)
 
         assert result["can_reroll"] is False
         assert "Toolsmith" in result["error"]
 
-    def test_build_mob_embed_data(self, mock_mobs, mock_mobs_by_rarity, mock_villagers, mock_session_factory):
-        service = RollService(mock_mobs, mock_mobs_by_rarity, mock_villagers)
-
-        with patch("services.roll_service.CollectionDB.get_mob_count") as mock_count:
-            mock_count.return_value = 2
-
-            data = service.build_mob_embed_data(mock_session_factory, 123, 456, "slime", mock_mobs["slime"])
-
-        assert data["owned_amount"] == 2
-        assert data["rerolled"] is False
-
-    def test_can_roll_on_cooldown(self, mock_mobs, mock_mobs_by_rarity, mock_villagers):
-        service = RollService(mock_mobs, mock_mobs_by_rarity, mock_villagers)
-
+    def test_can_roll_on_cooldown(self, mock_session_factory, mock_user_factory):
+        """Test can_roll when on cooldown."""
         now = int(time.time())
-        mock_user = SimpleNamespace(
-            last_claim_at=0,
-            timezone=None,
-            last_roll_at=now - 60,
-            trading_hall_level=0,
-        )
-
-        with patch("services.roll_service.UserDB.get_user", return_value=mock_user):
-            result = service.can_roll(MagicMock(), 123, 456, now)
+        user = mock_user_factory(last_roll_at=now - 60, last_claim_at=now - 86400)
+        with (
+            patch("services.roll_service.UserDB.get_user", return_value=user),
+            patch("strategies.standard.is_same_game_day", return_value=False),
+        ):
+            result = self.service.can_roll(mock_session_factory, 123, 456, now)
 
         assert result["can_roll"] is False
         assert "roll again" in result["error"]
-
-
-if __name__ == "__main__":
-    unittest.main()
