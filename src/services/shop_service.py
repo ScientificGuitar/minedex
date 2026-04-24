@@ -1,114 +1,102 @@
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
-from constants import TRADING_HALL_ORDER
+from database.inventory import Inventory as InventoryDB
 from database.user import User
 
 
 class ShopService:
-    def __init__(self, villagers: Dict[str, Dict]):
-        self.villagers = villagers
+    def __init__(self, shop_data: Dict):
+        self.shop_data = shop_data
 
     def get_user_emeralds(self, session_factory, guild_id: int, user_id: int) -> int:
         """Get user's emerald balance."""
         return User.get_emeralds(session_factory, guild_id, user_id) or 0
 
-    def get_trading_hall_data(self, session_factory, guild_id: int, user_id: int) -> Dict:
-        """Get data for trading hall display."""
+    def get_shop_inventory(self, session_factory, guild_id: int, user_id: int, category: str) -> Dict[str, Any]:
+        """Get inventory for a specific shop category."""
+        if category not in self.shop_data:
+            return {"error": f"Invalid shop category: {category}"}
+
+        items = self.shop_data[category]
         unlocked = User.get_unlocked_villagers(session_factory, guild_id, user_id)
         emeralds = self.get_user_emeralds(session_factory, guild_id, user_id)
 
-        villagers_data = []
-        for villager_id in TRADING_HALL_ORDER:
-            villager = self.villagers[villager_id]
-            state = self._get_villager_state(unlocked, villager_id)
-            villagers_data.append(
-                {
-                    "id": villager_id,
-                    "name": villager["name"],
-                    "description": villager["description"],
-                    "price": villager["price"],
-                    "state": state,
+        processed_items = []
+        for item_id, item_data in items.items():
+            # 1. Skip owned permanent upgrades (Don't show what you already bought)
+            if category == "permanent_upgrades" and item_id in unlocked:
+                continue
+
+            # 2. Check requirements
+            unmet_reqs = [req for req in item_data.get("requirements", []) if req not in unlocked]
+            
+            # 3. Only show items that are available to buy (no unmet requirements)
+            # This creates a "discovery" progression feel.
+            if not unmet_reqs:
+                processed_items.append({
+                    "id": item_id,
+                    "name": item_data["name"],
+                    "description": item_data["description"],
+                    "price": item_data["price"],
+                    "state": "available",
+                    "type": item_data.get("type")
+                })
+
+        return {
+            "category": category,
+            "emeralds": emeralds,
+            "items": processed_items
+        }
+
+    def can_purchase(self, session_factory, guild_id: int, user_id: int, item_id: str, category: str) -> Dict[str, Any]:
+        """Check if a user can purchase an item."""
+        if category not in self.shop_data or item_id not in self.shop_data[category]:
+            return {"can_purchase": False, "error": "Item not found."}
+
+        item_data = self.shop_data[category][item_id]
+        emeralds = self.get_user_emeralds(session_factory, guild_id, user_id)
+        unlocked = User.get_unlocked_villagers(session_factory, guild_id, user_id)
+
+        # 1. Emerald check
+        if emeralds < item_data["price"]:
+            return {
+                "can_purchase": False, 
+                "error": f"You need {item_data['price']} emeralds, but you only have {emeralds}."
+            }
+
+        # 2. Permanent ownership check
+        if category == "permanent_upgrades" and item_id in unlocked:
+            return {"can_purchase": False, "error": "You already own this upgrade."}
+
+        # 3. Requirements check
+        for req_id in item_data.get("requirements", []):
+            if req_id not in unlocked:
+                req_item = self.shop_data[category].get(req_id, {"name": req_id})
+                return {
+                    "can_purchase": False, 
+                    "error": f"You must first unlock: {req_item['name']}"
                 }
-            )
 
-        return {"unlocked_count": len(unlocked), "emeralds": emeralds, "villagers": villagers_data}
+        return {"can_purchase": True, "item": item_data}
 
-    def get_upgrade_data(self, session_factory, guild_id: int, user_id: int, target: Optional[str] = None) -> Dict:
-        """Get data for upgrade display."""
-        emeralds = self.get_user_emeralds(session_factory, guild_id, user_id)
-        unlocked = User.get_unlocked_villagers(session_factory, guild_id, user_id)
+    def perform_purchase(self, session_factory, guild_id: int, user_id: int, item_id: str, category: str) -> Dict[str, Any]:
+        """Execute the purchase logic."""
+        check = self.can_purchase(session_factory, guild_id, user_id, item_id, category)
+        if not check["can_purchase"]:
+            return {"success": False, "error": check["error"]}
 
-        if target == "trading":
-            next_villager_id = self._get_next_available_villager_id(unlocked)
+        item_data = check["item"]
+        price = item_data["price"]
 
-            if not next_villager_id:
-                return {"error": "Trading Hall is already fully upgraded."}
-
-            next_villager = self.villagers[next_villager_id]
-            return {
-                "type": "trading_hall_upgrade",
-                "next_villager_id": next_villager_id,
-                "next_villager": next_villager,
-                "price": next_villager["price"],
-                "can_afford": emeralds >= next_villager["price"],
-            }
-        else:
-            # General upgrade list
-            next_villager_id = self._get_next_available_villager_id(unlocked)
-            next_trading_villager = self.villagers.get(next_villager_id) if next_villager_id else None
-            return {
-                "type": "upgrade_list",
-                "emeralds": emeralds,
-                "next_trading_villager": next_trading_villager,
-                "invalid_target": target,
-            }
-
-    def can_upgrade_trading_hall(self, session_factory, guild_id: int, user_id: int) -> Dict:
-        """Check if user can upgrade trading hall."""
-        unlocked = User.get_unlocked_villagers(session_factory, guild_id, user_id)
-        emeralds = self.get_user_emeralds(session_factory, guild_id, user_id)
-
-        next_villager_id = self._get_next_available_villager_id(unlocked)
-        if not next_villager_id:
-            return {"can_upgrade": False, "error": "Trading Hall is already fully upgraded."}
-
-        next_villager = self.villagers[next_villager_id]
-        price = next_villager["price"]
-        if emeralds < price:
-            return {"can_upgrade": False, "error": f"You need {price} emeralds, but you only have {emeralds}."}
-
-        return {"can_upgrade": True, "next_villager_id": next_villager_id, "next_villager": next_villager}
-
-    def perform_trading_hall_upgrade(self, session_factory, guild_id: int, user_id: int) -> Dict:
-        """Perform trading hall upgrade."""
-        check_result = self.can_upgrade_trading_hall(session_factory, guild_id, user_id)
-        if not check_result["can_upgrade"]:
-            return {"success": False, "error": check_result["error"]}
-
-        next_villager_id = check_result["next_villager_id"]
-        next_villager = check_result["next_villager"]
-        price = next_villager["price"]
-
+        # Deduct emeralds
         User.add_emeralds(session_factory, guild_id, user_id, -price)
-        User.unlock_villager(session_factory, guild_id, user_id, next_villager_id)
 
-        return {"success": True, "upgraded_to": next_villager}
+        # Apply effects
+        if category == "permanent_upgrades":
+            User.unlock_villager(session_factory, guild_id, user_id, item_id)
+        elif category == "consumables":
+            # Assuming consumables are currently just tokens
+            if item_data["type"] == "token":
+                InventoryDB.add_to_inventory(session_factory, guild_id, user_id, item_data["item_id"], 1)
 
-    def _get_villager_state(self, unlocked: List[str], villager_id: str) -> str:
-        """Get the state of a villager."""
-        if villager_id in unlocked:
-            return "owned"
-        
-        # Check if it's the next one in line for the linear progression part
-        next_id = self._get_next_available_villager_id(unlocked)
-        if villager_id == next_id:
-            return "available"
-        
-        return "locked"
-
-    def _get_next_available_villager_id(self, unlocked: List[str]) -> Optional[str]:
-        """Get the next villager ID to unlock in the linear progression."""
-        for villager_id in TRADING_HALL_ORDER:
-            if villager_id not in unlocked:
-                return villager_id
-        return None
+        return {"success": True, "item": item_data}

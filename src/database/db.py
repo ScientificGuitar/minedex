@@ -2,7 +2,7 @@ import os
 from contextlib import contextmanager
 from typing import Generator
 
-from sqlalchemy import BigInteger, ForeignKeyConstraint, Integer, String, create_engine
+from sqlalchemy import BigInteger, Boolean, ForeignKeyConstraint, Integer, String, create_engine
 from sqlalchemy.orm import Mapped, Session, declarative_base, mapped_column, sessionmaker
 from sqlalchemy.pool import NullPool
 

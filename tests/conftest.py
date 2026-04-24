@@ -63,6 +63,38 @@ def mock_villagers():
     }
 
 
+@pytest.fixture(scope="session")
+def mock_shop_data():
+    """Fixture for mock shop data."""
+    return {
+        "permanent_upgrades": {
+            "farmer": {
+                "name": "Farmer",
+                "description": "Trades mobs for emeralds",
+                "price": 100,
+                "type": "villager_unlock",
+                "requirements": []
+            },
+            "cleric": {
+                "name": "Cleric",
+                "description": "Trades mobs for tokens",
+                "price": 200,
+                "type": "villager_unlock",
+                "requirements": ["farmer"]
+            }
+        },
+        "consumables": {
+            "token": {
+                "name": "Token",
+                "description": "Single-use token",
+                "price": 50,
+                "type": "token",
+                "item_id": "rare"
+            }
+        }
+    }
+
+
 @pytest.fixture
 def mock_session_factory():
     """Fixture for mock database session factory."""
