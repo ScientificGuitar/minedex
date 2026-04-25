@@ -163,7 +163,7 @@ class CollectionCog(commands.Cog):
         rarity = mob["rarity"]
         color = RARITY_COLORS[rarity]
 
-        embed = discord.Embed(title=f"{mob['name']}", color=color)
+        embed = discord.Embed(title=f"{mob['name']}", description=f"*{mob.get('lore', '')}*", color=color)
         embed.set_image(url=mob["image"])
         embed.set_footer(text=f"Mob ID: {mob_id}")
 

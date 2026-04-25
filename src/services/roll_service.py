@@ -1,28 +1,32 @@
-import random
 from typing import Any, Dict, List, Optional, Tuple
 
-from constants import RARITY_WEIGHTS, VALID_TOKEN_RARITIES
 from database.collection import Collection as CollectionDB
-from database.inventory import Inventory as InventoryDB
-from database.user import User as UserDB, is_same_game_day
+from database.user import User as UserDB
+from database.user import is_same_game_day
+from strategies.focus import FocusRollStrategy
 from strategies.standard import StandardRollStrategy
 from strategies.token import TokenRollStrategy
-from strategies.focus import FocusRollStrategy
 from utils.roll_utils import roll_random_mob as utils_roll_random_mob
 
 
 class RollService:
-    def __init__(self, mobs: Dict[str, Dict], mobs_by_rarity: Dict[str, List[str]], villagers: Dict[str, Dict], items: Dict[str, Dict]):
+    def __init__(
+        self,
+        mobs: Dict[str, Dict],
+        mobs_by_rarity: Dict[str, List[str]],
+        villagers: Dict[str, Dict],
+        items: Dict[str, Dict],
+    ):
         self.mobs = mobs
         self.mobs_by_rarity = mobs_by_rarity
         self.villagers = villagers
         self.items = items
-        
+
         # Strategy mapping
         self._strategies = {
             "standard": StandardRollStrategy(mobs, mobs_by_rarity, items),
             "token": TokenRollStrategy(mobs, mobs_by_rarity, items),
-            "focus": FocusRollStrategy(mobs, mobs_by_rarity, items)
+            "focus": FocusRollStrategy(mobs, mobs_by_rarity, items),
         }
 
     def can_reroll(self, session_factory, guild_id: int, user_id: int, now: int) -> Dict[str, Any]:
@@ -107,6 +111,7 @@ class RollService:
     def roll_rarity(exclude: Optional[set] = None, allowed: Optional[set] = None) -> str:
         """Roll a rarity based on weights."""
         from utils.roll_utils import roll_rarity as utils_roll_rarity
+
         return utils_roll_rarity(exclude, allowed)
 
     def build_mob_embed_data(

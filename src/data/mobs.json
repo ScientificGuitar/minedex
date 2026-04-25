@@ -3,7 +3,7 @@
     "name": "Zombie",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Zombie_JE3_BE2.png?228b5",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The classic undead menace that wanders the night, seeking to snack on unsuspecting villagers.",
     "tags": [
       "overworld",
       "hostile",
@@ -19,7 +19,7 @@
     "name": "Skeleton",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Skeleton_JE6_BE4.png?85786",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Equipped with a bow and endless arrows, these archers are the bane of any player caught out after sunset.",
     "tags": [
       "overworld",
       "hostile",
@@ -35,7 +35,7 @@
     "name": "Creeper",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Creeper_JE3_BE1.png?dc7b2",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Famous for their iconic 'hiss' and explosive personality. Just stay clear of their blast radius!",
     "tags": [
       "overworld",
       "hostile"
@@ -50,7 +50,7 @@
     "name": "Spider",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/thumb/Spider_JE5_BE4.png/1024px-Spider_JE5_BE4.png?b090e",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "They can climb over walls and hide in the shadows, waiting to strike with their glowing red eyes.",
     "tags": [
       "overworld",
       "neutral",
@@ -66,7 +66,7 @@
     "name": "Slime",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Slime_JE3_BE2.png?5b6a7",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Bouncy, green, and eager to multiply, these cube-shaped creatures are mostly found in deep caverns.",
     "tags": [
       "overworld",
       "hostile"
@@ -81,7 +81,7 @@
     "name": "Bat",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/thumb/Bat_JE1_BE1.png/800px-Bat_JE1_BE1.png?55f87",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Tiny, harmless, and completely useless—bats are the atmospheric masters of the dark caves.",
     "tags": [
       "overworld",
       "passive",
@@ -98,7 +98,7 @@
     "name": "Silverfish",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/MCD_Silverfish.png?83812",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "They live within the walls of strongholds, waiting for a player to break a block so they can swarm out.",
     "tags": [
       "overworld",
       "hostile",
@@ -114,7 +114,7 @@
     "name": "Chicken",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/MCD_Silverfish.png?83812",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "They lay eggs, flap around helplessly, and are highly valued by foxes.",
     "tags": [
       "overworld",
       "passive",
@@ -130,7 +130,7 @@
     "name": "Cow",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/thumb/Cow_JE7_BE4.png/800px-Cow_JE7_BE4.png?3de94",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The quintessential passive mob providing milk, leather, and beef to every player.",
     "tags": [
       "overworld",
       "passive",
@@ -146,7 +146,7 @@
     "name": "Pig",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Temperate_Pig_JE4_BE2.png?c550c",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Saddle one up with a carrot on a stick and go for a ride—just don't expect them to listen to you.",
     "tags": [
       "overworld",
       "passive",
@@ -162,7 +162,7 @@
     "name": "Sheep",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/White_Sheep_JE4_BE7.png?5062a",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "They provide colorful wool for all your building needs, but watch out for the shears!",
     "tags": [
       "overworld",
       "passive",
@@ -178,7 +178,7 @@
     "name": "Cod",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Cod.gif?fe8d7",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Just keep swimming—these fish are simply trying to make it through their day in the ocean.",
     "tags": [
       "overworld",
       "passive",
@@ -195,7 +195,7 @@
     "name": "Salmon",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Salmon.gif?cb24f",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The larger, swimming cousin of the cod, often found hopping up river currents.",
     "tags": [
       "overworld",
       "passive",
@@ -212,7 +212,7 @@
     "name": "Rabbit",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Brown_Rabbit_BE4.png?235b9",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Fast, twitchy, and prone to jumping high into the air. Good luck catching one!",
     "tags": [
       "overworld",
       "passive",
@@ -228,7 +228,7 @@
     "name": "Nitwit",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Plains_Nitwit.png?01c04",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The villager who just can't seem to find a job, preferring to admire the scenery all day.",
     "tags": [
       "overworld",
       "passive",
@@ -244,7 +244,7 @@
     "name": "Cat",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Tabby_Cat.png?ea9ab",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Creepers avoid them, making cats the perfect companion for your long mining sessions.",
     "tags": [
       "overworld",
       "passive",
@@ -260,7 +260,7 @@
     "name": "Horse",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/thumb/White_Horse.png/800px-White_Horse.png?f3f6e",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Speed, endurance, and grace. A horse is the best way to travel across the vast Overworld.",
     "tags": [
       "overworld",
       "passive",
@@ -276,7 +276,7 @@
     "name": "Squid",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Squid_JE1_BE1.png?d0fd1",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "They roam the oceans, occasionally dropping ink sacs as they float in the water.",
     "tags": [
       "overworld",
       "passive",
@@ -293,7 +293,7 @@
     "name": "Tadpole",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Tadpole_JE1.png?94313",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The early stage of a frog's life, fragile and eager to grow into a hopper.",
     "tags": [
       "overworld",
       "passive",
@@ -310,7 +310,7 @@
     "name": "Tropical Fish",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Clownfish.png?1b6b5",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "With hundreds of color variations, these fish turn every ocean into a vibrant spectacle.",
     "tags": [
       "overworld",
       "passive",
@@ -327,7 +327,7 @@
     "name": "Witch",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Witch_JE3.png?aeb30",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Armed with splash potions, these alchemists are surprisingly tough enemies to overcome.",
     "tags": [
       "overworld",
       "hostile",
@@ -345,7 +345,7 @@
     "name": "Stray",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Stray_JE2_BE4.png?ef82d",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Skeletons that have adapted to the cold, firing arrows that leave you feeling frozen and slow.",
     "tags": [
       "overworld",
       "hostile",
@@ -363,7 +363,7 @@
     "name": "Husk",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Husk_JE2_BE2.png?a6767",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Desert zombies that never burn in sunlight, always ready to hunger for more.",
     "tags": [
       "overworld",
       "hostile",
@@ -381,7 +381,7 @@
     "name": "Drowned",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Drowned_JE1.png?2454e",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "They lurk beneath the surface, ancient and waterlogged, waiting to drag you down.",
     "tags": [
       "overworld",
       "hostile",
@@ -400,7 +400,7 @@
     "name": "Pillager",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/thumb/Pillager_JE3.png/800px-Pillager_JE3.png?22662",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A member of the illager raiding parties, notorious for terrorizing innocent villagers.",
     "tags": [
       "overworld",
       "hostile",
@@ -418,7 +418,7 @@
     "name": "Vindicator",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Vindicator_JE4.png?48924",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Give them an axe and stay back; their aggression is legendary among illagers.",
     "tags": [
       "overworld",
       "hostile",
@@ -436,7 +436,7 @@
     "name": "Zombie Villager",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Plains_Zombie_Villager_Base_JE1_BE1.png?7882a",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A tragic victim of a zombie's bite, they can actually be cured back into a productive villager.",
     "tags": [
       "overworld",
       "hostile",
@@ -454,7 +454,7 @@
     "name": "Endermite",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Endermite_JE1.png?dc5e8",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Strange, tiny creatures that appear when an Enderman teleports—keep your distance!",
     "tags": [
       "end",
       "hostile",
@@ -472,7 +472,7 @@
     "name": "Magma Cube",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Magma_Cube_JE2_BE2.png?b4389",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Hopping fire-cubes that split into smaller pieces when you defeat them—it never ends!",
     "tags": [
       "nether",
       "hostile"
@@ -489,7 +489,7 @@
     "name": "Llama",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Brown_Llama_JE2_BE2.png?3b960",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Do not anger a llama; they are famous for their remarkably accurate and rude spit.",
     "tags": [
       "overworld",
       "neutral",
@@ -507,7 +507,7 @@
     "name": "Goat",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Goat_%28two_horns%29_JE1_BE1.png?a5c0c",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Watch out! If you stand still too long on a mountain peak, they might just ram you right off.",
     "tags": [
       "overworld",
       "neutral",
@@ -525,7 +525,7 @@
     "name": "Axolotl",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Lucy_Axolotl_JE2.png?90400",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The cutest underwater predator, they play dead to recover health when things look grim.",
     "tags": [
       "overworld",
       "passive",
@@ -544,7 +544,7 @@
     "name": "Bee",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Bee.png?3dd28",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "They pollinate crops and make honey, but they will defend their nest with their lives if threatened.",
     "tags": [
       "overworld",
       "neutral",
@@ -563,7 +563,7 @@
     "name": "Fox",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Fox_JE1_BE1.png?ebd36",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Masters of stealth and theft, foxes will steal anything not nailed down when you aren't looking.",
     "tags": [
       "overworld",
       "passive",
@@ -581,7 +581,7 @@
     "name": "Frog",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Temperate_Frog_JE1_BE1.gif?5a0ff",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Frogs enjoy eating slimeballs and hanging out in swampy biomes.",
     "tags": [
       "overworld",
       "passive",
@@ -599,7 +599,7 @@
     "name": "Allay",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Allay_JE1_BE1.png?643d1",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Give an allay an item, and it will joyfully search the area to bring you more of it.",
     "tags": [
       "overworld",
       "passive",
@@ -617,7 +617,7 @@
     "name": "Armadillo",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Armadillo_JE2_BE2.png?9cdf1",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "They roll into a ball when they feel threatened, keeping their precious scutes protected.",
     "tags": [
       "overworld",
       "passive",
@@ -635,7 +635,7 @@
     "name": "Bogged",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Bogged_JE2_BE2.png?55cb9",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A swamp-dwelling skeleton that fires poisonous arrows instead of standard ones.",
     "tags": [
       "overworld",
       "hostile",
@@ -653,7 +653,7 @@
     "name": "Camel",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Camel_Idle.gif?72667",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Perfect for crossing deserts, they are tall enough to keep you safe from small mob attacks.",
     "tags": [
       "overworld",
       "passive",
@@ -671,7 +671,7 @@
     "name": "Cave Spider",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Cave_Spider_JE3_BE3.png?86c1d",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Small, blue, and venomous—these spiders prefer the tight, dark spaces of abandoned mineshafts.",
     "tags": [
       "overworld",
       "hostile",
@@ -689,7 +689,7 @@
     "name": "Dolphin",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Dolphin_pJE20171118_2.png?e9ccc",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Playful and intelligent, they will guide players toward shipwrecks and treasures if fed properly.",
     "tags": [
       "overworld",
       "neutral",
@@ -708,7 +708,7 @@
     "name": "Donkey",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/thumb/Donkey_JE5.png/800px-Donkey_JE5.png?9e2a1",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Less majestic than a horse, but far superior when you need to carry chests full of loot.",
     "tags": [
       "overworld",
       "passive",
@@ -726,7 +726,7 @@
     "name": "Glow Squid",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Glow_Squid_JE1.gif?dcad8",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Luminous creatures that bring a bit of neon light to the darkest ocean depths.",
     "tags": [
       "overworld",
       "passive",
@@ -745,7 +745,7 @@
     "name": "Mooshroom",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Red_Mooshroom_JE5_BE3.png?de6c9",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Cow meets fungus—a unique symbiotic species found only in the rare Mushroom Fields biome.",
     "tags": [
       "overworld",
       "passive",
@@ -763,7 +763,7 @@
     "name": "Mule",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/thumb/Mule_JE5.png/800px-Mule_JE5.png?3c1f0",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A hybrid offspring of a horse and a donkey, combining the best traits of both parents.",
     "tags": [
       "overworld",
       "passive",
@@ -781,7 +781,7 @@
     "name": "Ocelot",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Ocelot_JE2_BE2.png?7d798",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Wild, shy jungle cats that are elusive but undeniably fast.",
     "tags": [
       "overworld",
       "passive",
@@ -799,7 +799,7 @@
     "name": "Piglin",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Piglin_JE1.png?a498e",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Obsessed with gold, they roam the Nether and trade if you look the part.",
     "tags": [
       "nether",
       "neutral"
@@ -816,7 +816,7 @@
     "name": "Pufferfish",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Pufferfish_large.png?f2115",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Small and cute at first, until you get too close and they inflate into a defensive spike-ball.",
     "tags": [
       "overworld",
       "neutral",
@@ -835,7 +835,7 @@
     "name": "Trader Llama",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Brown_Trader_Llama.png?b7db4",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The faithful companion of the Wandering Trader, hauling goods across the lands.",
     "tags": [
       "overworld",
       "neutral",
@@ -853,7 +853,7 @@
     "name": "Turtle",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Turtle_JE3_BE1.png?373f9",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "These slow but steady creatures return to their home beach to lay eggs in the sand.",
     "tags": [
       "overworld",
       "passive",
@@ -872,7 +872,7 @@
     "name": "Wolf",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Wolf_JE2_BE2.png?ee46e",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Wild, untamed, and fierce—but give them a bone and they become a loyal protector.",
     "tags": [
       "overworld",
       "neutral",
@@ -890,7 +890,7 @@
     "name": "Zombified Piglin",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Zombified_Piglin_JE9.png?b91da",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The peaceful denizens of the Nether, until you strike one... and then, their friends arrive.",
     "tags": [
       "nether",
       "neutral",
@@ -908,7 +908,7 @@
     "name": "Enderman",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/thumb/Enderman_JE3_BE1.png/800px-Enderman_JE3_BE1.png?c6308",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Tall, dark, and mysterious. Just don't look them in the eyes unless you're ready for a fight.",
     "tags": [
       "overworld",
       "nether",
@@ -927,7 +927,7 @@
     "name": "Ghast",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Ghast_JE3_BE3.gif?ae9fb",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Floating through the Nether and firing explosive fireballs, their cries are hauntingly sad.",
     "tags": [
       "nether",
       "hostile",
@@ -945,7 +945,7 @@
     "name": "Guardian",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/thumb/Guardian_JE1_BE1.png/1024px-Guardian_JE1_BE1.png?57ead",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The spiked guardians of ocean monuments, firing lasers from their singular, unblinking eyes.",
     "tags": [
       "overworld",
       "hostile",
@@ -963,7 +963,7 @@
     "name": "Elder Guardian",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Elder_Guardian_JE2_BE2.gif?99f67",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The massive, ancient boss of the deep ocean monuments. Their gaze induces weariness.",
     "tags": [
       "overworld",
       "hostile",
@@ -982,7 +982,7 @@
     "name": "Ravager",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/thumb/Ravager_JE1.png/1024px-Ravager_JE1.png?55aae",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A beast of burden for illagers, their charge can smash crops and send players flying.",
     "tags": [
       "overworld",
       "hostile",
@@ -1000,7 +1000,7 @@
     "name": "Hoglin",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/thumb/Hoglin_JE3.png/1024px-Hoglin_JE3.png?65eaa",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Wild boars of the Nether, fiercely territorial and great for food if you can take them down.",
     "tags": [
       "nether",
       "hostile",
@@ -1018,7 +1018,7 @@
     "name": "Piglin Brute",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/thumb/Piglin_Brute_JE1_BE1.png/300px-Piglin_Brute_JE1_BE1.png?5d4a0",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The elite warriors of the Bastion, unbribable and deadly with their golden axes.",
     "tags": [
       "nether",
       "hostile"
@@ -1035,7 +1035,7 @@
     "name": "Phantom",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Phantom_JE2_BE1.png?94468",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Go to sleep! If you stay awake for too many nights, these flying nightmares begin to hunt you.",
     "tags": [
       "overworld",
       "hostile",
@@ -1054,7 +1054,7 @@
     "name": "Shulker",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Shulker_JE1_BE1.png?02a87",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Hiding in plain sight within their shells, shulkers fire projectiles that leave you floating high above.",
     "tags": [
       "end",
       "hostile"
@@ -1071,7 +1071,7 @@
     "name": "Strider",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Strider_JE2_BE2.gif?f8244",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "They live in the lava lakes of the Nether and provide the safest way to travel across them.",
     "tags": [
       "nether",
       "passive",
@@ -1089,7 +1089,7 @@
     "name": "Breeze",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Breeze_JE1.webp?181ec",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Swift, air-wielding foes found in trial chambers that will knock you off your feet.",
     "tags": [
       "overworld",
       "hostile"
@@ -1106,7 +1106,7 @@
     "name": "Copper Golem",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Copper_Golem_JE1_BE1.png?3c87d&20250716011045",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A metallic companion that oxidizes over time as it wanders around pushing buttons.",
     "tags": [
       "overworld",
       "passive"
@@ -1123,7 +1123,7 @@
     "name": "Nautilus",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Nautilus_Breathe_JE1_BE2.gif?af9c0",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The shell-dwelling creatures of the deep, their shells are a key ingredient for crafting conduits.",
     "tags": [
       "overworld",
       "passive",
@@ -1142,7 +1142,7 @@
     "name": "Panda",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Panda_JE1_BE1.png?31d00",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Bamboo-loving bears that come in many personalities, from playful to aggressive.",
     "tags": [
       "overworld",
       "passive",
@@ -1160,7 +1160,7 @@
     "name": "Parrot",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Red_Parrot_JE1_BE1.png?90904",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Highly talented mimics that will imitate the sounds of nearby hostile mobs perfectly.",
     "tags": [
       "overworld",
       "passive",
@@ -1179,7 +1179,7 @@
     "name": "Polar Bear",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Polar_Bear_JE2_BE2.png?29c45",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Majestic predators of the icy biomes, but approach their cubs with extreme caution.",
     "tags": [
       "overworld",
       "neutral",
@@ -1197,7 +1197,7 @@
     "name": "Skeleton Horse",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/thumb/Skeleton_Horse.png/800px-Skeleton_Horse.png?5e42a",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The result of a lightning strike on a horse during a thunderstorm, these spectral mounts are prized possessions.",
     "tags": [
       "overworld",
       "passive",
@@ -1216,7 +1216,7 @@
     "name": "Wandering Trader",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Wandering_Trader_JE1_BE1.png?309b9",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "They travel from village to village with their llamas, offering rare goods in exchange for emeralds.",
     "tags": [
       "overworld",
       "passive"
@@ -1233,7 +1233,7 @@
     "name": "Zoglin",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/thumb/Zoglin_JE1.png/1024px-Zoglin_JE1.png?6fd4b",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A hoglin brought into the Overworld becomes a zombified monster with an insatiable hunger.",
     "tags": [
       "nether",
       "hostile",
@@ -1252,7 +1252,7 @@
     "name": "Zombie Horse",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/thumb/Zombie_Horse_JE6.png/800px-Zombie_Horse_JE6.png?b6882",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "An undead horse that roams the night, silent and mysterious.",
     "tags": [
       "overworld",
       "passive",
@@ -1271,7 +1271,7 @@
     "name": "Zombie Nautilus",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Zombie_Nautilus_Breathe_JE1_BE2.gif?1d78e",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A rare fusion of an undead and the aquatic deep—a curiosity of the seas.",
     "tags": [
       "overworld",
       "neutral",
@@ -1291,7 +1291,7 @@
     "name": "Blaze",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Blaze_JE2.gif?29f6f",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Found in Nether Fortresses, these flying beings launch scorching fireballs at anyone they see.",
     "tags": [
       "nether",
       "hostile",
@@ -1309,7 +1309,7 @@
     "name": "Wither Skeleton",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/thumb/Wither_Skeleton_JE4_BE3.png/300px-Wither_Skeleton_JE4_BE3.png?9c107",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Taller than standard skeletons and wielding stone swords, their attacks wither your health away.",
     "tags": [
       "nether",
       "hostile",
@@ -1327,7 +1327,7 @@
     "name": "Iron Golem",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Iron_Golem_JE2_BE2.png?2cd73",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Built by villagers to protect their homes, these massive constructs don't take kindly to mobs.",
     "tags": [
       "overworld",
       "neutral"
@@ -1344,7 +1344,7 @@
     "name": "Evoker",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Evoker_JE3.png?54321",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Spellcasting illagers that summon fangs from the ground—a true test of reflexes.",
     "tags": [
       "overworld",
       "hostile",
@@ -1362,7 +1362,7 @@
     "name": "Vex",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Vex_JE4.gif?da166",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Tiny, fast-flying spirits summoned by Evokers that can pass through walls to strike.",
     "tags": [
       "overworld",
       "hostile",
@@ -1380,7 +1380,7 @@
     "name": "Warden",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Warden.gif?d0f99",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Blind, ancient, and nearly invincible—this guardian of the Deep Dark is not to be trifled with.",
     "tags": [
       "overworld",
       "hostile",
@@ -1398,7 +1398,7 @@
     "name": "Illusioner",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Illusioner_JE3.png?4414c",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Master of trickery, they can create clones of themselves to confuse their enemies.",
     "tags": [
       "overworld",
       "hostile",
@@ -1416,7 +1416,7 @@
     "name": "Pink Sheep",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/thumb/Pink_Sheep_JE2.png/800px-Pink_Sheep_JE2.png?d27c5",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "An incredibly rare sighting in the wild, finding one is a badge of honor for any player.",
     "tags": [
       "overworld",
       "passive",
@@ -1434,7 +1434,7 @@
     "name": "jeb_",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Jeb_Sheep_JE4_BE3.webp?ac096",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A sheep named 'jeb_' cycles through all the colors of the rainbow—the ultimate showstopper.",
     "tags": [
       "overworld",
       "passive",
@@ -1452,7 +1452,7 @@
     "name": "Charged Creeper",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Charged_Creeper.webp?e75f2",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A creeper struck by lightning, charged with incredible explosive force.",
     "tags": [
       "overworld",
       "hostile"
@@ -1469,7 +1469,7 @@
     "name": "Camel Husk",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Camel_Husk_Idle_JE1.gif?4ee1a",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A strange and rare hybrid, combining the desert-faring nature of a camel with the undead hunger of a husk.",
     "tags": [
       "overworld",
       "passive",
@@ -1488,7 +1488,7 @@
     "name": "Creaking",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Creaking_JE1_BE1.png?1a8ab",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "They only move when you aren't looking, making them a constant, creeping threat in the dark.",
     "tags": [
       "overworld",
       "hostile"
@@ -1505,7 +1505,7 @@
     "name": "Happy Ghast",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Happy_Ghast_JE1_BE1.gif?7e801",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Even in the fiery Nether, some ghasts just have a positive outlook on life.",
     "tags": [
       "nether",
       "passive",
@@ -1523,7 +1523,7 @@
     "name": "Parched",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Parched_JE2.png?70598",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A creature forever thirsty in the scorching desert sun.",
     "tags": [
       "overworld",
       "hostile",
@@ -1541,7 +1541,7 @@
     "name": "Sniffer",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Sniffer_sniffsniff.gif?36ccd",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "Ancient creatures hatched from eggs found deep in the ocean, they love to sniff out seeds.",
     "tags": [
       "overworld",
       "passive",
@@ -1559,7 +1559,7 @@
     "name": "Snow Golem",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Snow_Golem_JE2_BE2.png?23125",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "They leave a trail of snow wherever they go and throw snowballs at hostile mobs, even if it does zero damage.",
     "tags": [
       "overworld",
       "passive"
@@ -1576,7 +1576,7 @@
     "name": "Ender Dragon",
     "rarity": "Legendary",
     "image": "https://minecraft.wiki/images/Ender_Dragon.gif?fb9ba",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The majestic and terrifying final boss of Minecraft. Defeating it is the mark of a true champion.",
     "tags": [
       "end",
       "boss",
@@ -1595,7 +1595,7 @@
     "name": "Wither",
     "rarity": "Legendary",
     "image": "https://minecraft.wiki/images/thumb/Wither_JE2_BE2.png/800px-Wither_JE2_BE2.png?60b11",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A boss created from soul sand and wither skeleton skulls—truly a force of pure destruction.",
     "tags": [
       "nether",
       "boss",
@@ -1615,7 +1615,7 @@
     "name": "Herobrine",
     "rarity": "Legendary",
     "image": "https://minecraft.wiki/images/thumb/Herobrine_1.19.3%2B.png/226px-Herobrine_1.19.3%2B.png?3c5da",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A legend born from player stories, this mysterious figure is said to watch from the shadows.",
     "tags": [
       "myth"
     ],
@@ -1631,7 +1631,7 @@
     "name": "Moobloom",
     "rarity": "Legendary",
     "image": "https://minecraft.wiki/images/thumb/MoobloomPixel.png/231px-MoobloomPixel.png?de56f",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "A flower-covered cow from long-lost game concepts, adored for their beauty.",
     "tags": [
       "myth"
     ],
@@ -1647,7 +1647,7 @@
     "name": "Kevin",
     "rarity": "Legendary",
     "image": "https://minecraft.wiki/images/thumb/PenguinPixel.png/300px-PenguinPixel.png?93e4b",
-    "lore": "Lorem ipsum dolor sit amet.",
+    "lore": "The most mythical mob of all—a penguin who just wants to slide across the ice in peace.",
     "tags": [
       "myth"
     ],

@@ -73,6 +73,7 @@ class Rolls(commands.Cog):
                 description=(
                     f"**Rarity:** {mob['rarity']}\n"
                     f"**You already own:** {embed_data['owned_amount']}\n"
+                    f"*{mob.get('lore', '')}*\n"
                     "*💡 Duplicates can still be claimed.*"
                 ),
                 color=color,
@@ -80,7 +81,7 @@ class Rolls(commands.Cog):
         else:
             embed = discord.Embed(
                 title=f"{emoji} {mob['name']}",
-                description=f"**Rarity:** {mob['rarity']}",
+                description=f"**Rarity:** {mob['rarity']}\n*{mob.get('lore', '')}*",
                 color=color,
             )
 
