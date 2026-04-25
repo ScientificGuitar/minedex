@@ -26,12 +26,14 @@ class PlayerSnapshot:
         self.emeralds = user.emeralds if user else 0
         self.trading_hall_level = user.trading_hall_level if user else 0
 
-        # Lifetime statistics
-        self.total_rolls = user.total_rolls if user else 0
-        self.total_claims = user.total_claims if user else 0
-        self.total_farmer_trades = user.total_farmer_trades if user else 0
-        self.total_cleric_trades = user.total_cleric_trades if user else 0
-        self.total_emeralds_gained = user.total_emeralds_gained if user else 0
+        # Lifetime statistics from normalized table
+        stats = UserDB.get_stats(session_factory, guild_id, user_id)
+        self.total_rolls = stats.total_rolls if stats else 0
+        self.total_claims = stats.total_claims if stats else 0
+        self.total_farmer_trades = stats.total_farmer_trades if stats else 0
+        self.total_cleric_trades = stats.total_cleric_trades if stats else 0
+        self.total_emeralds_gained = stats.total_emeralds_gained if stats else 0
+        self.total_mobs_traded = stats.total_mobs_traded if stats else 0
         self.total_trades = self.total_farmer_trades + self.total_cleric_trades
 
         # Load collection data
@@ -217,5 +219,6 @@ class AchievementService:
             "total_farmer_trades": snapshot.total_farmer_trades,
             "total_cleric_trades": snapshot.total_cleric_trades,
             "total_trades": snapshot.total_trades,
+            "total_mobs_traded": snapshot.total_mobs_traded,
             "total_emeralds_gained": snapshot.total_emeralds_gained,
         }

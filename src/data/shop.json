@@ -1,0 +1,58 @@
+{
+  "permanent_upgrades": {
+    "farmer": {
+      "name": "Farmer's License",
+      "description": "Unlocks the ability to trade duplicate mobs for emeralds.",
+      "price": 50,
+      "type": "villager_unlock",
+      "requirements": []
+    },
+    "cleric": {
+      "name": "Cleric's Ordination",
+      "description": "Unlocks the ability to convert duplicate mobs into magical roll tokens.",
+      "price": 100,
+      "type": "villager_unlock",
+      "requirements": []
+    },
+    "toolsmith": {
+      "name": "Toolsmith's Apprenticeship",
+      "description": "Unlocks 1 free reroll per day to correct your luck.",
+      "price": 250,
+      "type": "villager_unlock",
+      "requirements": []
+    },
+    "librarian": {
+      "name": "Librarian's Membership",
+      "description": "Unlocks 1 focused roll per day (guarantees no common mobs).",
+      "price": 500,
+      "type": "villager_unlock",
+      "requirements": []
+    }
+  },
+  "consumables": {
+    "uncommon_token": {
+      "name": "Uncommon Roll Token",
+      "description": "A single-use token that guarantees an Uncommon mob on your next roll.",
+      "price": 30,
+      "type": "token",
+      "rarity": "Uncommon",
+      "item_id": "uncommon"
+    },
+    "rare_token": {
+      "name": "Rare Roll Token",
+      "description": "A single-use token that guarantees a Rare mob on your next roll.",
+      "price": 75,
+      "type": "token",
+      "rarity": "Rare",
+      "item_id": "rare"
+    },
+    "epic_token": {
+      "name": "Epic Roll Token",
+      "description": "A single-use token that guarantees an Epic mob on your next roll.",
+      "price": 150,
+      "type": "token",
+      "rarity": "Epic",
+      "item_id": "epic"
+    }
+  }
+}

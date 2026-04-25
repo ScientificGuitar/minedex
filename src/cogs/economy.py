@@ -109,11 +109,3 @@ class Economy(commands.Cog):
 
 async def setup(bot):
     await bot.add_cog(Economy(bot))
-
-
-def same_utc_day(ts1: int | None, ts2: int | None) -> bool:
-    if ts1 is None or ts2 is None:
-        return False
-    d1 = datetime.fromtimestamp(ts1, tz=timezone.utc).date()
-    d2 = datetime.fromtimestamp(ts2, tz=timezone.utc).date()
-    return d1 == d2

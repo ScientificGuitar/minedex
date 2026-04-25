@@ -4,15 +4,21 @@ from typing import Any, Dict, List, Optional, Tuple
 from constants import RARITY_WEIGHTS
 from database.collection import Collection as CollectionDB
 from database.inventory import Inventory as InventoryDB
-from database.user import User as UserDB
-from database.user import same_utc_day
+from database.user import User as UserDB, is_same_game_day
 
 
 class EconomyService:
-    def __init__(self, mobs: Dict[str, Dict], mobs_by_rarity: Dict[str, List[str]], items: Dict[str, Dict]):
+    def __init__(self, mobs: Dict[str, Dict], mobs_by_rarity: Dict[str, List[str]], items: Dict[str, Dict], raid_service=None):
         self.mobs = mobs
         self.mobs_by_rarity = mobs_by_rarity
         self.items = items
+        self.raid_service = raid_service
+
+    def add_emeralds(self, session_factory, guild_id: int, user_id: int, amount: int) -> None:
+        """Add emeralds and check for raid trigger."""
+        UserDB.add_emeralds(session_factory, guild_id, user_id, amount)
+        if self.raid_service and amount > 0:
+            self.raid_service.check_spawn_trigger(session_factory, guild_id)
 
     def get_user_balance(self, session_factory, guild_id: int, user_id: int) -> int:
         """Get user's emerald balance."""
@@ -48,14 +54,14 @@ class EconomyService:
         user = UserDB.get_user(session_factory, guild_id, user_id)
         last_daily_claim_at = user.last_daily_at if user else None
 
-        if same_utc_day(last_daily_claim_at, now):
+        if is_same_game_day(last_daily_claim_at, now):
             return {"error": "You've already claimed today."}
 
         emeralds = random.randint(2, 5)
         mob_id, mob = self.roll_random_mob(allowed={"Common"})
 
         UserDB.update_last_daily_at(session_factory, guild_id, user_id, now)
-        UserDB.add_emeralds(session_factory, guild_id, user_id, emeralds)
+        self.add_emeralds(session_factory, guild_id, user_id, emeralds)
         CollectionDB.add_to_collection(session_factory, guild_id, user_id, mob_id)
 
         return {"emeralds": emeralds, "mob": mob}

@@ -24,14 +24,10 @@ class TestTradeService:
     def test_can_trade_with_farmer_success(self, mock_session_factory):
         """Test successful farmer trade check."""
         with (
-            patch("services.trade_service.UserDB.get_user") as mock_user,
+            patch("services.trade_service.UserDB.is_villager_unlocked", return_value=True),
             patch("services.trade_service.CollectionDB.get_mob_count") as mock_count,
         ):
-            mock_user_obj = MagicMock()
-            mock_user_obj.trading_hall_level = 1
-            mock_user.return_value = mock_user_obj
             mock_count.return_value = 5
-
             result = self.service.can_trade_with_farmer(mock_session_factory, 123, 456, "zombie", 3)
 
         assert result["can_trade"] is True
@@ -40,14 +36,10 @@ class TestTradeService:
     def test_can_trade_with_farmer_no_duplicates(self, mock_session_factory):
         """Test farmer trade with no duplicate mobs."""
         with (
-            patch("services.trade_service.UserDB.get_user") as mock_user,
+            patch("services.trade_service.UserDB.is_villager_unlocked", return_value=True),
             patch("services.trade_service.CollectionDB.get_mob_count") as mock_count,
         ):
-            mock_user_obj = MagicMock()
-            mock_user_obj.trading_hall_level = 1
-            mock_user.return_value = mock_user_obj
             mock_count.return_value = 1
-
             result = self.service.can_trade_with_farmer(mock_session_factory, 123, 456, "zombie", 1)
 
         assert result["can_trade"] is False
@@ -55,11 +47,7 @@ class TestTradeService:
 
     def test_can_trade_with_farmer_no_level(self, mock_session_factory):
         """Test farmer trade when farmer not unlocked."""
-        with patch("services.trade_service.UserDB.get_user") as mock_user:
-            mock_user_obj = MagicMock()
-            mock_user_obj.trading_hall_level = 0
-            mock_user.return_value = mock_user_obj
-
+        with patch("services.trade_service.UserDB.is_villager_unlocked", return_value=False):
             result = self.service.can_trade_with_farmer(mock_session_factory, 123, 456, "zombie", 1)
 
         assert result["can_trade"] is False
@@ -77,6 +65,8 @@ class TestTradeService:
         with (
             patch("services.trade_service.CollectionDB.remove_mob"),
             patch("services.trade_service.UserDB.add_emeralds"),
+            patch("services.trade_service.UserDB.increment_total_farmer_trades"),
+            patch("services.trade_service.UserDB.add_emeralds_gained"),
         ):
             result = self.service.perform_farmer_trade(mock_session_factory, 123, 456, "zombie", 3, 30)
 
@@ -85,14 +75,10 @@ class TestTradeService:
     def test_can_trade_with_cleric_success(self, mock_session_factory):
         """Test successful cleric trade check."""
         with (
-            patch("services.trade_service.UserDB.get_user") as mock_user,
+            patch("services.trade_service.UserDB.is_villager_unlocked", return_value=True),
             patch("services.trade_service.CollectionDB.get_mob_count") as mock_count,
         ):
-            mock_user_obj = MagicMock()
-            mock_user_obj.trading_hall_level = 2
-            mock_user.return_value = mock_user_obj
             mock_count.return_value = 6
-
             result = self.service.can_trade_with_cleric(mock_session_factory, 123, 456, "zombie", 4)
 
         assert result["can_trade"] is True
@@ -100,14 +86,10 @@ class TestTradeService:
     def test_can_trade_with_cleric_odd_amount(self, mock_session_factory):
         """Test cleric trade with odd number of mobs."""
         with (
-            patch("services.trade_service.UserDB.get_user") as mock_user,
+            patch("services.trade_service.UserDB.is_villager_unlocked", return_value=True),
             patch("services.trade_service.CollectionDB.get_mob_count") as mock_count,
         ):
-            mock_user_obj = MagicMock()
-            mock_user_obj.trading_hall_level = 2
-            mock_user.return_value = mock_user_obj
             mock_count.return_value = 6
-
             result = self.service.can_trade_with_cleric(mock_session_factory, 123, 456, "zombie", 3)
 
         assert result["can_trade"] is False
@@ -125,6 +107,7 @@ class TestTradeService:
         with (
             patch("services.trade_service.CollectionDB.remove_mob"),
             patch("services.trade_service.InventoryDB.add_to_inventory"),
+            patch("services.trade_service.UserDB.increment_total_cleric_trades"),
         ):
             result = self.service.perform_cleric_trade(mock_session_factory, 123, 456, "zombie", 4, "uncommon", 2)
 
@@ -132,9 +115,8 @@ class TestTradeService:
 
     def test_can_trade_with_farmer_amount_exceeds_count(self, mock_session_factory):
         """Test farmer trade when amount exceeds available mobs."""
-        user = SimpleNamespace(trading_hall_level=1)
         with (
-            patch("services.trade_service.UserDB.get_user", return_value=user),
+            patch("services.trade_service.UserDB.is_villager_unlocked", return_value=True),
             patch("services.trade_service.CollectionDB.get_mob_count", return_value=3),
         ):
             result = self.service.can_trade_with_farmer(mock_session_factory, 123, 456, "zombie", 5)
@@ -144,8 +126,7 @@ class TestTradeService:
 
     def test_can_trade_with_cleric_nonexistent_mob(self, mock_session_factory):
         """Test cleric trade with non-existent mob."""
-        user = SimpleNamespace(trading_hall_level=2)
-        with patch("services.trade_service.UserDB.get_user", return_value=user):
+        with patch("services.trade_service.UserDB.is_villager_unlocked", return_value=True):
             result = self.service.can_trade_with_cleric(mock_session_factory, 123, 456, "nonexistent_mob", 4)
 
         assert result["can_trade"] is False
@@ -153,9 +134,8 @@ class TestTradeService:
 
     def test_can_trade_with_cleric_amount_exceeds_count(self, mock_session_factory):
         """Test cleric trade when amount exceeds available mobs."""
-        user = SimpleNamespace(trading_hall_level=2)
         with (
-            patch("services.trade_service.UserDB.get_user", return_value=user),
+            patch("services.trade_service.UserDB.is_villager_unlocked", return_value=True),
             patch("services.trade_service.CollectionDB.get_mob_count", return_value=3),
         ):
             result = self.service.can_trade_with_cleric(mock_session_factory, 123, 456, "zombie", 4)
@@ -165,9 +145,8 @@ class TestTradeService:
 
     def test_can_trade_with_cleric_exact_minimum(self, mock_session_factory):
         """Test cleric trade with exact minimum duplicates (needs 3+ total)."""
-        user = SimpleNamespace(trading_hall_level=2)
         with (
-            patch("services.trade_service.UserDB.get_user", return_value=user),
+            patch("services.trade_service.UserDB.is_villager_unlocked", return_value=True),
             patch("services.trade_service.CollectionDB.get_mob_count", return_value=5),
         ):
             result = self.service.can_trade_with_cleric(mock_session_factory, 123, 456, "zombie", 2)
@@ -187,6 +166,8 @@ class TestTradeService:
         with (
             patch("services.trade_service.CollectionDB.remove_mob") as mock_remove,
             patch("services.trade_service.UserDB.add_emeralds") as mock_reward,
+            patch("services.trade_service.UserDB.increment_total_farmer_trades"),
+            patch("services.trade_service.UserDB.add_emeralds_gained"),
         ):
             result = self.service.perform_farmer_trade(mock_session_factory, 123, 456, "zombie", 2, 20)
 

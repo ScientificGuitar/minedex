@@ -1,7 +1,7 @@
-from datetime import datetime, timezone
-from zoneinfo import ZoneInfo
+from datetime import datetime, time, timezone
 
-from .db import User as UserModel
+from constants import GLOBAL_RESET_HOUR
+from .db import User as UserModel, UserStatistics as StatsModel
 
 
 class User:
@@ -14,6 +14,9 @@ class User:
                 user = UserModel(guild_id=guild_id, user_id=user_id)
                 session.add(user)
                 session.commit()
+            
+            # Also ensure stats entry exists
+            User.ensure_stats(session_factory, guild_id, user_id)
 
     @staticmethod
     def get_user(session_factory, guild_id: int, user_id: int) -> UserModel | None:
@@ -30,7 +33,7 @@ class User:
             if user is None or user.last_focus_roll_at is None:
                 return False
 
-            return same_utc_day(user.last_focus_roll_at, now_ts, user.timezone)
+            return is_same_game_day(user.last_focus_roll_at, now_ts)
 
     @staticmethod
     def record_roll(session_factory, guild_id: int, user_id: int, now_ts: int) -> None:
@@ -94,99 +97,122 @@ class User:
             return user.emeralds if user else None
 
     @staticmethod
-    def get_trading_hall_level(session_factory, guild_id: int, user_id: int) -> int | None:
-        """Get the trading hall level for a user."""
+    def get_unlocked_villagers(session_factory, guild_id: int, user_id: int) -> list[str]:
+        """Get the list of unlocked villager IDs for a user."""
         with session_factory() as session:
             user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
-            return user.trading_hall_level if user else None
+            if not user or not user.unlocked_villagers:
+                return []
+            return [v.strip() for v in user.unlocked_villagers.split(",") if v.strip()]
 
     @staticmethod
-    def upgrade_trading_hall(session_factory, guild_id: int, user_id: int) -> None:
-        """Upgrade a user's trading hall level."""
+    def unlock_villager(session_factory, guild_id: int, user_id: int, villager_id: str) -> None:
+        """Unlock a villager for a user."""
         with session_factory() as session:
             user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
             if user:
-                user.trading_hall_level += 1
+                unlocked = User.get_unlocked_villagers(session_factory, guild_id, user_id)
+                if villager_id not in unlocked:
+                    unlocked.append(villager_id)
+                    user.unlocked_villagers = ",".join(unlocked)
+                    user.trading_hall_level = len(unlocked)
                 session.commit()
 
     @staticmethod
-    def get_timezone(session_factory, guild_id: int, user_id: int) -> str | None:
-        """Get the timezone for a user."""
-        with session_factory() as session:
-            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
-            return user.timezone if user else None
+    def is_villager_unlocked(session_factory, guild_id: int, user_id: int, villager_id: str) -> bool:
+        """Check if a villager is unlocked for a user."""
+        unlocked = User.get_unlocked_villagers(session_factory, guild_id, user_id)
+        return villager_id in unlocked
 
     @staticmethod
-    def set_timezone(session_factory, guild_id: int, user_id: int, timezone: str) -> None:
-        """Set the timezone for a user."""
+    def ensure_stats(session_factory, guild_id: int, user_id: int) -> None:
+        """Ensure stats entry exists for user."""
         with session_factory() as session:
-            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
-            if user:
-                user.timezone = timezone
+            stats = session.query(StatsModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if not stats:
+                stats = StatsModel(guild_id=guild_id, user_id=user_id)
+                session.add(stats)
                 session.commit()
+
+    @staticmethod
+    def get_stats(session_factory, guild_id: int, user_id: int) -> StatsModel | None:
+        """Get user statistics."""
+        with session_factory() as session:
+            return session.query(StatsModel).filter_by(guild_id=guild_id, user_id=user_id).first()
 
     @staticmethod
     def increment_total_rolls(session_factory, guild_id: int, user_id: int) -> None:
         """Increment the total rolls counter."""
+        User.ensure_stats(session_factory, guild_id, user_id)
         with session_factory() as session:
-            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
-            if user:
-                user.total_rolls += 1
+            stats = session.query(StatsModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if stats:
+                stats.total_rolls += 1
                 session.commit()
 
     @staticmethod
     def increment_total_claims(session_factory, guild_id: int, user_id: int) -> None:
         """Increment the total claims counter."""
+        User.ensure_stats(session_factory, guild_id, user_id)
         with session_factory() as session:
-            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
-            if user:
-                user.total_claims += 1
+            stats = session.query(StatsModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if stats:
+                stats.total_claims += 1
                 session.commit()
 
     @staticmethod
     def increment_total_farmer_trades(session_factory, guild_id: int, user_id: int) -> None:
         """Increment the total farmer trades counter."""
+        User.ensure_stats(session_factory, guild_id, user_id)
         with session_factory() as session:
-            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
-            if user:
-                user.total_farmer_trades += 1
+            stats = session.query(StatsModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if stats:
+                stats.total_farmer_trades += 1
                 session.commit()
 
     @staticmethod
     def increment_total_cleric_trades(session_factory, guild_id: int, user_id: int) -> None:
         """Increment the total cleric trades counter."""
+        User.ensure_stats(session_factory, guild_id, user_id)
         with session_factory() as session:
-            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
-            if user:
-                user.total_cleric_trades += 1
+            stats = session.query(StatsModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if stats:
+                stats.total_cleric_trades += 1
                 session.commit()
 
     @staticmethod
     def add_emeralds_gained(session_factory, guild_id: int, user_id: int, amount: int) -> None:
         """Add to the total emeralds gained (for stats tracking)."""
+        User.ensure_stats(session_factory, guild_id, user_id)
         with session_factory() as session:
-            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
-            if user:
-                user.total_emeralds_gained += amount
+            stats = session.query(StatsModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if stats:
+                stats.total_emeralds_gained += amount
                 session.commit()
 
     @staticmethod
     def add_mobs_traded(session_factory, guild_id: int, user_id: int, amount: int) -> None:
         """Add to the total mobs traded counter."""
+        User.ensure_stats(session_factory, guild_id, user_id)
         with session_factory() as session:
-            user = session.query(UserModel).filter_by(guild_id=guild_id, user_id=user_id).first()
-            if user:
-                user.total_mobs_traded += amount
+            stats = session.query(StatsModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            if stats:
+                stats.total_mobs_traded += amount
                 session.commit()
 
 
-def same_utc_day(ts1: int | None, ts2: int | None, tz_str: str | None = None) -> bool:
-    """Check if two timestamps are on the same day in the given timezone (or UTC if None)."""
+def is_same_game_day(ts1: int | None, ts2: int | None) -> bool:
+    """Check if two timestamps are in the same game day (resetting at GLOBAL_RESET_HOUR UTC)."""
     if ts1 is None or ts2 is None:
         return False
 
-    tz = ZoneInfo(tz_str) if tz_str else timezone.utc
+    dt1 = datetime.fromtimestamp(ts1, tz=timezone.utc)
+    dt2 = datetime.fromtimestamp(ts2, tz=timezone.utc)
 
-    d1 = datetime.fromtimestamp(ts1, tz=tz).date()
-    d2 = datetime.fromtimestamp(ts2, tz=tz).date()
-    return d1 == d2
+    # Adjusted date: if time is before reset hour, it belongs to the previous calendar day
+    def get_game_date(dt: datetime):
+        if dt.hour < GLOBAL_RESET_HOUR:
+            return dt.date().toordinal() - 1
+        return dt.date().toordinal()
+
+    return get_game_date(dt1) == get_game_date(dt2)

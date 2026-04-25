@@ -1,0 +1,30 @@
+{
+  "merchants_monocle": {
+    "name": "Merchant's Monocle",
+    "description": "Increases Emerald sell value of duplicate mobs by 20% for the next 5 trades.",
+    "medal_cost": 50,
+    "type": "boost",
+    "effect": "farmer_boost"
+  },
+  "haste_potion": {
+    "name": "Haste Potion",
+    "description": "Reduces standard roll cooldown by 30 minutes for the rest of the day.",
+    "medal_cost": 40,
+    "type": "boost",
+    "effect": "cooldown_reduction"
+  },
+  "token_finders_compass": {
+    "name": "Token Finder's Compass",
+    "description": "15% chance to receive a bonus second token when performing a Cleric trade for the next 24 hours.",
+    "medal_cost": 60,
+    "type": "boost",
+    "effect": "cleric_double_token"
+  },
+  "focus_scroll": {
+    "name": "Focus Scroll",
+    "description": "Grants one extra 'Focus Roll' (ignoring common mobs) that doesn't count against your daily limit.",
+    "medal_cost": 100,
+    "type": "consumable",
+    "effect": "extra_focus_roll"
+  }
+}

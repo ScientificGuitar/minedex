@@ -44,6 +44,7 @@ class TestEconomyService:
             patch("services.economy_service.UserDB.update_last_daily_at"),
             patch("services.economy_service.UserDB.add_emeralds"),
             patch("services.economy_service.CollectionDB.add_to_collection"),
+            patch("services.economy_service.is_same_game_day", return_value=False),
         ):
             result = self.service.claim_daily_reward(mock_session_factory, 123, 456, int(time.time()))
 
@@ -87,8 +88,11 @@ class TestEconomyService:
     def test_claim_daily_reward_already_claimed(self, mock_session_factory, mock_user_factory):
         """Test claiming daily reward when already claimed today."""
         now = int(time.time())
-        user = mock_user_factory(last_daily_at=now - 3600)  # Claimed 1 hour ago (same day)
-        with patch("services.economy_service.UserDB.get_user", return_value=user):
+        user = mock_user_factory(last_daily_at=now - 3600)  # Claimed 1 hour ago
+        with (
+            patch("services.economy_service.UserDB.get_user", return_value=user),
+            patch("services.economy_service.is_same_game_day", return_value=True),
+        ):
             result = self.service.claim_daily_reward(mock_session_factory, 123, 456, now)
 
         assert "error" in result
@@ -125,15 +129,11 @@ class TestEconomyService:
         item = self.service.get_item_info("item_with_underscore_123")
         assert item is None
 
-    def test_get_item_info(self, mock_mobs, mock_mobs_by_rarity, mock_items):
-        """Test getting item information."""
+    def test_get_item_info_epic(self, mock_mobs, mock_mobs_by_rarity, mock_items):
+        """Test getting item information for epic token."""
         service = EconomyService(mock_mobs, mock_mobs_by_rarity, mock_items)
         item = service.get_item_info("epic")
 
         assert item["name"] == "Epic Roll Token"
         assert item["type"] == "token"
         assert item["rarity"] == "Epic"
-
-        # Test non-existing item
-        item = service.get_item_info("nonexistent")
-        assert item is None

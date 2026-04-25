@@ -1,6 +1,5 @@
 from typing import Dict
 
-from constants import CLERIC_RARITY_TO_TOKEN, FARMER_EMERALD_VALUES
 from database.collection import Collection as CollectionDB
 from database.inventory import Inventory as InventoryDB
 from database.user import User as UserDB
@@ -14,10 +13,7 @@ class TradeService:
 
     def can_trade_with_farmer(self, session_factory, guild_id: int, user_id: int, mob_id: str, mob_amount: int) -> Dict:
         """Check if user can trade with farmer."""
-        user = UserDB.get_user(session_factory, guild_id, user_id)
-        user_trading_hall_level = user.trading_hall_level if user else 0
-
-        if user_trading_hall_level < self.villagers["farmer"]["level"]:
+        if not UserDB.is_villager_unlocked(session_factory, guild_id, user_id, "farmer"):
             return {
                 "can_trade": False,
                 "error": "Your village doesn't have a Farmer yet! Upgrade your Trading Hall to trade your duplicate mobs for emeralds!",
@@ -44,8 +40,7 @@ class TradeService:
 
     def calculate_farmer_trade(self, mob: Dict, mob_amount: int) -> Dict:
         """Calculate what the farmer trade gives."""
-        rarity = mob["rarity"]
-        value_per = FARMER_EMERALD_VALUES[rarity]
+        value_per = mob.get("farmer_value", 0)
         emeralds = mob_amount * value_per
 
         return {"mob": mob, "mob_amount": mob_amount, "emeralds": emeralds, "value_per": value_per}
@@ -61,15 +56,13 @@ class TradeService:
         # Track stats
         UserDB.increment_total_farmer_trades(session_factory, guild_id, user_id)
         UserDB.add_emeralds_gained(session_factory, guild_id, user_id, emeralds)
+        UserDB.add_mobs_traded(session_factory, guild_id, user_id, mob_amount)
 
         return {"success": True}
 
     def can_trade_with_cleric(self, session_factory, guild_id: int, user_id: int, mob_id: str, mob_amount: int) -> Dict:
         """Check if user can trade with cleric."""
-        user = UserDB.get_user(session_factory, guild_id, user_id)
-        user_trading_hall_level = user.trading_hall_level if user else 0
-
-        if user_trading_hall_level < self.villagers["cleric"]["level"]:
+        if not UserDB.is_villager_unlocked(session_factory, guild_id, user_id, "cleric"):
             return {
                 "can_trade": False,
                 "error": "Your village doesn't have a Cleric yet! Upgrade your Trading Hall to trade your duplicate mobs for tokens!",
@@ -98,15 +91,19 @@ class TradeService:
                 "error": "The Cleric only accepts **pairs of duplicates**.\n_Trade 2 mobs to receive 1 roll token._",
             }
 
+        if not mob.get("token_reward"):
+            return {
+                "can_trade": False,
+                "error": "The Cleric is not interested in this mob. Some rare mobs cannot be converted into tokens.",
+            }
+
         return {"can_trade": True, "mob": mob}
 
     def calculate_cleric_trade(self, mob: Dict, mob_amount: int) -> Dict:
         """Calculate what the cleric trade gives."""
-        mob_rarity = mob["rarity"]
-        token_rarity = CLERIC_RARITY_TO_TOKEN[mob_rarity]
-        token_id = token_rarity
+        token_id = mob.get("token_reward")
         token_count = mob_amount // 2
-        token = self.items[token_id]
+        token = self.items.get(token_id)
 
         return {"mob": mob, "mob_amount": mob_amount, "token": token, "token_id": token_id, "token_count": token_count}
 
@@ -127,5 +124,6 @@ class TradeService:
         InventoryDB.add_to_inventory(session_factory, guild_id, user_id, token_id, token_count)
         # Track stats
         UserDB.increment_total_cleric_trades(session_factory, guild_id, user_id)
+        UserDB.add_mobs_traded(session_factory, guild_id, user_id, mob_amount)
 
         return {"success": True}

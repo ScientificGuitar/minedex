@@ -1,13 +1,20 @@
+import json
+import os
 from discord import Colour
 
-RARITY_WEIGHTS = {"Common": 55, "Uncommon": 25, "Rare": 13, "Epic": 6, "Legendary": 1}
-RARITY_EMERALD_REWARDS = {
-    "Common": 2,
-    "Uncommon": 5,
-    "Rare": 10,
-    "Epic": 20,
-    "Legendary": 50,
-}
+# Load balancing data
+BALANCING_FILE = os.path.join(os.path.dirname(__file__), "data", "balancing.json")
+
+def load_balancing():
+    with open(BALANCING_FILE, "r") as f:
+        return json.load(f)
+
+balancing = load_balancing()
+
+RARITY_WEIGHTS = balancing["rarity_weights"]
+GLOBAL_RESET_HOUR = balancing.get("global_reset_hour", 0)
+
+# UI Constants (Keep in code as they are not balance-related)
 RARITY_EMOJIS = {
     "Common": ":white_circle:",
     "Uncommon": ":green_circle:",
@@ -23,33 +30,5 @@ RARITY_COLORS = {
     "Legendary": Colour.orange(),
 }
 
-RARITY_BUCKET_TOTALS = {
-    "Common": 100,
-    "Uncommon": 175,
-    "Rare": 300,
-    "Epic": 500,
-    "Legendary": 800,
-}
-
-RARITY_COMPLETION_BONUS = {
-    "Common": 25,
-    "Uncommon": 50,
-    "Rare": 100,
-    "Epic": 175,
-    "Legendary": 300,
-}
-
-FULL_COLLECTION_BONUS = 500
-
 TRADING_HALL_ORDER = ["farmer", "cleric", "toolsmith", "librarian"]
-
 VALID_TOKEN_RARITIES = ["uncommon", "rare", "epic"]
-
-FARMER_EMERALD_VALUES = {
-    "Common": 5,
-    "Uncommon": 20,
-    "Rare": 50,
-    "Epic": 100,
-    "Legendary": 200,
-}
-CLERIC_RARITY_TO_TOKEN = {"Common": "uncommon", "Uncommon": "rare", "Rare": "epic"}

@@ -9,7 +9,6 @@ import pytest
 # Add src directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from constants import FULL_COLLECTION_BONUS, RARITY_BUCKET_TOTALS, RARITY_COMPLETION_BONUS
 from services.collection_service import CollectionService
 
 
@@ -94,6 +93,7 @@ class TestCollectionService:
         assert result["total_entries"] == 2
         assert result["current_page"] == 1
         assert "entries" in result
+        assert "completion_pct" in result
 
     def test_build_collection_embed_data_invalid_page(self):
         """Test building embed data with invalid page."""
@@ -128,11 +128,13 @@ class TestCollectionService:
         assert "error" in result
         assert "No mobs found for rarity" in result["error"]
 
-    def test_calculate_collection_value_score(self):
-        """Test calculating weighted collection value from a unique mob set."""
-        common_mob_id = self.service.mobs_by_rarity["Common"][0]
-        result = self.service.calculate_collection_value_score([{"mob_id": common_mob_id, "amount": 1}])
-        expected = int(round(RARITY_BUCKET_TOTALS["Common"] / len(self.service.mobs_by_rarity["Common"])))
+    def test_calculate_completion_percentage(self):
+        """Test calculating completion percentage."""
+        total_mobs = len(self.service.mobs)
+        rows = [{"mob_id": list(self.service.mobs.keys())[0], "amount": 1}]
+        
+        result = self.service.calculate_completion_percentage(rows)
+        expected = (1 / total_mobs) * 100
 
         assert result == expected
 
@@ -156,29 +158,7 @@ class TestCollectionService:
 
         assert result["emeralds"][0]["user_id"] == 111
         assert result["completion"][0]["user_id"] == 111
-        assert result["value"][0]["user_id"] == 111
-
-    def test_calculate_collection_value_score_applies_rarity_completion_bonus(self):
-        """Rarity completion awards the configured bonus when all rarity mobs are owned."""
-        common_ids = self.service.mobs_by_rarity["Common"]
-        rows = [{"mob_id": mob_id, "amount": 1} for mob_id in common_ids]
-
-        expected_score = sum(RARITY_BUCKET_TOTALS["Common"] / len(common_ids) for _ in common_ids)
-        expected_score += RARITY_COMPLETION_BONUS["Common"]
-
-        assert self.service.calculate_collection_value_score(rows) == int(round(expected_score))
-
-    def test_calculate_collection_value_score_applies_full_collection_bonus(self):
-        """Owning every unique mob grants the full collection bonus."""
-        rows = [{"mob_id": mob_id, "amount": 1} for mob_id in self.service.mobs]
-
-        expected_score = 0.0
-        for rarity, mob_ids in self.service.mobs_by_rarity.items():
-            expected_score += len(mob_ids) * (RARITY_BUCKET_TOTALS[rarity] / len(mob_ids))
-            expected_score += RARITY_COMPLETION_BONUS[rarity]
-        expected_score += FULL_COLLECTION_BONUS
-
-        assert self.service.calculate_collection_value_score(rows) == int(round(expected_score))
+        assert "completion_pct" in result["completion"][0]
 
     def test_get_leaderboards_includes_empty_collection_users(self, mock_session_factory):
         """Users with emeralds but no collection should still appear in leaderboards."""
@@ -198,7 +178,7 @@ class TestCollectionService:
         assert result["emeralds"][0]["emeralds"] == 150
         assert result["completion"][0]["unique_count"] == 0
         assert result["completion"][0]["total_count"] == 0
-        assert result["value"][0]["collection_value"] == 0
+        assert result["completion"][0]["completion_pct"] == 0.0
 
     def test_get_leaderboards_completion_sort_by_total_count(self, mock_session_factory):
         """Completion leaderboard should sort by unique count then total count."""

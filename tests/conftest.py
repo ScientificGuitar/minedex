@@ -63,6 +63,93 @@ def mock_villagers():
     }
 
 
+@pytest.fixture(scope="session")
+def mock_shop_data():
+    """Fixture for mock shop data."""
+    return {
+        "permanent_upgrades": {
+            "farmer": {
+                "name": "Farmer",
+                "description": "Trades mobs for emeralds",
+                "price": 100,
+                "type": "villager_unlock",
+                "requirements": []
+            },
+            "cleric": {
+                "name": "Cleric",
+                "description": "Trades mobs for tokens",
+                "price": 200,
+                "type": "villager_unlock",
+                "requirements": ["farmer"]
+            }
+        },
+        "consumables": {
+            "token": {
+                "name": "Token",
+                "description": "Single-use token",
+                "price": 50,
+                "type": "token",
+                "item_id": "rare"
+            }
+        }
+    }
+
+
+@pytest.fixture(scope="session")
+def mock_artifacts():
+    """Fixture for mock artifact data."""
+    return {
+        "merchants_monocle": {
+            "name": "Merchant's Monocle",
+            "description": "Increases Emerald sell value",
+            "medal_cost": 50,
+            "type": "boost",
+            "effect": "farmer_boost"
+        }
+    }
+
+
+@pytest.fixture(scope="session")
+def mock_bosses():
+    """Fixture for mock boss data."""
+    return {
+        "config": {
+            "spawn_threshold_emeralds": 1000,
+            "player_donation_limit_per_phase": 5,
+            "raid_duration_hours": 48
+        },
+        "bosses": {
+            "wither": {
+                "name": "The Wither",
+                "image": "image_url",
+                "phases": [
+                    {
+                        "id": 1,
+                        "type": "tag",
+                        "description": "Phase 1",
+                        "target_power_multiplier": 50,
+                        "possible_tags": ["undead"]
+                    },
+                    {
+                        "id": 2,
+                        "type": "rarity_limit",
+                        "description": "Phase 2",
+                        "target_power_multiplier": 100,
+                        "allowed_rarities": ["Common", "Uncommon"]
+                    },
+                    {
+                        "id": 3,
+                        "type": "rarity_min",
+                        "description": "Phase 3",
+                        "target_power_multiplier": 200,
+                        "allowed_rarities": ["Epic", "Legendary"]
+                    }
+                ]
+            }
+        }
+    }
+
+
 @pytest.fixture
 def mock_session_factory():
     """Fixture for mock database session factory."""
@@ -71,22 +158,22 @@ def mock_session_factory():
 
 def create_mock_user(
     trading_hall_level=0,
+    unlocked_villagers="",
     last_claim_at=None,
     last_reroll_at=None,
     last_daily_at=None,
     last_roll_at=None,
-    timezone=None,
-    balance=1000,
+    emeralds=1000,
 ):
     """Factory for creating mock user objects with sensible defaults."""
     return SimpleNamespace(
         trading_hall_level=trading_hall_level,
+        unlocked_villagers=unlocked_villagers,
         last_claim_at=last_claim_at,
         last_reroll_at=last_reroll_at,
         last_daily_at=last_daily_at,
         last_roll_at=last_roll_at,
-        timezone=timezone,
-        balance=balance,
+        emeralds=emeralds,
     )
 
 
