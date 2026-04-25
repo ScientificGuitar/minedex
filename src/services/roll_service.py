@@ -16,11 +16,13 @@ class RollService:
         mobs_by_rarity: Dict[str, List[str]],
         villagers: Dict[str, Dict],
         items: Dict[str, Dict],
+        raid_service=None,
     ):
         self.mobs = mobs
         self.mobs_by_rarity = mobs_by_rarity
         self.villagers = villagers
         self.items = items
+        self.raid_service = raid_service
 
         # Strategy mapping
         self._strategies = {
@@ -100,6 +102,10 @@ class RollService:
         UserDB.add_emeralds(session_factory, guild_id, user_id, reward)
         UserDB.increment_total_claims(session_factory, guild_id, user_id)
         UserDB.add_emeralds_gained(session_factory, guild_id, user_id, reward)
+
+        # Check for raid trigger
+        if self.raid_service and reward > 0:
+            self.raid_service.check_spawn_trigger(session_factory, guild_id)
 
         return reward
 

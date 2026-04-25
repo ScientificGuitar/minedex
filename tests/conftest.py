@@ -95,6 +95,61 @@ def mock_shop_data():
     }
 
 
+@pytest.fixture(scope="session")
+def mock_artifacts():
+    """Fixture for mock artifact data."""
+    return {
+        "merchants_monocle": {
+            "name": "Merchant's Monocle",
+            "description": "Increases Emerald sell value",
+            "medal_cost": 50,
+            "type": "boost",
+            "effect": "farmer_boost"
+        }
+    }
+
+
+@pytest.fixture(scope="session")
+def mock_bosses():
+    """Fixture for mock boss data."""
+    return {
+        "config": {
+            "spawn_threshold_emeralds": 1000,
+            "player_donation_limit_per_phase": 5,
+            "raid_duration_hours": 48
+        },
+        "bosses": {
+            "wither": {
+                "name": "The Wither",
+                "image": "image_url",
+                "phases": [
+                    {
+                        "id": 1,
+                        "type": "tag",
+                        "description": "Phase 1",
+                        "target_power_multiplier": 50,
+                        "possible_tags": ["undead"]
+                    },
+                    {
+                        "id": 2,
+                        "type": "rarity_limit",
+                        "description": "Phase 2",
+                        "target_power_multiplier": 100,
+                        "allowed_rarities": ["Common", "Uncommon"]
+                    },
+                    {
+                        "id": 3,
+                        "type": "rarity_min",
+                        "description": "Phase 3",
+                        "target_power_multiplier": 200,
+                        "allowed_rarities": ["Epic", "Legendary"]
+                    }
+                ]
+            }
+        }
+    }
+
+
 @pytest.fixture
 def mock_session_factory():
     """Fixture for mock database session factory."""

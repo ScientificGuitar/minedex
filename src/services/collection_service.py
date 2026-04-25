@@ -65,6 +65,32 @@ class CollectionService:
 
         return {"rarity": rarity, "mobs": mob_names, "count": len(mob_names)}
 
+    def get_user_mobs_by_tag(self, session_factory, guild_id: int, user_id: int, tag: str) -> Dict[str, Any]:
+        """Get user's owned mobs filtered by tag, sorted by power level."""
+        rows = self.get_user_collection(session_factory, guild_id, user_id)
+        tag = tag.lower()
+        
+        filtered_mobs = []
+        for row in rows:
+            mob_id = row["mob_id"]
+            mob_data = self.mobs.get(mob_id)
+            if mob_data and tag in mob_data.get("tags", []):
+                filtered_mobs.append({
+                    "id": mob_id,
+                    "name": mob_data["name"],
+                    "power": mob_data.get("base_power", 0),
+                    "amount": row["amount"]
+                })
+        
+        # Sort by power descending
+        filtered_mobs.sort(key=lambda m: m["power"], reverse=True)
+        
+        return {
+            "tag": tag,
+            "mobs": filtered_mobs,
+            "count": len(filtered_mobs)
+        }
+
     def get_mob_info(self, mob_id: str) -> Optional[Dict[str, Any]]:
         """Get information about a specific mob."""
         mob_id = mob_id.lower()

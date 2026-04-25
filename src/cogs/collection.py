@@ -169,7 +169,32 @@ class CollectionCog(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    def _build_embed_from_data(self, data, display_name):
+    @commands.command()
+    async def tags(self, ctx, mob_id: str):
+        mob = self.bot.collection_service.get_mob_info(mob_id)
+        if not mob:
+            await ctx.send("❌ That mob does not exist.")
+            return
+
+        rarity = mob["rarity"]
+        color = RARITY_COLORS[rarity]
+        tags = mob.get("tags", [])
+        power = mob.get("base_power", 0)
+
+        embed = discord.Embed(
+            title=f"🏷️ Mob Analysis: {mob['name']}",
+            description=f"*{mob.get('lore', '')}*",
+            color=color
+        )
+        embed.add_field(name="💪 Base Power", value=str(power), inline=True)
+        embed.add_field(name="🏷️ Tags", value=", ".join(tags) if tags else "None", inline=True)
+        embed.set_thumbnail(url=mob["image"])
+        embed.set_footer(text=f"Mob ID: {mob_id} | Rarity: {rarity}")
+
+        await ctx.send(embed=embed)
+
+    async def _all_mobs(self, ctx, page: int = 1):
+
         embed = discord.Embed(
             title=f"{display_name}'s Collection",
             colour=discord.Colour.green(),

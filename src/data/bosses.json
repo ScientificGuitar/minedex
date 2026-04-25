@@ -1,0 +1,63 @@
+{
+  "config": {
+    "spawn_threshold_emeralds": 1000,
+    "player_donation_limit_per_phase": 10,
+    "raid_duration_hours": 48
+  },
+  "bosses": {
+    "wither": {
+      "name": "The Wither",
+      "image": "https://minecraft.wiki/images/thumb/Wither_JE2_BE2.png/800px-Wither_JE2_BE2.png?60b11",
+      "phases": [
+        {
+          "id": 1,
+          "type": "tag",
+          "description": "The Breach: The Wither is absorbing energy! Donate mobs with specific traits to weaken its shield.",
+          "target_power_multiplier": 50,
+          "possible_tags": ["undead", "nether", "hostile"]
+        },
+        {
+          "id": 2,
+          "type": "rarity_limit",
+          "description": "The Sabotage: Flood the Wither's reach with weak energy. Donate Common, Uncommon, and Rare mobs.",
+          "target_power_multiplier": 80,
+          "allowed_rarities": ["Common", "Uncommon", "Rare"]
+        },
+        {
+          "id": 3,
+          "type": "rarity_min",
+          "description": "The Final Stand: Direct hit! Sacrificing your strongest mobs will finish the Wither once and for all.",
+          "target_power_multiplier": 150,
+          "allowed_rarities": ["Epic", "Legendary"]
+        }
+      ]
+    },
+    "warden": {
+      "name": "The Warden",
+      "image": "https://minecraft.wiki/images/Warden.gif?d0f99",
+      "phases": [
+        {
+          "id": 1,
+          "type": "tag",
+          "description": "Distraction: The Warden is listening. Donate mobs with specific traits to confuse its senses.",
+          "target_power_multiplier": 60,
+          "possible_tags": ["aquatic", "overworld", "animal"]
+        },
+        {
+          "id": 2,
+          "type": "rarity_limit",
+          "description": "The Silence: Cleanse the village of small threats. Donate Common, Uncommon, and Rare mobs.",
+          "target_power_multiplier": 100,
+          "allowed_rarities": ["Common", "Uncommon", "Rare"]
+        },
+        {
+          "id": 3,
+          "type": "rarity_min",
+          "description": "The Banishing: Exorcise the Deep Dark guardian with high-tier power.",
+          "target_power_multiplier": 200,
+          "allowed_rarities": ["Epic", "Legendary"]
+        }
+      ]
+    }
+  }
+}

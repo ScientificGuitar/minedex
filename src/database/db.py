@@ -130,3 +130,39 @@ class AchievementUnlock(Base):
             ondelete="CASCADE",
         ),
     )
+
+
+class Raid(Base):
+    __tablename__ = "raids"
+
+    guild_id: Mapped[int] = mapped_column(BigInteger, primary_key=True, nullable=False)
+    boss_id: Mapped[str] = mapped_column(String, nullable=False)
+    
+    current_phase: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    target_tag: Mapped[str | None] = mapped_column(String, nullable=True)
+    
+    current_power: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    target_power: Mapped[int] = mapped_column(Integer, nullable=False)
+    
+    spawned_at: Mapped[int] = mapped_column(Integer, nullable=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+
+
+class RaidContribution(Base):
+    __tablename__ = "raid_contributions"
+
+    guild_id: Mapped[int] = mapped_column(BigInteger, primary_key=True, nullable=False)
+    user_id: Mapped[int] = mapped_column(BigInteger, primary_key=True, nullable=False)
+    # Track contribution for the active raid in this guild
+    
+    total_power_donated: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    mobs_donated_this_phase: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    is_claimed: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["guild_id", "user_id"],
+            ["users.guild_id", "users.user_id"],
+            ondelete="CASCADE",
+        ),
+    )

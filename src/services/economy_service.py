@@ -8,10 +8,17 @@ from database.user import User as UserDB, is_same_game_day
 
 
 class EconomyService:
-    def __init__(self, mobs: Dict[str, Dict], mobs_by_rarity: Dict[str, List[str]], items: Dict[str, Dict]):
+    def __init__(self, mobs: Dict[str, Dict], mobs_by_rarity: Dict[str, List[str]], items: Dict[str, Dict], raid_service=None):
         self.mobs = mobs
         self.mobs_by_rarity = mobs_by_rarity
         self.items = items
+        self.raid_service = raid_service
+
+    def add_emeralds(self, session_factory, guild_id: int, user_id: int, amount: int) -> None:
+        """Add emeralds and check for raid trigger."""
+        UserDB.add_emeralds(session_factory, guild_id, user_id, amount)
+        if self.raid_service and amount > 0:
+            self.raid_service.check_spawn_trigger(session_factory, guild_id)
 
     def get_user_balance(self, session_factory, guild_id: int, user_id: int) -> int:
         """Get user's emerald balance."""
@@ -54,7 +61,7 @@ class EconomyService:
         mob_id, mob = self.roll_random_mob(allowed={"Common"})
 
         UserDB.update_last_daily_at(session_factory, guild_id, user_id, now)
-        UserDB.add_emeralds(session_factory, guild_id, user_id, emeralds)
+        self.add_emeralds(session_factory, guild_id, user_id, emeralds)
         CollectionDB.add_to_collection(session_factory, guild_id, user_id, mob_id)
 
         return {"emeralds": emeralds, "mob": mob}
