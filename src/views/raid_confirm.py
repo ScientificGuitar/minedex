@@ -29,7 +29,11 @@ class RaidConfirmView(discord.ui.View):
             
             if result["phase_completed"]:
                 if result["raid_finished"]:
-                    embed.add_field(name="🎉 VICTORY!", value="The boss has been defeated! Rewards will be distributed shortly.", inline=False)
+                    # Get the results and trigger the announcement in the cog
+                    rewards = self.bot.raid_service.calculate_rewards(self.bot.db, self.guild_id)
+                    raid_cog = self.bot.get_cog("RaidCog")
+                    if raid_cog:
+                        await raid_cog.announce_victory(self.guild_id, result["mob_name"], rewards)
                 else:
                     embed.add_field(name="🚀 PHASE COMPLETE!", value="The server has advanced to the next phase of the raid!", inline=False)
             

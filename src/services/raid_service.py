@@ -84,10 +84,18 @@ class RaidService:
 
     def check_spawn_trigger(self, session_factory, guild_id: int) -> bool:
         """Check if a guild has enough total emeralds to trigger a raid."""
-        # Check if a raid is already active
+        # 1. Check if a raid is already active
         if self.get_active_raid(session_factory, guild_id):
             return False
 
+        # 2. Enforce 48-hour cooldown since the last raid ended
+        last_end = self.get_last_raid_end(session_factory, guild_id)
+        if last_end:
+            elapsed = int(time.time()) - last_end
+            if elapsed < (48 * 3600): # 48 hours
+                return False
+
+        # 3. Check emerald threshold
         with session_factory() as session:
             total_emeralds = session.query(UserModel.emeralds).filter_by(guild_id=guild_id).all()
             guild_sum = sum(e[0] for e in total_emeralds)
@@ -211,14 +219,22 @@ class RaidService:
 
     def complete_raid(self, session_factory, guild_id: int) -> List[Dict[str, Any]]:
         """Finalize a raid and distribute rewards."""
+        now = int(time.time())
         with session_factory() as session:
             raid = session.query(RaidModel).filter_by(guild_id=guild_id, is_active=True).first()
             if raid:
                 raid.is_active = False
+                raid.ended_at = now
                 session.commit()
                 
         # Trigger reward distribution
         return self.calculate_rewards(session_factory, guild_id)
+
+    def get_last_raid_end(self, session_factory, guild_id: int) -> Optional[int]:
+        """Get the timestamp when the last raid in this guild ended."""
+        with session_factory() as session:
+            last_raid = session.query(RaidModel).filter_by(guild_id=guild_id, is_active=False).order_by(RaidModel.ended_at.desc()).first()
+            return last_raid.ended_at if last_raid else None
 
     def _advance_phase(self, session_factory, guild_id: int):
         """Move to the next raid phase."""

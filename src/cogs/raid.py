@@ -14,6 +14,47 @@ class RaidCog(commands.Cog):
     def cog_unload(self):
         self.raid_check.cancel()
 
+    async def announce_victory(self, guild_id: int, final_mob: str, rewards: list):
+        """Broadcast raid victory and rewards to the server."""
+        guild = self.bot.get_guild(guild_id)
+        if not guild:
+            return
+
+        channel = guild.system_channel or next((c for c in guild.text_channels if c.permissions_for(guild.me).send_messages), None)
+        if not channel:
+            return
+
+        embed = discord.Embed(
+            title="🎊 RAID VICTORY! 🎊",
+            description=f"The final sacrifice of **{final_mob}** was enough! The village is saved!",
+            color=discord.Color.gold()
+        )
+        
+        # Format Top Contributors
+        if rewards:
+            # Sort rewards to show Top 3
+            sorted_rewards = sorted(rewards, key=lambda r: r["power"], reverse=True)
+            leaderboard_lines = []
+            for idx, r in enumerate(sorted_rewards[:5], 1):
+                member = guild.get_member(r["user_id"])
+                name = member.display_name if member else f"User {r['user_id']}"
+                icon = "💎" if r["tier"] == "diamond" else "🥇" if r["tier"] == "gold" else "🥈"
+                leaderboard_lines.append(f"{idx}. **{name}** — {r['power']} Power {icon}")
+            
+            embed.add_field(name="🏆 Hall of Fame", value="\n".join(leaderboard_lines), inline=False)
+            
+            # Summary of loot
+            total_emerald_payout = sum(r["loot"]["emeralds"] for r in rewards)
+            embed.add_field(name="💰 Total Village Loot", value=f"{total_emerald_payout} Emeralds distributed across {len(rewards)} heroes!", inline=False)
+        
+        embed.add_field(
+            name="✨ Victory Boon Active", 
+            value="The village is celebrating! All emerald gains are increased by **15%** for the next 12 hours!", 
+            inline=False
+        )
+        
+        await channel.send(embed=embed)
+
     @tasks.loop(minutes=5)
     async def raid_check(self):
         """Background task to check for expired raids."""

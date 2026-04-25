@@ -145,6 +145,7 @@ class Raid(Base):
     target_power: Mapped[int] = mapped_column(Integer, nullable=False)
     
     spawned_at: Mapped[int] = mapped_column(Integer, nullable=False)
+    ended_at: Mapped[int | None] = mapped_column(Integer, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
 
 
