@@ -27,7 +27,8 @@ class TestRaidService:
         mock_session_factory.return_value.__enter__.return_value = mock_session
         
         with (
-            patch.object(self.service, "get_active_raid", return_value=None)
+            patch.object(self.service, "get_active_raid", return_value=None),
+            patch.object(self.service, "get_last_raid_end", return_value=None)
         ):
             # Sum of emeralds is 500 (threshold is 1000)
             mock_session.query.return_value.filter_by.return_value.all.return_value = [(200,), (300,)]
@@ -42,6 +43,7 @@ class TestRaidService:
         
         with (
             patch.object(self.service, "get_active_raid", return_value=None),
+            patch.object(self.service, "get_last_raid_end", return_value=None),
             patch.object(self.service, "spawn_raid")
         ):
             # Sum is 1500 (threshold 1000)
@@ -71,7 +73,7 @@ class TestRaidService:
         mock_session_factory.return_value.__enter__.return_value = mock_session
 
         # Mock active raid
-        raid = MagicMock(boss_id="wither", current_phase=1, target_tag="undead", target_power=100, current_power=0)
+        raid = MagicMock(boss_id="wither", current_phase=1, target_tag="undead", target_power=100, current_power=0, spawned_at=1000)
         contribution = MagicMock(mobs_donated_this_phase=0, total_power_donated=0)
         
         # Skeleton has 'undead' tag and rarity 'Common'
@@ -94,7 +96,7 @@ class TestRaidService:
 
     def test_donate_mob_invalid_rarity(self, mock_session_factory):
         """Test donating a mob that doesn't meet phase rarity requirements (Phase 3)."""
-        raid = MagicMock(boss_id="wither", current_phase=3, target_power=200, current_power=0)
+        raid = MagicMock(boss_id="wither", current_phase=3, target_power=200, current_power=0, spawned_at=1000)
         
         # Skeleton is 'Common', Phase 3 requires 'Epic' or 'Legendary'
         mob_id = "skeleton"
@@ -113,6 +115,10 @@ class TestRaidService:
         """Test reward calculation for raid contributors."""
         mock_session = MagicMock()
         mock_session_factory.return_value.__enter__.return_value = mock_session
+
+        # Mock last finished raid
+        raid = MagicMock(spawn_at=1000, ended_at=2000, is_active=False)
+        mock_session.query.return_value.filter_by.return_value.order_by.return_value.first.return_value = raid
 
         # Guild 123 has 100 total power donated
         cont1 = MagicMock(user_id=111, total_power_donated=60, is_claimed=False) # Top 1 (60%)

@@ -18,9 +18,18 @@ class RaidService:
 
     def calculate_rewards(self, session_factory, guild_id: int) -> List[Dict[str, Any]]:
         """Calculate and distribute rewards for the finished raid."""
+        # We need the most recent raid that hasn't been claimed yet
         with session_factory() as session:
-            # Get all contributions for this guild's last raid
-            contributions = session.query(ContributionModel).filter_by(guild_id=guild_id, is_claimed=False).all()
+            last_raid = session.query(RaidModel).filter_by(guild_id=guild_id, is_active=False).order_by(RaidModel.ended_at.desc()).first()
+            if not last_raid:
+                return []
+
+            contributions = session.query(ContributionModel).filter_by(
+                guild_id=guild_id, 
+                spawned_at=last_raid.spawned_at, 
+                is_claimed=False
+            ).all()
+            
             if not contributions:
                 return []
 
@@ -140,10 +149,14 @@ class RaidService:
         with session_factory() as session:
             return session.query(RaidModel).filter_by(guild_id=guild_id, is_active=True).first()
 
-    def get_user_contribution(self, session_factory, guild_id: int, user_id: int) -> Optional[ContributionModel]:
-        """Get a user's contribution for the active raid."""
+    def get_user_contribution(self, session_factory, guild_id: int, user_id: int, spawned_at: int) -> Optional[ContributionModel]:
+        """Get a user's contribution for a specific raid."""
         with session_factory() as session:
-            return session.query(ContributionModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            return session.query(ContributionModel).filter_by(
+                guild_id=guild_id, 
+                user_id=user_id, 
+                spawned_at=spawned_at
+            ).first()
 
     def donate_mob(self, session_factory, guild_id: int, user_id: int, mob_id: str, amount: int) -> Dict[str, Any]:
         """Process a mob donation to the active raid."""
@@ -177,7 +190,7 @@ class RaidService:
                 return {"success": False, "error": f"This phase requires high-tier energy from **{allowed}** mobs."}
 
         # 3. Check Individual Donation Limit
-        contribution = self._ensure_contribution_entry(session_factory, guild_id, user_id)
+        contribution = self._ensure_contribution_entry(session_factory, guild_id, user_id, raid.spawned_at)
         if contribution.mobs_donated_this_phase + amount > self.config["player_donation_limit_per_phase"]:
             remaining = self.config["player_donation_limit_per_phase"] - contribution.mobs_donated_this_phase
             return {"success": False, "error": f"You can only donate {remaining} more mobs in this phase."}
@@ -192,7 +205,11 @@ class RaidService:
             db_raid.current_power += power_donated
             
             # Update User Stats
-            db_cont = session.query(ContributionModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            db_cont = session.query(ContributionModel).filter_by(
+                guild_id=guild_id, 
+                user_id=user_id, 
+                spawned_at=raid.spawned_at
+            ).first()
             db_cont.total_power_donated += power_donated
             db_cont.mobs_donated_this_phase += amount
             
@@ -250,7 +267,10 @@ class RaidService:
             raid.target_tag = None # Rarity phases don't need tags
             
             # Reset player per-phase limits
-            session.query(ContributionModel).filter_by(guild_id=guild_id).update({
+            session.query(ContributionModel).filter_by(
+                guild_id=guild_id, 
+                spawned_at=raid.spawned_at
+            ).update({
                 ContributionModel.mobs_donated_this_phase: 0
             })
             
@@ -265,13 +285,20 @@ class RaidService:
         player_count = max(1, player_count)
         return player_count * multiplier
 
-    def _ensure_contribution_entry(self, session_factory, guild_id: int, user_id: int) -> ContributionModel:
-        """Ensure a user has a contribution row for the active guild."""
+    def _ensure_contribution_entry(self, session_factory, guild_id: int, user_id: int, spawned_at: int) -> ContributionModel:
+        """Ensure a user has a contribution row for the specific raid instance."""
         with session_factory() as session:
-            cont = session.query(ContributionModel).filter_by(guild_id=guild_id, user_id=user_id).first()
+            cont = session.query(ContributionModel).filter_by(
+                guild_id=guild_id, 
+                user_id=user_id, 
+                spawned_at=spawned_at
+            ).first()
             if not cont:
-                cont = ContributionModel(guild_id=guild_id, user_id=user_id)
+                cont = ContributionModel(
+                    guild_id=guild_id, 
+                    user_id=user_id, 
+                    spawned_at=spawned_at
+                )
                 session.add(cont)
                 session.commit()
-                # Refresh to bind to current session if needed, or just return
             return cont

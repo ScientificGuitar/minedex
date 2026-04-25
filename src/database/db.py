@@ -136,6 +136,7 @@ class Raid(Base):
     __tablename__ = "raids"
 
     guild_id: Mapped[int] = mapped_column(BigInteger, primary_key=True, nullable=False)
+    spawned_at: Mapped[int] = mapped_column(Integer, primary_key=True, nullable=False)
     boss_id: Mapped[str] = mapped_column(String, nullable=False)
     
     current_phase: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
@@ -144,7 +145,6 @@ class Raid(Base):
     current_power: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     target_power: Mapped[int] = mapped_column(Integer, nullable=False)
     
-    spawned_at: Mapped[int] = mapped_column(Integer, nullable=False)
     ended_at: Mapped[int | None] = mapped_column(Integer, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
 
@@ -154,7 +154,7 @@ class RaidContribution(Base):
 
     guild_id: Mapped[int] = mapped_column(BigInteger, primary_key=True, nullable=False)
     user_id: Mapped[int] = mapped_column(BigInteger, primary_key=True, nullable=False)
-    # Track contribution for the active raid in this guild
+    spawned_at: Mapped[int] = mapped_column(Integer, primary_key=True, nullable=False)
     
     total_power_donated: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     mobs_donated_this_phase: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
@@ -164,6 +164,11 @@ class RaidContribution(Base):
         ForeignKeyConstraint(
             ["guild_id", "user_id"],
             ["users.guild_id", "users.user_id"],
+            ondelete="CASCADE",
+        ),
+        ForeignKeyConstraint(
+            ["guild_id", "spawned_at"],
+            ["raids.guild_id", "raids.spawned_at"],
             ondelete="CASCADE",
         ),
     )
