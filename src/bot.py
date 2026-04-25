@@ -15,11 +15,24 @@ from services.raid_service import RaidService
 from services.roll_service import RollService
 from services.shop_service import ShopService
 from services.trade_service import TradeService
-from utils import item_loader, mob_loader, shop_loader, villager_loader
+from utils import boss_loader, item_loader, mob_loader, shop_loader, villager_loader
 
 
 class MyBot(commands.Bot):
-    def __init__(self, *args, extentions: List[str], mobs, mobs_by_rarity, villagers, items, shop_data, bosses, artifacts, db, **kwargs):
+    def __init__(
+        self,
+        *args,
+        extentions: List[str],
+        mobs,
+        mobs_by_rarity,
+        villagers,
+        items,
+        shop_data,
+        bosses,
+        artifacts,
+        db,
+        **kwargs,
+    ):
         super().__init__(*args, command_prefix="&", help_command=None, **kwargs)
         self.extentions = extentions
         self.mobs = mobs
@@ -64,40 +77,39 @@ async def main():
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
-    from utils import boss_loader, item_loader, mob_loader, shop_loader, villager_loader
-    ...
-        items = item_loader.load_items()
-        shop_data = shop_loader.load_shop_data()
-        bosses = boss_loader.load_boss_data()
-        artifacts = boss_loader.load_artifacts()
-        init_db()
+    mobs, mobs_by_rarity = mob_loader.load_mob_data()
+    villagers = villager_loader.load_villagers()
+    items = item_loader.load_items()
+    shop_data = shop_loader.load_shop_data()
+    bosses = boss_loader.load_boss_data()
+    artifacts = boss_loader.load_artifacts()
+    init_db()
 
-        extentions = [
-            "cogs.rolls",
-            "cogs.shop",
-            "cogs.collection",
-            "cogs.economy",
-            "cogs.villagers",
-            "cogs.trade",
-            "cogs.help",
-            "cogs.achievements",
-            "cogs.raid",
-        ]
-        intents = discord.Intents.default()
-        intents.message_content = True
-        async with MyBot(
-            extentions=extentions,
-            intents=intents,
-            mobs=mobs,
-            mobs_by_rarity=mobs_by_rarity,
-            villagers=villagers,
-            items=items,
-            shop_data=shop_data,
-            bosses=bosses,
-            artifacts=artifacts,
-            db=get_session,
-        ) as bot:
-
+    extentions = [
+        "cogs.rolls",
+        "cogs.shop",
+        "cogs.collection",
+        "cogs.economy",
+        "cogs.villagers",
+        "cogs.trade",
+        "cogs.help",
+        "cogs.achievements",
+        "cogs.raid",
+    ]
+    intents = discord.Intents.default()
+    intents.message_content = True
+    async with MyBot(
+        extentions=extentions,
+        intents=intents,
+        mobs=mobs,
+        mobs_by_rarity=mobs_by_rarity,
+        villagers=villagers,
+        items=items,
+        shop_data=shop_data,
+        bosses=bosses,
+        artifacts=artifacts,
+        db=get_session,
+    ) as bot:
         await bot.start(os.getenv("DISCORD_TOKEN", ""))
 
 

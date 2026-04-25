@@ -25,6 +25,6 @@
     "description": "Grants one extra 'Focus Roll' (ignoring common mobs) that doesn't count against your daily limit.",
     "medal_cost": 100,
     "type": "consumable",
-    "effect": "extra_focus_roll"/model
+    "effect": "extra_focus_roll"
   }
 }

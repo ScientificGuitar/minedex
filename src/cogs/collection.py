@@ -151,7 +151,41 @@ class CollectionCog(commands.Cog):
             await self._all_mobs(ctx, mob_filter)
             return
 
-        await self._mobs_by_rarity(ctx, mob_filter)
+        # Check if the filter matches a known rarity, if not, treat as a tag
+        if mob_filter.capitalize() in ["Common", "Uncommon", "Rare", "Epic", "Legendary"]:
+            await self._mobs_by_rarity(ctx, mob_filter)
+        else:
+            await self._mobs_by_tag(ctx, mob_filter)
+
+    async def _mobs_by_tag(self, ctx, tag: str):
+        guild_id = ctx.guild.id
+        user_id = ctx.author.id
+        User.ensure_user(self.bot.db, guild_id, user_id)
+        
+        data = self.bot.collection_service.get_user_mobs_by_tag(self.bot.db, guild_id, user_id, tag)
+
+        if not data["mobs"]:
+            await ctx.send(f"❌ No mobs found with the tag '{tag}' in your collection.")
+            return
+
+        # Build embed
+        embed = discord.Embed(
+            title=f"🏷️ Mobs with Tag: {tag.capitalize()}",
+            description=f"You have {data['count']} mobs with this tag.",
+            color=discord.Color.blue()
+        )
+
+        for mob in data["mobs"][:15]: # Show top 15
+            embed.add_field(
+                name=f"{mob['name']} (x{mob['amount']})",
+                value=f"💪 Power: {mob['power']}",
+                inline=True
+            )
+        
+        if data["count"] > 15:
+            embed.set_footer(text=f"Showing top 15 of {data['count']} mobs.")
+            
+        await ctx.send(embed=embed)
 
     @commands.command()
     async def mob(self, ctx, mob_id: str):
@@ -193,8 +227,7 @@ class CollectionCog(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    async def _all_mobs(self, ctx, page: int = 1):
-
+    def _build_embed_from_data(self, data, display_name):
         embed = discord.Embed(
             title=f"{display_name}'s Collection",
             colour=discord.Colour.green(),
