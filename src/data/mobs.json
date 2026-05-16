@@ -81,7 +81,7 @@
     "name": "Bat",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/thumb/Bat_JE1_BE1.png/800px-Bat_JE1_BE1.png?55f87",
-    "lore": "Tiny, harmless, and completely useless—bats are the atmospheric masters of the dark caves.",
+    "lore": "Tiny, harmless, and completely useless - bats are the atmospheric masters of the dark caves.",
     "tags": [
       "overworld",
       "passive",
@@ -146,7 +146,7 @@
     "name": "Pig",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Temperate_Pig_JE4_BE2.png?c550c",
-    "lore": "Saddle one up with a carrot on a stick and go for a ride—just don't expect them to listen to you.",
+    "lore": "Saddle one up with a carrot on a stick and go for a ride - just don't expect them to listen to you.",
     "tags": [
       "overworld",
       "passive",
@@ -178,7 +178,7 @@
     "name": "Cod",
     "rarity": "Common",
     "image": "https://minecraft.wiki/images/Cod.gif?fe8d7",
-    "lore": "Just keep swimming—these fish are simply trying to make it through their day in the ocean.",
+    "lore": "Just keep swimming - these fish are simply trying to make it through their day in the ocean.",
     "tags": [
       "overworld",
       "passive",
@@ -454,7 +454,7 @@
     "name": "Endermite",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Endermite_JE1.png?dc5e8",
-    "lore": "Strange, tiny creatures that appear when an Enderman teleports—keep your distance!",
+    "lore": "Strange, tiny creatures that appear when an Enderman teleports - keep your distance!",
     "tags": [
       "end",
       "hostile",
@@ -472,7 +472,7 @@
     "name": "Magma Cube",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Magma_Cube_JE2_BE2.png?b4389",
-    "lore": "Hopping fire-cubes that split into smaller pieces when you defeat them—it never ends!",
+    "lore": "Hopping fire-cubes that split into smaller pieces when you defeat them - it never ends!",
     "tags": [
       "nether",
       "hostile"
@@ -671,7 +671,7 @@
     "name": "Cave Spider",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Cave_Spider_JE3_BE3.png?86c1d",
-    "lore": "Small, blue, and venomous—these spiders prefer the tight, dark spaces of abandoned mineshafts.",
+    "lore": "Small, blue, and venomous - these spiders prefer the tight, dark spaces of abandoned mineshafts.",
     "tags": [
       "overworld",
       "hostile",
@@ -745,7 +745,7 @@
     "name": "Mooshroom",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Red_Mooshroom_JE5_BE3.png?de6c9",
-    "lore": "Cow meets fungus—a unique symbiotic species found only in the rare Mushroom Fields biome.",
+    "lore": "Cow meets fungus - a unique symbiotic species found only in the rare Mushroom Fields biome.",
     "tags": [
       "overworld",
       "passive",
@@ -872,7 +872,7 @@
     "name": "Wolf",
     "rarity": "Uncommon",
     "image": "https://minecraft.wiki/images/Wolf_JE2_BE2.png?ee46e",
-    "lore": "Wild, untamed, and fierce—but give them a bone and they become a loyal protector.",
+    "lore": "Wild, untamed, and fierce - but give them a bone and they become a loyal protector.",
     "tags": [
       "overworld",
       "neutral",
@@ -1271,7 +1271,7 @@
     "name": "Zombie Nautilus",
     "rarity": "Rare",
     "image": "https://minecraft.wiki/images/Zombie_Nautilus_Breathe_JE1_BE2.gif?1d78e",
-    "lore": "A rare fusion of an undead and the aquatic deep—a curiosity of the seas.",
+    "lore": "A rare fusion of an undead and the aquatic deep - a curiosity of the seas.",
     "tags": [
       "overworld",
       "neutral",
@@ -1344,7 +1344,7 @@
     "name": "Evoker",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Evoker_JE3.png?54321",
-    "lore": "Spellcasting illagers that summon fangs from the ground—a true test of reflexes.",
+    "lore": "Spellcasting illagers that summon fangs from the ground - a true test of reflexes.",
     "tags": [
       "overworld",
       "hostile",
@@ -1380,7 +1380,7 @@
     "name": "Warden",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Warden.gif?d0f99",
-    "lore": "Blind, ancient, and nearly invincible—this guardian of the Deep Dark is not to be trifled with.",
+    "lore": "Blind, ancient, and nearly invincible - this guardian of the Deep Dark is not to be trifled with.",
     "tags": [
       "overworld",
       "hostile",
@@ -1434,7 +1434,7 @@
     "name": "jeb_",
     "rarity": "Epic",
     "image": "https://minecraft.wiki/images/Jeb_Sheep_JE4_BE3.webp?ac096",
-    "lore": "A sheep named 'jeb_' cycles through all the colors of the rainbow—the ultimate showstopper.",
+    "lore": "A sheep named 'jeb_' cycles through all the colors of the rainbow - the ultimate showstopper.",
     "tags": [
       "overworld",
       "passive",
@@ -1595,7 +1595,7 @@
     "name": "Wither",
     "rarity": "Legendary",
     "image": "https://minecraft.wiki/images/thumb/Wither_JE2_BE2.png/800px-Wither_JE2_BE2.png?60b11",
-    "lore": "A boss created from soul sand and wither skeleton skulls—truly a force of pure destruction.",
+    "lore": "A boss created from soul sand and wither skeleton skulls - truly a force of pure destruction.",
     "tags": [
       "nether",
       "boss",
@@ -1647,7 +1647,7 @@
     "name": "Kevin",
     "rarity": "Legendary",
     "image": "https://minecraft.wiki/images/thumb/PenguinPixel.png/300px-PenguinPixel.png?93e4b",
-    "lore": "The most mythical mob of all—a penguin who just wants to slide across the ice in peace.",
+    "lore": "The most mythical mob of all - a penguin who just wants to slide across the ice in peace.",
     "tags": [
       "myth"
     ],
