@@ -36,7 +36,6 @@ class FocusRollStrategy(RollStrategy):
         self, session_factory, guild_id: int, user_id: int, now: int, value: Optional[str] = None
     ) -> Tuple[str, Dict]:
         UserDB.record_focus_roll(session_factory, guild_id, user_id, now)
-        UserDB.record_roll(session_factory, guild_id, user_id, now)
         UserDB.increment_total_rolls(session_factory, guild_id, user_id)
 
         # Exclude common rarity
