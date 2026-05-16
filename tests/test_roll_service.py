@@ -188,6 +188,26 @@ class TestRollService:
         assert result["can_roll"] is True
         assert result["mode"] == "focus"
 
+    def test_focus_roll_does_not_affect_standard_roll_cooldown(self, mock_session_factory, mock_user_factory):
+        """Test that focus roll does not block standard roll cooldown."""
+        now = int(time.time())
+        user = mock_user_factory(last_claim_at=now - 86400, last_roll_at=None)
+
+        with (
+            patch("database.user.User.record_focus_roll"),
+            patch("database.user.User.increment_total_rolls"),
+        ):
+            self.service.perform_roll(mock_session_factory, 123, 456, now, mode="focus")
+
+        # Standard roll should still be allowed since last_roll_at was not updated
+        with (
+            patch("services.roll_service.UserDB.get_user", return_value=user),
+            patch("strategies.standard.is_same_game_day", return_value=False),
+        ):
+            result = self.service.can_roll(mock_session_factory, 123, 456, now)
+
+        assert result["can_roll"] is True
+
     def test_can_roll_focus_mode_no_librarian(self, mock_session_factory, mock_user_factory):
         """Test can_roll with focus mode when librarian not unlocked."""
         now = int(time.time())
