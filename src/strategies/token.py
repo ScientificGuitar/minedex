@@ -45,8 +45,6 @@ class TokenRollStrategy(RollStrategy):
         # Consume token
         InventoryDB.add_to_inventory(session_factory, guild_id, user_id, value, -1)
 
-        # Record roll for cooldown (tokens share standard roll timestamp to prevent stacking)
-        UserDB.record_roll(session_factory, guild_id, user_id, now)
         UserDB.increment_total_rolls(session_factory, guild_id, user_id)
 
         # Roll restricted to token rarity

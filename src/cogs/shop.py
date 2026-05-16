@@ -20,14 +20,11 @@ class ShopItemSelect(discord.ui.Select):
             description = f"{item['price']} Emeralds - {item['description']}"
             if len(description) > 100:
                 description = description[:97] + "..."
-                
-            options.append(discord.SelectOption(
-                label=item["name"],
-                value=item["id"],
-                description=description,
-                emoji="💎"
-            ))
-            
+
+            options.append(
+                discord.SelectOption(label=item["name"], value=item["id"], description=description, emoji="💎")
+            )
+
         super().__init__(placeholder="Select an item to buy...", options=options)
         self.category_id = category_id
 
@@ -41,7 +38,7 @@ class ShopView(discord.ui.View):
         self.bot = bot
         self.guild_id = guild_id
         self.user_id = user_id
-        
+
         # Initial category buttons
         self.add_item(ShopCategoryButton("permanent_upgrades", "Upgrades", "🏛️", 0))
         self.add_item(ShopCategoryButton("consumables", "Items", "🧪", 0))
@@ -51,19 +48,26 @@ class ShopView(discord.ui.View):
             return await interaction.response.send_message("This menu isn't for you!", ephemeral=True)
 
         inventory = self.bot.shop_service.get_shop_inventory(self.bot.db, self.guild_id, self.user_id, category_id)
-        
-        embed = discord.Embed(
-            title=f"{'🏛️ Village Upgrades' if category_id == 'permanent_upgrades' else '🧪 Marketplace Items'}",
-            description=f"💎 **Balance:** {inventory['emeralds']} Emeralds\n\nSelect an item from the menu below to view details and purchase.",
-            color=discord.Color.gold()
-        )
-        
+
+        description = f"💎 **Balance:** {inventory['emeralds']} Emeralds"
+
         # Update view
         self.clear_items()
         self.add_item(ShopCategoryButton("permanent_upgrades", "Upgrades", "🏛️", 0))
         self.add_item(ShopCategoryButton("consumables", "Items", "🧪", 0))
-        self.add_item(ShopItemSelect(category_id, inventory["items"]))
-        
+
+        if inventory["items"]:
+            description += "\n\nSelect an item from the menu below to view details and purchase."
+            self.add_item(ShopItemSelect(category_id, inventory["items"]))
+        else:
+            description += "\n\nNo items available in this category right now!"
+
+        embed = discord.Embed(
+            title=f"{'🏛️ Village Upgrades' if category_id == 'permanent_upgrades' else '🧪 Marketplace Items'}",
+            description=description,
+            color=discord.Color.gold(),
+        )
+
         await interaction.response.edit_message(embed=embed, view=self)
 
     async def show_item_details(self, interaction: discord.Interaction, category_id: str, item_id: str):
@@ -73,18 +77,18 @@ class ShopView(discord.ui.View):
         # Re-fetch inventory to get current state
         inventory = self.bot.shop_service.get_shop_inventory(self.bot.db, self.guild_id, self.user_id, category_id)
         item = next((i for i in inventory["items"] if i["id"] == item_id), None)
-        
+
         if not item:
             return await interaction.response.send_message("Item not found.", ephemeral=True)
 
         embed = discord.Embed(
             title=f"Purchase: {item['name']}",
             description=f"{item['description']}\n\n"
-                        f"💰 **Price:** {item['price']} Emeralds\n"
-                        f"💎 **Your Balance:** {inventory['emeralds']} Emeralds",
-            color=discord.Color.blue()
+            f"💰 **Price:** {item['price']} Emeralds\n"
+            f"💎 **Your Balance:** {inventory['emeralds']} Emeralds",
+            color=discord.Color.blue(),
         )
-        
+
         if item["state"] == "owned":
             embed.set_footer(text="✅ You already own this upgrade.")
             can_buy = False
@@ -99,36 +103,37 @@ class ShopView(discord.ui.View):
 
         # Purchase confirm button
         confirm_button = discord.ui.Button(
-            label="Confirm Purchase", 
-            style=discord.ButtonStyle.green, 
-            disabled=not can_buy,
-            emoji="💰"
+            label="Confirm Purchase", style=discord.ButtonStyle.green, disabled=not can_buy, emoji="💰"
         )
-        
+
         async def confirm_callback(btn_interaction: discord.Interaction):
-            result = self.bot.shop_service.perform_purchase(self.bot.db, self.guild_id, self.user_id, item_id, category_id)
+            result = self.bot.shop_service.perform_purchase(
+                self.bot.db, self.guild_id, self.user_id, item_id, category_id
+            )
             if result["success"]:
                 purchase_embed = discord.Embed(
                     title="🎉 Purchase Successful!",
                     description=f"You bought **{item['name']}** for **{item['price']}** Emeralds.",
-                    color=discord.Color.green()
+                    color=discord.Color.green(),
                 )
                 await btn_interaction.response.edit_message(embed=purchase_embed, view=None)
             else:
                 await btn_interaction.response.send_message(f"❌ Error: {result['error']}", ephemeral=True)
 
         confirm_button.callback = confirm_callback
-        
+
         # Add a back button
         back_button = discord.ui.Button(label="Back to List", style=discord.ButtonStyle.gray)
+
         async def back_callback(btn_interaction: discord.Interaction):
             await self.show_category(btn_interaction, category_id)
+
         back_button.callback = back_callback
 
         self.clear_items()
         self.add_item(confirm_button)
         self.add_item(back_button)
-        
+
         await interaction.response.edit_message(embed=embed, view=self)
 
 
@@ -141,13 +146,13 @@ class Shop(commands.Cog):
         guild_id = ctx.guild.id
         user_id = ctx.author.id
         User.ensure_user(self.bot.db, guild_id, user_id)
-        
+
         emeralds = self.bot.shop_service.get_user_emeralds(self.bot.db, guild_id, user_id)
 
         embed = discord.Embed(
-            title="🏪 Marketplace", 
-            description=f"Welcome to the Village Shop!\n\n💎 **Your Balance:** {emeralds} Emeralds\n\nClick a category below to start browsing.", 
-            color=discord.Color.gold()
+            title="🏪 Marketplace",
+            description=f"Welcome to the Village Shop!\n\n💎 **Your Balance:** {emeralds} Emeralds\n\nClick a category below to start browsing.",
+            color=discord.Color.gold(),
         )
         embed.add_field(name="🏛️ Village Upgrades", value="Permanent improvements and villager licenses.", inline=True)
         embed.add_field(name="🧪 Marketplace Items", value="Single-use tokens and boosters.", inline=True)

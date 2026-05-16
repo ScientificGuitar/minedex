@@ -149,27 +149,18 @@ class CollectionService:
         rows: List[Dict[str, Any]],
         page: int = 1,
         per_page: int = 10,
-        rarity_filter: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Build data for collection embed."""
         rarity_order = ["Legendary", "Epic", "Rare", "Uncommon", "Common"]
         entries = []
         for r in rarity_order:
-            if rarity_filter is not None and r.lower() != rarity_filter.lower():
-                continue
             for row in rows:
                 mob = self.mobs[row["mob_id"]]
                 if mob["rarity"] == r:
                     entries.append((r, f"{mob['name']} x{row['amount']}"))
 
-        if rarity_filter is not None and not entries:
-            valid = ", ".join(rarity_order)
-            return {"error": f"No mobs found for rarity '{rarity_filter}'. Valid options: {valid}"}
-
         total_entries = len(entries)
-        total_pages = (total_entries + per_page - 1) // per_page
-        if total_pages == 0:
-            total_pages = 1
+        total_pages = max((total_entries + per_page - 1) // per_page, 1)
 
         if page < 1 or page > total_pages:
             return {"error": f"Page must be between 1 and {total_pages}."}
@@ -187,7 +178,48 @@ class CollectionService:
             "total_entries": total_entries,
             "total_pages": total_pages,
             "current_page": page,
-            "rarity_filter": rarity_filter,
             "entries": dict(grouped_entries),
             "completion_pct": self.calculate_completion_percentage(rows),
         }
+
+    def get_full_collection_data(self, rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Generate data for the user's full collection, grouped by rarity.
+        Returns a list of dicts, each representing one embed page with 'title', 'description',
+        and 'fields' (list of {name, value} dicts).
+        """
+        rarity_order = ["Legendary", "Epic", "Rare", "Uncommon", "Common"]
+        entries_by_rarity: Dict[str, List[str]] = defaultdict(list)
+        for r in rarity_order:
+            for row in rows:
+                mob = self.mobs[row["mob_id"]]
+                if mob["rarity"] == r:
+                    entries_by_rarity[r].append(f"{mob['name']} x{row['amount']}")
+
+        pages: List[Dict[str, Any]] = []
+        current_page: Dict[str, Any] = {"title": "Full Collection", "description": None, "fields": []}
+        char_count = len(current_page["title"])
+
+        for rarity_name in rarity_order:
+            entries = entries_by_rarity.get(rarity_name)
+            if not entries:
+                continue
+
+            field_name = rarity_name
+            field_value = "\n".join(entries)
+            field_len = len(field_name) + len(field_value)
+
+            if char_count + field_len > 5900:
+                pages.append(current_page)
+                current_page = {"title": "Full Collection (continued)", "description": None, "fields": []}
+                char_count = len(current_page["title"])
+
+            current_page["fields"].append({"name": field_name, "value": field_value})
+            char_count += field_len
+
+        if current_page["fields"]:
+            pages.append(current_page)
+
+        if not pages:
+            pages.append({"title": "Full Collection", "description": "Your collection is empty.", "fields": []})
+
+        return pages
