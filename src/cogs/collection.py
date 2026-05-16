@@ -3,6 +3,7 @@ from discord.ext import commands
 
 from constants import RARITY_COLORS, RARITY_EMOJIS
 from database.user import User
+from views.collection_view import CollectionView
 
 
 class CollectionCog(commands.Cog):
@@ -10,7 +11,7 @@ class CollectionCog(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def collection(self, ctx, collection_filter: int | str = 1):
+    async def collection(self, ctx):
         guild_id = ctx.guild.id
         user_id = ctx.author.id
         User.ensure_user(self.bot.db, guild_id, user_id)
@@ -20,21 +21,9 @@ class CollectionCog(commands.Cog):
             await ctx.send(f"📭 Your collection is empty. Try `{self.bot.command_prefix}roll`!")
             return
 
-        if isinstance(collection_filter, int):
-            embed_data = self.bot.collection_service.build_collection_embed_data(rows, page=collection_filter)
-        else:
-            embed_data = self.bot.collection_service.build_collection_embed_data(rows, rarity_filter=collection_filter)
-
-        if "error" in embed_data:
-            embed = discord.Embed(
-                title="❌ Error",
-                description=embed_data["error"],
-                colour=discord.Colour.red(),
-            )
-        else:
-            embed = self._build_embed_from_data(embed_data, ctx.author.display_name)
-
-        await ctx.send(embed=embed)
+        view = CollectionView(self.bot, user_id, guild_id, rows)
+        embed = await view.build_embed(1, ctx.author.display_name)
+        await ctx.send(embed=embed, view=view)
 
     @commands.command()
     async def missing(self, ctx):
@@ -120,7 +109,7 @@ class CollectionCog(commands.Cog):
         lines = []
         for idx, row in enumerate(rows, start=1):
             display_name = self._get_member_display_name(row["user_id"], guild)
-            lines.append(f"{idx}. {display_name} — {row['emeralds']} 💎")
+            lines.append(f"{idx}. {display_name} - {row['emeralds']} 💎")
 
         return "\n".join(lines)
 
@@ -132,9 +121,7 @@ class CollectionCog(commands.Cog):
         total_unique = len(self.bot.mobs)
         for idx, row in enumerate(rows, start=1):
             display_name = self._get_member_display_name(row["user_id"], guild)
-            lines.append(
-                f"{idx}. {display_name} — {row['unique_count']}/{total_unique} ({row['completion_pct']:.1f}%)"
-            )
+            lines.append(f"{idx}. {display_name} - {row['unique_count']}/{total_unique} ({row['completion_pct']:.1f}%)")
 
         return "\n".join(lines)
 
@@ -161,7 +148,7 @@ class CollectionCog(commands.Cog):
         guild_id = ctx.guild.id
         user_id = ctx.author.id
         User.ensure_user(self.bot.db, guild_id, user_id)
-        
+
         data = self.bot.collection_service.get_user_mobs_by_tag(self.bot.db, guild_id, user_id, tag)
 
         if not data["mobs"]:
@@ -172,19 +159,15 @@ class CollectionCog(commands.Cog):
         embed = discord.Embed(
             title=f"🏷️ Mobs with Tag: {tag.capitalize()}",
             description=f"You have {data['count']} mobs with this tag.",
-            color=discord.Color.blue()
+            color=discord.Color.blue(),
         )
 
-        for mob in data["mobs"][:15]: # Show top 15
-            embed.add_field(
-                name=f"{mob['name']} (x{mob['amount']})",
-                value=f"💪 Power: {mob['power']}",
-                inline=True
-            )
-        
+        for mob in data["mobs"][:15]:  # Show top 15
+            embed.add_field(name=f"{mob['name']} (x{mob['amount']})", value=f"💪 Power: {mob['power']}", inline=True)
+
         if data["count"] > 15:
             embed.set_footer(text=f"Showing top 15 of {data['count']} mobs.")
-            
+
         await ctx.send(embed=embed)
 
     @commands.command()
@@ -216,9 +199,7 @@ class CollectionCog(commands.Cog):
         power = mob.get("base_power", 0)
 
         embed = discord.Embed(
-            title=f"🏷️ Mob Analysis: {mob['name']}",
-            description=f"*{mob.get('lore', '')}*",
-            color=color
+            title=f"🏷️ Mob Analysis: {mob['name']}", description=f"*{mob.get('lore', '')}*", color=color
         )
         embed.add_field(name="💪 Base Power", value=str(power), inline=True)
         embed.add_field(name="🏷️ Tags", value=", ".join(tags) if tags else "None", inline=True)
@@ -226,26 +207,6 @@ class CollectionCog(commands.Cog):
         embed.set_footer(text=f"Mob ID: {mob_id} | Rarity: {rarity}")
 
         await ctx.send(embed=embed)
-
-    def _build_embed_from_data(self, data, display_name):
-        embed = discord.Embed(
-            title=f"{display_name}'s Collection",
-            colour=discord.Colour.green(),
-            description=f"Page {data['current_page']}/{data['total_pages']} ({data['total_entries']} mobs total) — {data['completion_pct']:.1f}% Complete",
-        )
-
-        for rarity_name, entries in data["entries"].items():
-            embed.add_field(
-                name=f"{RARITY_EMOJIS[rarity_name]} {rarity_name}",
-                value="\n".join(entries),
-                inline=False,
-            )
-
-        footer_text = f"Use {self.bot.command_prefix}collection <page> to navigate"
-        if data.get("rarity_filter"):
-            footer_text += f" | Filtering by rarity: {data['rarity_filter'].capitalize()}"
-        embed.set_footer(text=footer_text)
-        return embed
 
     async def _all_mobs(self, ctx, page: int = 1):
         data = self.bot.collection_service.get_all_mobs_paginated(page)

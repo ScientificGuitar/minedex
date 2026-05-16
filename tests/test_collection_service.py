@@ -102,8 +102,8 @@ class TestCollectionService:
 
         assert "error" in result
 
-    def test_build_collection_embed_data_with_filter(self):
-        """Test building embed data with filter applied."""
+    def test_build_collection_embed_data_with_multiple_entries(self):
+        """Test building embed data with multiple entries."""
         first_two_mobs = list(self.service.mobs.items())[:2]
         rows = [{"mob_id": mob_id, "amount": 2} for mob_id, _ in first_two_mobs]
 
@@ -120,19 +120,29 @@ class TestCollectionService:
         assert "error" not in result
         assert result["total_entries"] == 1
 
-    def test_build_collection_embed_data_invalid_rarity_filter(self):
-        """Test building embed data with invalid rarity filter."""
-        rows = [{"mob_id": list(self.service.mobs.keys())[0], "amount": 1}]
-        result = self.service.build_collection_embed_data(rows, page=1, per_page=10, rarity_filter="InvalidRarity")
+    def test_get_full_collection_data(self, mock_mobs):
+        """Test generating full collection data."""
+        rows = [{"mob_id": mob_id, "amount": 1} for mob_id in list(mock_mobs.keys())[:3]]
+        pages = self.service.get_full_collection_data(rows)
 
-        assert "error" in result
-        assert "No mobs found for rarity" in result["error"]
+        assert isinstance(pages, list)
+        assert len(pages) > 0
+        assert "title" in pages[0]
+        assert "fields" in pages[0]
+        assert len(pages[0]["fields"]) > 0
+
+    def test_get_full_collection_data_empty(self):
+        """Test generating full collection data with empty collection."""
+        pages = self.service.get_full_collection_data([])
+
+        assert len(pages) == 1
+        assert "empty" in pages[0]["description"]
 
     def test_calculate_completion_percentage(self):
         """Test calculating completion percentage."""
         total_mobs = len(self.service.mobs)
         rows = [{"mob_id": list(self.service.mobs.keys())[0], "amount": 1}]
-        
+
         result = self.service.calculate_completion_percentage(rows)
         expected = (1 / total_mobs) * 100
 
