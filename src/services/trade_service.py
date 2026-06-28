@@ -6,10 +6,11 @@ from database.user import User as UserDB
 
 
 class TradeService:
-    def __init__(self, mobs: Dict[str, Dict], villagers: Dict[str, Dict], items: Dict[str, Dict]):
+    def __init__(self, mobs: Dict[str, Dict], villagers: Dict[str, Dict], items: Dict[str, Dict], raid_service=None):
         self.mobs = mobs
         self.villagers = villagers
         self.items = items
+        self.raid_service = raid_service
 
     def can_trade_with_farmer(self, session_factory, guild_id: int, user_id: int, mob_id: str, mob_amount: int) -> Dict:
         """Check if user can trade with farmer."""
@@ -46,17 +47,17 @@ class TradeService:
         return {"mob": mob, "mob_amount": mob_amount, "emeralds": emeralds, "value_per": value_per}
 
     def perform_farmer_trade(
-        self, session_factory, guild_id: int, user_id: int, mob_id: str, mob_amount: int, emeralds: int
+        self, session_factory, guild_id: int, user_id: int, mob_id: str, mob_amount: int, emeralds: int, channel_id: int | None = None
     ) -> Dict:
         """Perform the farmer trade."""
-        # Remove mobs from collection
         CollectionDB.remove_mob(session_factory, guild_id, user_id, mob_id, mob_amount)
-        # Add emeralds
         UserDB.add_emeralds(session_factory, guild_id, user_id, emeralds)
-        # Track stats
         UserDB.increment_total_farmer_trades(session_factory, guild_id, user_id)
         UserDB.add_emeralds_gained(session_factory, guild_id, user_id, emeralds)
         UserDB.add_mobs_traded(session_factory, guild_id, user_id, mob_amount)
+
+        if self.raid_service and emeralds > 0:
+            self.raid_service.check_spawn_trigger(session_factory, guild_id, channel_id)
 
         return {"success": True}
 

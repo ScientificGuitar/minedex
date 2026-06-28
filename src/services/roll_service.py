@@ -93,7 +93,7 @@ class RollService:
         strategy = self._strategies.get(mode)
         return strategy.execute(session_factory, guild_id, user_id, now, value)
 
-    def claim_mob(self, session_factory, guild_id: int, user_id: int, mob_id: str, mob: Dict, now: int) -> int:
+    def claim_mob(self, session_factory, guild_id: int, user_id: int, mob_id: str, mob: Dict, now: int, channel_id: int | None = None) -> int:
         """Claim a mob and give rewards."""
         reward = mob.get("claim_reward", 0)
 
@@ -105,7 +105,7 @@ class RollService:
 
         # Check for raid trigger
         if self.raid_service and reward > 0:
-            self.raid_service.check_spawn_trigger(session_factory, guild_id)
+            self.raid_service.check_spawn_trigger(session_factory, guild_id, channel_id)
 
         return reward
 

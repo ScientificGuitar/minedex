@@ -24,7 +24,7 @@ class Claim(discord.ui.View):
     async def button_callback(self, interaction: discord.Interaction, button: discord.ui.Button):
         now = int(time.time())
 
-        reward = self.bot.roll_service.claim_mob(self.bot.db, self.guild_id, self.user_id, self.mob_id, self.mob, now)
+        reward = self.bot.roll_service.claim_mob(self.bot.db, self.guild_id, self.user_id, self.mob_id, self.mob, now, interaction.channel_id)
 
         # Evaluate achievements
         newly_unlocked = self.bot.achievement_service.evaluate_unlocked(

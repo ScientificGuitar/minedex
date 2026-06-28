@@ -147,6 +147,8 @@ class Raid(Base):
     
     ended_at: Mapped[int | None] = mapped_column(Integer, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    is_announced: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    start_channel_id: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
 
 
 class RaidContribution(Base):

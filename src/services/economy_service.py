@@ -14,11 +14,11 @@ class EconomyService:
         self.items = items
         self.raid_service = raid_service
 
-    def add_emeralds(self, session_factory, guild_id: int, user_id: int, amount: int) -> None:
+    def add_emeralds(self, session_factory, guild_id: int, user_id: int, amount: int, channel_id: int | None = None) -> None:
         """Add emeralds and check for raid trigger."""
         UserDB.add_emeralds(session_factory, guild_id, user_id, amount)
         if self.raid_service and amount > 0:
-            self.raid_service.check_spawn_trigger(session_factory, guild_id)
+            self.raid_service.check_spawn_trigger(session_factory, guild_id, channel_id)
 
     def get_user_balance(self, session_factory, guild_id: int, user_id: int) -> int:
         """Get user's emerald balance."""
@@ -49,7 +49,7 @@ class EconomyService:
         """Get information about a specific item."""
         return self.items.get(item_id)
 
-    def claim_daily_reward(self, session_factory, guild_id: int, user_id: int, now: int) -> Dict[str, Any]:
+    def claim_daily_reward(self, session_factory, guild_id: int, user_id: int, now: int, channel_id: int | None = None) -> Dict[str, Any]:
         """Claim daily reward if available."""
         user = UserDB.get_user(session_factory, guild_id, user_id)
         last_daily_claim_at = user.last_daily_at if user else None
@@ -61,7 +61,7 @@ class EconomyService:
         mob_id, mob = self.roll_random_mob(allowed={"Common"})
 
         UserDB.update_last_daily_at(session_factory, guild_id, user_id, now)
-        self.add_emeralds(session_factory, guild_id, user_id, emeralds)
+        self.add_emeralds(session_factory, guild_id, user_id, emeralds, channel_id)
         CollectionDB.add_to_collection(session_factory, guild_id, user_id, mob_id)
 
         return {"emeralds": emeralds, "mob": mob}

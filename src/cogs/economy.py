@@ -80,7 +80,7 @@ class Economy(commands.Cog):
         now = int(time.time())
         User.ensure_user(self.bot.db, guild_id, user_id)
 
-        result = self.bot.economy_service.claim_daily_reward(self.bot.db, guild_id, user_id, now)
+        result = self.bot.economy_service.claim_daily_reward(self.bot.db, guild_id, user_id, now, ctx.channel.id)
 
         if "error" in result:
             await ctx.send(f"❌ {result['error']}")

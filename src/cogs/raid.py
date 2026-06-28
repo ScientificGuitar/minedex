@@ -15,15 +15,19 @@ class RaidCog(commands.Cog):
     def cog_unload(self):
         self.raid_check.cancel()
 
-    async def announce_victory(self, guild_id: int, final_mob: str, rewards: list):
+    async def announce_victory(self, guild_id: int, final_mob: str, rewards: list, channel_id: int | None = None):
         """Broadcast raid victory and rewards to the server."""
         guild = self.bot.get_guild(guild_id)
         if not guild:
             return
 
-        channel = guild.system_channel or next(
-            (c for c in guild.text_channels if c.permissions_for(guild.me).send_messages), None
-        )
+        channel = None
+        if channel_id:
+            channel = guild.get_channel(channel_id)
+        if not channel:
+            channel = guild.system_channel or next(
+                (c for c in guild.text_channels if c.permissions_for(guild.me).send_messages), None
+            )
         if not channel:
             return
 
@@ -64,24 +68,47 @@ class RaidCog(commands.Cog):
 
     @tasks.loop(minutes=5)
     async def raid_check(self):
-        """Background task to check for expired raids."""
+        """Background task to check for expired raids and send announcements."""
         now = int(time.time())
         duration_sec = self.bot.raid_service.config["raid_duration_hours"] * 3600
 
-        # We need a way to get all guilds the bot is in to check each one
         for guild in self.bot.guilds:
             raid = self.bot.raid_service.get_active_raid(self.bot.db, guild.id)
             if not raid:
                 continue
 
+            # Send start announcement if not yet announced
+            if not raid.is_announced and raid.start_channel_id:
+                channel = guild.get_channel(raid.start_channel_id)
+                if channel:
+                    boss_template = self.bot.raid_service.boss_data[raid.boss_id]
+                    embed = discord.Embed(
+                        title=f"⚔️ RAID ALERT: {boss_template['name']}",
+                        description=f"A **{boss_template['name']}** has been spotted near the village! "
+                                    f"The village needs your strongest mobs to defend it!",
+                        color=discord.Color.red(),
+                    )
+                    embed.set_thumbnail(url=boss_template["image"])
+                    await channel.send(embed=embed)
+
+                with self.bot.db() as session:
+                    from database.db import Raid as RaidModel
+                    db_raid = session.query(RaidModel).filter_by(guild_id=guild.id, spawned_at=raid.spawned_at).first()
+                    if db_raid:
+                        db_raid.is_announced = True
+                        session.commit()
+
+            # Check expiry
             if now > raid.spawned_at + duration_sec:
-                # Raid expired!
                 self.bot.raid_service.complete_raid(self.bot.db, guild.id)
 
-                # Notify the server
-                channel = guild.system_channel or next(
-                    (c for c in guild.text_channels if c.permissions_for(guild.me).send_messages), None
-                )
+                channel = None
+                if raid.start_channel_id:
+                    channel = guild.get_channel(raid.start_channel_id)
+                if not channel:
+                    channel = guild.system_channel or next(
+                        (c for c in guild.text_channels if c.permissions_for(guild.me).send_messages), None
+                    )
                 if channel:
                     embed = discord.Embed(
                         title="⌛ RAID EXPIRED",

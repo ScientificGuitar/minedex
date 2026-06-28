@@ -49,7 +49,7 @@ class MyBot(commands.Bot):
         self.economy_service = EconomyService(mobs, mobs_by_rarity, items, self.raid_service)
         self.roll_service = RollService(mobs, mobs_by_rarity, villagers, items, self.raid_service)
         self.shop_service = ShopService(shop_data)
-        self.trade_service = TradeService(mobs, villagers, items)
+        self.trade_service = TradeService(mobs, villagers, items, self.raid_service)
         self.achievement_service = AchievementService(mobs, mobs_by_rarity)
 
     async def setup_hook(self) -> None:

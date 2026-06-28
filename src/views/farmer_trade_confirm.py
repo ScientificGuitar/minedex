@@ -24,7 +24,7 @@ class FarmerTradeConfirm(discord.ui.View):
         now = int(time.time())
 
         self.bot.trade_service.perform_farmer_trade(
-            self.bot.db, self.guild_id, self.user_id, self.mob_id, self.amount, self.emeralds
+            self.bot.db, self.guild_id, self.user_id, self.mob_id, self.amount, self.emeralds, interaction.channel_id
         )
 
         # Evaluate achievements
