@@ -77,18 +77,7 @@ class RaidCog(commands.Cog):
             if now > raid.spawned_at + duration_sec:
                 # Raid expired!
                 self.bot.raid_service.complete_raid(self.bot.db, guild.id)
-
-                # Notify the server
-                channel = guild.system_channel or next(
-                    (c for c in guild.text_channels if c.permissions_for(guild.me).send_messages), None
-                )
-                if channel:
-                    embed = discord.Embed(
-                        title="⌛ RAID EXPIRED",
-                        description="The time has run out! The boss has vanished, leaving the village in disarray.",
-                        color=discord.Color.dark_red(),
-                    )
-                    await channel.send(embed=embed)
+                # Expiry message suppressed — raid ends silently
 
     @commands.group(invoke_without_command=True)
     async def raid(self, ctx):
