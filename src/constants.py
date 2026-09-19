@@ -30,5 +30,5 @@ RARITY_COLORS = {
     "Legendary": Colour.orange(),
 }
 
-TRADING_HALL_ORDER = ["farmer", "cleric", "toolsmith", "librarian"]
-VALID_TOKEN_RARITIES = ["uncommon", "rare", "epic"]
+TRADING_HALL_ORDER = ["farmer", "cleric", "toolsmith", "librarian", "master_cleric"]
+VALID_TOKEN_RARITIES = ["uncommon", "rare", "epic", "legendary"]

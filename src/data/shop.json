@@ -27,6 +27,13 @@
       "price": 500,
       "type": "villager_unlock",
       "requirements": []
+    },
+    "master_cleric": {
+      "name": "Master Cleric's Blessing",
+      "description": "Unlocks trading 2 duplicate Legendaries + 500 emeralds for a Legendary Roll Token.",
+      "price": 1000,
+      "type": "villager_unlock",
+      "requirements": []
     }
   },
   "consumables": {

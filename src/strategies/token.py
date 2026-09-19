@@ -16,7 +16,7 @@ class TokenRollStrategy(RollStrategy):
         self, session_factory, guild_id: int, user_id: int, now: int, value: Optional[str] = None
     ) -> Dict[str, Any]:
         if value is None:
-            return {"can_execute": False, "error": "You must specify a token rarity (e.g. `uncommon`, `rare`, `epic`)."}
+            return {"can_execute": False, "error": f"You must specify a token rarity (e.g. `{', '.join(VALID_TOKEN_RARITIES)}`)."}
 
         if value not in VALID_TOKEN_RARITIES:
             return {

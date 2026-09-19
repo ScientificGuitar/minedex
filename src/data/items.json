@@ -16,5 +16,11 @@
     "type": "token",
     "rarity": "Epic",
     "description": "Use to only roll Epic mobs"
+  },
+  "legendary": {
+    "name": "Legendary Roll Token",
+    "type": "token",
+    "rarity": "Legendary",
+    "description": "Use to only roll Legendary mobs. Obtained only from the Master Cleric."
   }
 }

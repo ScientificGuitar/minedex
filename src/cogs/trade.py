@@ -4,6 +4,7 @@ from discord.ext import commands
 from database.user import User
 from views.cleric_trade_confirm import ClericTradeConfirm
 from views.farmer_trade_confirm import FarmerTradeConfirm
+from views.master_cleric_trade_confirm import MasterClericTradeConfirm
 
 
 class Trade(commands.Cog):
@@ -18,6 +19,10 @@ class Trade(commands.Cog):
     async def cleric(self, ctx, mob_id: str | None = None, mob_amount: int | None = None):
         await self._trade_with_villager(ctx, "cleric", mob_id, mob_amount)
 
+    @commands.command(name="master_cleric")
+    async def master_cleric(self, ctx, mob_id: str | None = None, mob_amount: int | None = None):
+        await self._trade_with_villager(ctx, "master_cleric", mob_id, mob_amount)
+
     @commands.command(aliases=["trading"])
     async def trade(self, ctx, villager: str | None = None, mob_id: str | None = None, mob_amount: int | None = None):
         if villager is None:
@@ -25,7 +30,8 @@ class Trade(commands.Cog):
                 "❌ You need to specify **which villager** you want to trade with.\n\n"
                 "Available villagers:\n"
                 "• **farmer** - trade duplicate mobs for emeralds\n"
-                "• **cleric** - trade duplicate mobs for roll tokens\n\n"
+                "• **cleric** - trade duplicate mobs for roll tokens\n"
+                "• **master_cleric** - trade 2 duplicate Legendaries + 500 emeralds for a Legendary Token\n\n"
                 "Example:\n"
                 f"`{self.bot.command_prefix}trade farmer <mob_id> <amount>`"
             )
@@ -87,7 +93,7 @@ class Trade(commands.Cog):
             )
 
             await ctx.send(embed=embed, view=view)
-        elif villager == "cleric":
+        elif villager.lower() == "cleric":
             check_result = self.bot.trade_service.can_trade_with_cleric(
                 self.bot.db, guild_id, user_id, mob_id, mob_amount
             )
@@ -127,9 +133,50 @@ class Trade(commands.Cog):
             )
 
             await ctx.send(embed=embed, view=view)
+        elif villager.lower() == "master_cleric":
+            check_result = self.bot.trade_service.can_trade_with_master_cleric(
+                self.bot.db, guild_id, user_id, mob_id, mob_amount
+            )
+            if not check_result["can_trade"]:
+                await ctx.send(f"❌ {check_result['error']}")
+                return
+
+            mob = check_result["mob"]
+            trade_data = self.bot.trade_service.calculate_master_cleric_trade(mob, mob_amount)
+
+            embed = discord.Embed(
+                title="🔮 Master Cleric Transmutation Offer",
+                colour=discord.Colour.gold(),
+            )
+            embed.add_field(
+                name="You Give",
+                value=f"🃏 **{trade_data['mob']['name']}** x{trade_data['mob_amount']} ({trade_data['mob']['rarity']})\n💎 **{trade_data['fee']} emeralds** fee",
+                inline=False,
+            )
+            embed.add_field(
+                name="You Receive",
+                value=f"🪙 **{trade_data['token']['name']}** x{trade_data['token_count']} (2 Legendary dupes + fee → 1 token)",
+                inline=False,
+            )
+
+            embed.set_thumbnail(url=trade_data["mob"]["image"])
+            embed.set_footer(text="Confirming this trade will permanently remove the mobs and charge the fee.")
+
+            view = MasterClericTradeConfirm(
+                bot=self.bot,
+                guild_id=guild_id,
+                user_id=user_id,
+                mob_id=mob_id,
+                mob_amount=mob_amount,
+                token_id=trade_data["token_id"],
+                token=trade_data["token"],
+                fee=trade_data["fee"],
+            )
+
+            await ctx.send(embed=embed, view=view)
         else:
             await ctx.send(
-                "❌ That villager does not exist.\nUse `{self.bot.command_prefix}help trading` for more information about trading"
+                f"❌ That villager does not exist.\nUse `{self.bot.command_prefix}help trading` for more information about trading"
             )
             return
 

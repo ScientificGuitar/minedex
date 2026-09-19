@@ -35,5 +35,15 @@
     "lore": "A wise librarian who teaches you how to perform a focused roll once per day, avoiding common mobs.",
     "description": "Focused roll once per day (no Commons)",
     "commands": ["roll focus"]
+  },
+  "master_cleric": {
+    "name": "Master Cleric",
+    "level": 5,
+    "price": 1000,
+    "image": "https://minecraft.wiki/images/Plains_Cleric.png?817d6",
+    "lore": "An enlightened master who can transmute duplicate Legendary mobs into Legendary Roll Tokens — for a fee.",
+    "description": "Convert 2 duplicate Legendaries + 500 emeralds into a Legendary Roll Token",
+    "commands": ["trade master_cleric <mob> 2"],
+    "trade_fee": 500
   }
 }

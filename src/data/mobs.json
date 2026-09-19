@@ -1589,7 +1589,7 @@
     ],
     "claim_reward": 50,
     "farmer_value": 200,
-    "token_reward": null
+    "token_reward": "legendary"
   },
   "wither": {
     "name": "Wither",
@@ -1609,7 +1609,7 @@
     ],
     "claim_reward": 50,
     "farmer_value": 200,
-    "token_reward": null
+    "token_reward": "legendary"
   },
   "herobrine": {
     "name": "Herobrine",
@@ -1625,7 +1625,7 @@
     ],
     "claim_reward": 50,
     "farmer_value": 200,
-    "token_reward": null
+    "token_reward": "legendary"
   },
   "moobloom": {
     "name": "Moobloom",
@@ -1641,7 +1641,7 @@
     ],
     "claim_reward": 50,
     "farmer_value": 200,
-    "token_reward": null
+    "token_reward": "legendary"
   },
   "kevin": {
     "name": "Kevin",
@@ -1657,6 +1657,6 @@
     ],
     "claim_reward": 50,
     "farmer_value": 200,
-    "token_reward": null
+    "token_reward": "legendary"
   }
 }

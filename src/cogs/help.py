@@ -58,6 +58,7 @@ class Help(commands.Cog):
                     f"`{self.bot.command_prefix}trade` - List tradeable villagers\n"
                     f"`{self.bot.command_prefix}farmer <id> <amt>` - Duplicates → Emeralds\n"
                     f"`{self.bot.command_prefix}cleric <id> <amt>` - Duplicates → Tokens\n"
+                    f"`{self.bot.command_prefix}master_cleric <id> 2` - 2 Legendary dupes + 500💎 → Legendary Token\n"
                     f"`{self.bot.command_prefix}shop` - Village Marketplace\n"
                     f"`{self.bot.command_prefix}villager <id>` - Villager info"
                 ),
@@ -114,11 +115,12 @@ class Help(commands.Cog):
             embed.add_field(
                 name="Token Roll",
                 value=(
-                    f"`{prefix}roll token <rarity>` — Consume an Uncommon, Rare, or Epic Roll Token\n"
+                    f"`{prefix}roll token <rarity>` — Consume an Uncommon, Rare, Epic, or Legendary Roll Token\n"
                     "to guarantee a mob of that exact rarity (e.g. `&roll token uncommon`).\n"
                     "Token rolls bypass the hourly cooldown.\n"
                     "Tokens are obtained via "
-                    f"**Cleric trades** (`{prefix}cleric`) or the **shop** (`{prefix}shop`)."
+                    f"**Cleric / Master Cleric trades** (`{prefix}cleric`, `{prefix}master_cleric`) or the **shop** (`{prefix}shop`).\n"
+                    "Legendary Tokens come only from the Master Cleric (never sold in the shop)."
                 ),
                 inline=False,
             )
@@ -173,7 +175,8 @@ class Help(commands.Cog):
                     "**Roll Tokens:**\n"
                     "• Uncommon Token — guarantees an Uncommon roll\n"
                     "• Rare Token — guarantees a Rare roll\n"
-                    "• Epic Token — guarantees an Epic roll"
+                    "• Epic Token — guarantees an Epic roll\n"
+                    "• Legendary Token — guarantees a Legendary roll (Master Cleric only, not sold in shop)"
                 ),
                 inline=False,
             )
@@ -238,7 +241,8 @@ class Help(commands.Cog):
                     "**Tier 1 — Farmer** (50 💎): Trade dupes for emeralds.\n"
                     "**Tier 2 — Cleric** (100 💎): Convert to roll tokens.\n"
                     "**Tier 3 — Toolsmith** (250 💎): Unlocks reroll.\n"
-                    "**Tier 4 — Librarian** (500 💎): Unlocks focus roll.\n\n"
+                    "**Tier 4 — Librarian** (500 💎): Unlocks focus roll.\n"
+                    "**Tier 5 — Master Cleric** (1000 💎, requires Librarian): 2 same Legendary dupes + 500💎 → Legendary Token.\n\n"
                     "Purchase upgrades with `&shop`."
                 ),
                 inline=False,
@@ -258,7 +262,16 @@ class Help(commands.Cog):
                     f"`{prefix}cleric <mob_id> <amount>` or `{prefix}trade cleric <id> <amt>`\n"
                     "Convert duplicates into roll tokens. **2 mobs → 1 token**.\n"
                     "Only mobs with a `token_reward` value can be traded (Common→Uncommon token,\n"
-                    "Uncommon→Rare token, Rare→Epic token). The amount must be even."
+                    "Uncommon→Rare token, Rare→Epic token, Legendary→Legendary token via Master Cleric). The amount must be even."
+                ),
+                inline=True,
+            )
+            embed.add_field(
+                name="Master Cleric — Legendary Tokens",
+                value=(
+                    f"`{prefix}master_cleric <mob_id> 2` or `{prefix}trade master_cleric <id> 2`\n"
+                    "Transmute **exactly 2 copies of the same Legendary** + **500 emeralds fee** → **1 Legendary Token**.\n"
+                    "Requires Master Cleric unlocked (1000💎, requires Librarian). Legendary Tokens are never sold in the shop."
                 ),
                 inline=True,
             )
@@ -277,7 +290,8 @@ class Help(commands.Cog):
                     "• **Farmer's License** — 50 💎 — Unlock Farmer trades\n"
                     "• **Cleric's Ordination** — 100 💎 — Unlock Cleric trades\n"
                     "• **Toolsmith's Apprenticeship** — 250 💎 — Unlock reroll\n"
-                    "• **Librarian's Membership** — 500 💎 — Unlock focus roll"
+                    "• **Librarian's Membership** — 500 💎 — Unlock focus roll\n"
+                    "• **Master Cleric's Blessing** — 1000 💎 (requires Librarian) — Unlock Master Cleric trades"
                 ),
                 inline=False,
             )
@@ -286,7 +300,8 @@ class Help(commands.Cog):
                 value=(
                     "• **Uncommon Roll Token** — 30 💎 — Guarantees Uncommon roll\n"
                     "• **Rare Roll Token** — 75 💎 — Guarantees Rare roll\n"
-                    "• **Epic Roll Token** — 150 💎 — Guarantees Epic roll"
+                    "• **Epic Roll Token** — 150 💎 — Guarantees Epic roll\n"
+                    "• Legendary Tokens are NOT sold here — earn them from the Master Cleric"
                 ),
                 inline=False,
             )
@@ -332,6 +347,14 @@ class Help(commands.Cog):
                 value=(
                     "Unlocks **one focus roll per day** (no Common mobs).\n"
                     f"Commands: `{prefix}roll focus`"
+                ),
+                inline=False,
+            )
+            embed.add_field(
+                name="🔮 Master Cleric — Tier 5 | 1000 💎 (requires Librarian)",
+                value=(
+                    "Transmute **2 same Legendary dupes + 500 emeralds** into a **Legendary Roll Token**.\n"
+                    f"Commands: `{prefix}master_cleric <mob_id> 2`"
                 ),
                 inline=False,
             )
